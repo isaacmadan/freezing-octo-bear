@@ -16,6 +16,7 @@
 	cookie.setMaxAge(60*60*72); //72 hours
 	response.addCookie(cookie);
 %>
+
 <div>Admin News</div><hr>
 <div>Popular Quizzes</div><hr>
 <div>Recently Created Quizzes</div><hr>
