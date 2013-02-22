@@ -24,5 +24,6 @@
 <div>Achievements</div><hr>
 <div>Messages</div><hr>
 <div>Recent Friends' Activities</div><hr>
+<a href = "make_quiz.jsp">Make a Quiz</a>
 </body>
 </html>
