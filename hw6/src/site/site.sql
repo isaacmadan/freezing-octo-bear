@@ -130,16 +130,3 @@ CREATE TABLE multiple_choices_choices (
     string TEXT,
     created_timestamp TIMESTAMP
 );
-
-DROP TABLE IF EXISTS achievements;
- -- remove table if it already exists and start from scratch
-
-CREATE TABLE achievements (
-	user_id INT,
-	amateur_author BOOLEAN,
-    prolific_author BOOLEAN,
-    prodigious_author BOOLEAN,
-    quiz_machine BOOLEAN,
-    i_am_greatest BOOLEAN,
-    practice_perfect BOOLEAN
-);
