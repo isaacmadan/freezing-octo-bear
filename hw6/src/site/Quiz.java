@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Quiz {
 	
 	ArrayList<Question> questions;
+	int quiz_id;
+	int max_score;
 	
 	public Quiz() {
 		this.questions = new ArrayList<Question>();
@@ -14,8 +16,7 @@ public class Quiz {
 		this.questions.add(question);
 	}
 	
-	
-	
-	
-	
+	public ArrayList<Question> getQuestions() {
+		return questions;
+	}
 }
