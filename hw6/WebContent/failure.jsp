@@ -22,6 +22,7 @@
 	</fieldset>
 	<input type="submit" />
 </form>
+<a href="create.jsp">Create account</a>
 </div>
 
 </body>

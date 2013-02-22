@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="site.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,6 +8,14 @@
 <title>Welcome to freezing-octo-bear!</title>
 </head>
 <body>
+
+<%
+	User user = (User)session.getAttribute("user");
+	out.println(user.getUsername());
+	Cookie cookie = new Cookie("freezing-octo-bear",user.getUsername());
+	cookie.setMaxAge(60*60*72); //72 hours
+	response.addCookie(cookie);
+%>
 <div>Admin News</div><hr>
 <div>Popular Quizzes</div><hr>
 <div>Recently Created Quizzes</div><hr>
