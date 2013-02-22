@@ -8,12 +8,12 @@
 </head>
 <body>
 
-<h3>Welcome to freezing-octo-bear</h3>
+<h3>Create a new account</h3>
 <h4>Quiz site</h4>
 <p>Please login</p>
 
-<div id ="login">
-<form action="LoginServlet" method="POST">
+<div id ="create">
+<form action="CreateUserServlet" method="POST">
 	<fieldset>
 		<label>Username</label>
 		<input type="text" id="username" name="username"></input><br />
@@ -22,7 +22,6 @@
 	</fieldset>
 	<input type="submit" />
 </form>
-<a href="create.jsp">Create account</a>
 </div>
 
 </body>
