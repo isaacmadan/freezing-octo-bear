@@ -17,7 +17,9 @@ DROP TABLE IF EXISTS quizzes;
  -- remove table if it already exists and start from scratch
 
 CREATE TABLE quizzes (
-	quiz_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	quiz_id INT,
+	practice_mode BOOLEAN,
 	max_score INT,
 	description TEXT,
     created_timestamp TIMESTAMP
