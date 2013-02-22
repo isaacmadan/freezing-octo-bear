@@ -7,6 +7,22 @@
 <title>Insert title here</title>
 </head>
 <body>
-Hello! Testing the server!
+
+<h3>Welcome to freezing-octo-bear</h3>
+<h4>Quiz site</h4>
+<p>Please login</p>
+
+<div id ="login">
+<form action="LoginServlet" method="POST">
+	<fieldset>
+		<label>Username</label>
+		<input type="text" id="username" name="username"></input><br />
+		<label>Password</label>
+		<input type="password" id="password" name="password"></input>
+	</fieldset>
+	<input type="submit" />
+</form>
+</div>
+
 </body>
 </html>

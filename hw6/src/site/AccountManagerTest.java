@@ -9,8 +9,7 @@ public class AccountManagerTest {
 	@Test
 	public void test() {
 		AccountManager manager = new AccountManager();
-		//assertFalse(manager.isExistingAccount("isaac"));
-		manager.createNewAccount("isaac", "madan");
+		manager.createNewAccount("isaac", "madan", false);
 		assertTrue(manager.isExistingAccount("isaac"));
 		assertFalse(manager.isExistingAccount("aojia"));
 		assertFalse(manager.isPasswordCorrect("aojia", "anything"));

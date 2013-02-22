@@ -24,7 +24,7 @@ public class AccountManager {
 				resCount++;
 			}
 		}
-		catch(Exception e) {} 
+		catch(Exception e) {}
 		if(resCount == 0) {
 			return false;
 		}
@@ -51,8 +51,32 @@ public class AccountManager {
 		return false; 
 	}
 	
-	public void createNewAccount(String username, String password) {
-		if(isExistingAccount(username)) return;
+	public User getAccount(String username) {
+		if(!isExistingAccount(username)) return null;
+		
+		int id=0;
+		String password="";
+		boolean isAdmin=false;
+		int loginCount=0;
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username='"+username+"'");
+			while(rs.next()) {
+				id = rs.getInt("user_id");
+				password = rs.getString("password");
+				isAdmin = rs.getBoolean("is_admin");
+				loginCount = rs.getInt("login_count");
+			}
+			User user = new User(id, username, password, isAdmin, loginCount);
+			return user;
+		}
+		catch(Exception e) {}
+		return null;
+	}
+	
+	public User createNewAccount(String username, String password, boolean isAdmin) {
+		if(isExistingAccount(username)) return null;
 		int loginCount = 0;
 		
 		try {
@@ -67,10 +91,25 @@ public class AccountManager {
 		try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
 			String query = "INSERT INTO users (username, password, is_admin, login_count, created_timestamp, last_login_timestamp)" +
-						   " VALUES('"+username+"', '"+hashPassword(password)+"', false, "+loginCount+", NULL, NULL)";
+						   " VALUES('"+username+"', '"+hashPassword(password)+"', "+isAdmin+", "+loginCount+", NULL, NULL)";
 			stmt.executeUpdate(query);
 		}
-		catch(Exception e) {} 
+		catch(Exception e) { return null; } 
+		
+		int id = 0;
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username='"+username+"'");
+			while(rs.next()) {
+				id = Integer.parseInt(rs.getString("user_id"));
+			}
+			User user = new User(id, username, hashPassword(password), isAdmin, loginCount);
+			return user;
+		}
+		catch(Exception e) {}
+		
+		return null;
+		
 	}
 	
 	/*

@@ -12,14 +12,16 @@ public class User {
 	//Inbox
 	//History
 	//Achievements
+	private int loginCount;
 	private boolean isAdmin;
 	
-	public User(String username, String password, boolean isAdmin) {
+	public User(int id, String username, String password, boolean isAdmin, int loginCount) {
 		
+		this.id = id;
 		this.username = username;
 		this.password = password;
-		
 		this.isAdmin = isAdmin;
+		this.loginCount = loginCount;
 		
 	}
 
