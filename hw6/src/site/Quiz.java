@@ -39,4 +39,9 @@ public class Quiz {
 	public void setMax_score(int max_score) {
 		this.max_score = max_score;
 	}
+
+	public static Quiz getQuiz(int quiz) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
