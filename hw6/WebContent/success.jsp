@@ -11,7 +11,7 @@
 
 <%
 	User user = (User)session.getAttribute("user");
-	out.println(user.getUsername());
+	out.println("Hi " + user.getUsername()+"!<br /><br />");
 	Cookie cookie = new Cookie("freezing-octo-bear",user.getUsername());
 	cookie.setMaxAge(60*60*72); //72 hours
 	response.addCookie(cookie);
