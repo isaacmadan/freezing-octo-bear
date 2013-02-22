@@ -36,7 +36,6 @@ public class CreateUserServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("enter create");	
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 				
@@ -48,7 +47,6 @@ public class CreateUserServlet extends HttpServlet {
 		}
 				
 		if(manager.isExistingAccount(username)) {
-			System.out.println("failure create");
 			RequestDispatcher dispatch = request.getRequestDispatcher("create_failure.jsp");
 			dispatch.forward(request, response);
 			return;
@@ -57,7 +55,6 @@ public class CreateUserServlet extends HttpServlet {
 			User user = manager.createNewAccount(username, password, false);
 			if(user != null) {
 				session.setAttribute("user", user);
-				System.out.println("success create");
 				RequestDispatcher dispatch = request.getRequestDispatcher("success.jsp");
 				dispatch.forward(request, response);
 			}
