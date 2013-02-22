@@ -4,9 +4,16 @@ S<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Welcome to freezing-octo-bear!</title>
 </head>
 <body>
-Success
+<div>Admin News</div><hr>
+<div>Popular Quizzes</div><hr>
+<div>Recently Created Quizzes</div><hr>
+<div>Recent Quiz Taking Activities</div><hr>
+<div>Recent Quiz Creating Activities</div><hr>
+<div>Achievements</div><hr>
+<div>Messages</div><hr>
+<div>Recent Friends' Activities</div><hr>
 </body>
 </html>

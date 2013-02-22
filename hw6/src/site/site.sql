@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS quizzes;
 CREATE TABLE quizzes (
 	quiz_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	max_score INT,
+	description TEXT,
     created_timestamp TIMESTAMP
 );
 
