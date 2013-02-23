@@ -28,9 +28,49 @@ public class QuizResult {
 		} catch (SQLException e) {
 
 		}
-
+		System.out.println("Initialized connection");
+	}
+	/**Adds a result to the SQL results database, either by passing in a bunch of parameters
+	 * Or first generating a Result and passing it in. 
+	 * 
+	 * The first type takes care of the timestamp and other things by itself
+	 * 
+	 * How do you add dates to an sql?
+	 * These are not functional yet, because I don't know how dates work yet
+	 * 
+	 * */
+	public static void addResult(int quizTakerId, int quizId, int pointsScored, int maxPossiblePoints, long duration ){
+		String execution = "INSERT INTO " + RESULT_DATABASE + " VALUES('"+quizTakerId+"', '"+getNewId()+
+				"', '"+quizId+"', '"+pointsScored+"', '"+maxPossiblePoints+"', '"+duration+"', NOW()";  
+		try {
+			stmt.executeUpdate(execution);
+		} catch (SQLException e) {
+			System.out.print("Failed result addition");
+		}
+	}
+	
+	public static void addResult(Result r){
+		String execution = "INSERT INTO " + RESULT_DATABASE + " VALUES('"+r.userId+"', '"+r.resultId+
+				"', '"+r.quizId+"', '"+r.pointsScored+"', '"+r.maxPossiblePoints+"', '"+r.durationOfQuiz+"', '"+r.timeStamp+"'";  
+		try {
+			stmt.executeUpdate(execution);
+		} catch (SQLException e) {
+			System.out.print("Failed result addition");
+		}
 	}
 
+	/**Call to see if the quizresult database is empty*/
+	public static boolean isEmpty(){
+		return false;
+	}
+	
+	/**Generates a Result from a given ResultSet set to a given row
+	 * Remember that ResultSets start at index 1
+	 * */
+	private static Result generateResult(ResultSet set, int row){
+		Result result = null;
+		return result;
+	}
 	
 	/**Returns the most recent quiz a user has taken. Hopefully used for 
 	 * the Quiz Results Page
@@ -38,7 +78,7 @@ public class QuizResult {
 	 * @param userID int
 	 * @param quizID int
 	 * */
-	public Result getLastQuiz(int userID, int quizID){
+	public static Result getLastQuiz(int userID, int quizID){
 		Result rs = null;
 		return rs;
 	}
@@ -47,18 +87,21 @@ public class QuizResult {
 	 * 
 	 * @param resultID integer ID of interest
 	 * */
-	public Result getResultFromID(int resultID){
+	public static Result getResultFromID(int resultID){
 		Result rs = null;
 		String ID = Integer.toString(resultID);
 		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE result_id= '" +ID+ "'";  
+		System.out.println(execution);
 		try {
 			ResultSet set = stmt.executeQuery(execution);
+			set.first();
 			int taker = set.getInt(1);
 			int rsId = set.getInt(2);
 			int quiz = set.getInt(3);
 			int score = set.getInt(4);
 			int mxScore = set.getInt(5); 
 			long dur =set.getLong(6);
+			//This getDate is not working...
 			Date dt = set.getDate(7);
 			rs = new Result(taker, rsId, quiz, score, mxScore, dt, dur);
 		} catch (SQLException e) {
