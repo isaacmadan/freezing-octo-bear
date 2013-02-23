@@ -14,8 +14,7 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="/Users/isaacmadan/Documents/workspace/mysql-connector-java-5.1.22/mysql-connector-java-5.1.22-bin.jar"/>
-	<classpathentry kind="lib" path="/Users/Aojia/Desktop/CS/apache-tomcat-7.0.35/lib/mysql-connector-java-5.1.23-bin.jar"/>
-	<classpathentry kind="lib" path="/Users/Aojia/Desktop/CS/apache-tomcat-7.0.35/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/apache-tomcat-7.0.35/lib/mysql-connector-java-5.1.22-bin.jar"/>
+	<classpathentry kind="lib" path="C:/apache-tomcat-7.0.35/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
