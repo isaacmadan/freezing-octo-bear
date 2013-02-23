@@ -11,10 +11,16 @@
 
 <%
 	User user = (User)session.getAttribute("user");
-	out.println("Hi " + user.getUsername()+"!<br /><br />");
-	Cookie cookie = new Cookie("freezing-octo-bear",user.getUsername());
-	cookie.setMaxAge(60*60*72); //72 hours
-	response.addCookie(cookie);
+	if(user != null) {
+		out.println("Hi " + user.getUsername()+"!<br /><br />");
+		Cookie cookie = new Cookie("freezing-octo-bear",user.getUsername());
+		cookie.setMaxAge(60*60*72); //72 hours
+		response.addCookie(cookie);
+	}
+	else {
+		RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
+		dispatch.forward(request, response);
+	}
 %>
 
 <div>Admin News</div><hr>
@@ -25,6 +31,7 @@
 <div>Achievements</div><hr>
 <div>Messages</div><hr>
 <div>Recent Friends' Activities</div><hr>
-<a href = "make_quiz.jsp">Make a Quiz</a>
+<a href = "make_quiz.jsp">Make a Quiz</a><br />
+<a href="logout.jsp">Logout</a>
 </body>
 </html>
