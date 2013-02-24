@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Unauthorized</title>
 </head>
 <body>
-
+<h3>You are not authorized to access this resource.</h3>
+<p>Try <a href="index.jsp">logging in</a>.</p>
 </body>
 </html>

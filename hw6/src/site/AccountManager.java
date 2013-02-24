@@ -15,6 +15,22 @@ public class AccountManager {
 		con = MyDB.getConnection();
 	}
 	
+	public boolean isExistingAccountById(String user_id) { 
+		int resCount = 0;
+		try {
+			Statement stmt = con.createStatement(); //construct search query based on inputs
+			ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE user_id='"+user_id+"'");
+			while(rs.next()) {
+				resCount++;
+			}
+		}
+		catch(Exception e) {}
+		if(resCount == 0) {
+			return false;
+		}
+		return true;
+	}
+	
 	public boolean isExistingAccount(String username) { 
 		int resCount = 0;
 		try {
@@ -49,6 +65,32 @@ public class AccountManager {
 		if(hashedPassword.equals(realPassword))
 			return true;
 		return false; 
+	}
+	
+	public User getAccountById(String user_id) {
+		if(!isExistingAccountById(user_id)) return null;
+		
+		int id=0;
+		String username="";
+		String password="";
+		boolean isAdmin=false;
+		int loginCount=0;
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE user_id='"+user_id+"'");
+			while(rs.next()) {
+				id = rs.getInt("user_id");
+				username = rs.getString("username");
+				password = rs.getString("password");
+				isAdmin = rs.getBoolean("is_admin");
+				loginCount = rs.getInt("login_count");
+			}
+			User user = new User(id, username, password, isAdmin, loginCount);
+			return user;
+		}
+		catch(Exception e) {}
+		return null;
 	}
 	
 	public User getAccount(String username) {
