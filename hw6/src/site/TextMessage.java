@@ -6,6 +6,7 @@ public class TextMessage implements Message{
 	private User toUser;
 	private int messageType;
 	private String note;
+	private String timestamp;
 	
 	public TextMessage(User fromUser, User toUser, int messageType, String note) {
 		messageId = 0;
@@ -13,6 +14,16 @@ public class TextMessage implements Message{
 		this.setToUser(toUser);
 		this.setMessageType(messageType);
 		this.note = note;
+		setTimestamp("");
+	}
+	
+	public TextMessage(int id, User fromUser, User toUser, int messageType, String note, String timestamp) {
+		messageId = id;
+		this.setFromUser(fromUser);
+		this.setToUser(toUser);
+		this.setMessageType(messageType);
+		this.note = note;
+		this.setTimestamp(timestamp);
 	}
 	
 	public int getMessageId() {
@@ -49,5 +60,13 @@ public class TextMessage implements Message{
 
 	public void setMessageType(int messageType) {
 		this.messageType = messageType;
+	}
+
+	public String getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
 	}
 }

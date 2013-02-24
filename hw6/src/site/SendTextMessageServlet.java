@@ -47,12 +47,12 @@ public class SendTextMessageServlet extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		if(result) {
-			out.println("Your message was sent successfully.<br />");
-			out.println("<a href='inbox.jsp'>Back to inbox</a>.");
+			out.println("<p>Your message was sent successfully.<br />");
+			out.println("<a href='inbox.jsp'>Back to inbox</a>.</p>");
 		}
 		else {
-			out.println("There was a problem sending your message.<br />");
-			out.println("<a href='compose.jsp'>Try again</a>.");
+			out.println("<p>There was a problem sending your message.<br />");
+			out.println("<a href='compose.jsp'>Try again</a>.</p>");
 		}
 	}
 

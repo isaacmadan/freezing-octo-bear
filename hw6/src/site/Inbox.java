@@ -28,6 +28,7 @@ public class Inbox {
 	public static ArrayList<TextMessage> getMessagesById(int user_id) {
 		ArrayList<TextMessage> messages = new ArrayList<TextMessage>();
 		
+		int messageId = 0;
 		String date = "";
 		String fromUserId = "";
 		String content = "";
@@ -37,17 +38,21 @@ public class Inbox {
 		Connection con = MyDB.getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM messages WHERE to_id='"+user_id+"'");
+			String query = "SELECT * FROM messages WHERE to_id="+user_id;
+			ResultSet rs = stmt.executeQuery(query);
+			System.out.println("hit this");
 			while(rs.next()) {
+				
+				messageId = rs.getInt("message_id");
 				date = String.valueOf(rs.getTimestamp("created_timestamp"));
-				fromUserId = rs.getString("from_user");
+				fromUserId = rs.getString("from_id");
 				content = rs.getString("content");
 				messageType = rs.getInt("message_type");
-				TextMessage message = new TextMessage(manager.getAccountById(fromUserId), manager.getAccountById(String.valueOf(user_id)), messageType, content);
+				TextMessage message = new TextMessage(messageId, manager.getAccountById(fromUserId), manager.getAccountById(String.valueOf(user_id)), messageType, content, date);
 				messages.add(message);
 			}
 		}
-		catch(Exception e) {}
+		catch(Exception e) { System.out.println(e); }
 		
 		return messages;
 	}

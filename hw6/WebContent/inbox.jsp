@@ -10,10 +10,17 @@
 <body>
 
 <%
-	User user = (User)session.getAttribute("user");
-	if(user == null) {
+	if(session == null) {
 		RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
 		dispatch.forward(request, response);
+		return;
+	}
+	
+	User user = (User)session.getAttribute("user");
+	if(user == null) {
+		RequestDispatcher dispatch = request.getRequestDispatcher("unauthorized.jsp");
+		dispatch.forward(request, response);
+		return;
 	}
 %>
 
@@ -26,10 +33,10 @@
 	<%
 		ArrayList<TextMessage> messages = Inbox.getMessagesById(user.getId());
 		for(int i=0; i<messages.size(); i++) {
-			out.println("<tr><td>xx</td><td>"+messages.get(i).getFromUser().getUsername()+"</td><td>"+messages.get(i).getNote()+"</td></tr>");
+			out.println("<tr><td>"+messages.get(i).getTimestamp()+"</td><td>"+messages.get(i).getFromUser().getUsername()+"</td><td>"+messages.get(i).getNote()+"</td></tr>");
 		}
 	%>
-</table>
-
+</table><br />
+<a href="index.jsp">Back home</a>
 </body>
 </html>
