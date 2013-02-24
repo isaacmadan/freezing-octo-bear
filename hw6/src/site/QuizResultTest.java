@@ -42,5 +42,6 @@ public class QuizResultTest {
 		
 		System.out.println(QuizResult.getWorstQuizTakers(3, 0));
 		
+		
 	}
 }

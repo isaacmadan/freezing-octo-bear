@@ -255,21 +255,28 @@ public class QuizResult {
 		return results;
 	}
 
-	/**Removes all entries from more than a day ago*/
-	private static void pruneLastDay(ArrayList<Result> results){
-		
+	/**Removes all entries from more than a 24 hours ago*/
+	private static ArrayList<Result> prunedLastDay(ArrayList<Result> results){
+		 ArrayList<Result> newResults = new  ArrayList<Result> ();
+		java.util.Date now = new java.util.Date();
+		Timestamp stamp =  new Timestamp(now.getTime());
+		for(int i = 0; i < results.size(); i ++){
+			if (results.get(i).timeStamp.after(stamp)) newResults.add(results.get(i));
+		}
+		return newResults;
 	}
 
-	/** Returns a sorted ArrayList of Results for the highest scores for a quiz
-	 * in the last day. Sorted by score
+	
+	/** Returns a ArrayList of Results for a quiz in the last day WITH no repeated users.
+	 *  Sorted by date
 	 * @param quizID integer ID number of quiz
 	 * @param numUsers length of quiz, if zero, return all  
 	 * */
-	public static ArrayList<Result> getBestTakerslastDay(int quizID, int numUsers){
-		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID;
+	public static ArrayList<Result> getRecentTakers(int quizID, int numUsers){
+		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID
+				+ " ORDER BY created_timestamp";
 		ArrayList<Result> results = generateList(execution);
-		
-		Collections.sort(results, new SortByBestScore());
+		results = prunedLastDay(results);
 		if (numUsers > 0){
 			return sublist(0, numUsers, results);
 		}
@@ -277,11 +284,18 @@ public class QuizResult {
 	}
 
 	/** Returns a sorted ArrayList of Results for the highest scores for a quiz
-	 * in the last day
+	 * in the last day, WITH repeated users. Sorted by score
 	 * @param quizID integer ID number of quiz
 	 * @param numUsers length of quiz, if zero, return all  
 	 * */
-	public static ArrayList<Result> getRecentTakers(int quizID, int numUsers){
+	public static ArrayList<Result> getRecentHighScores(int quizID, int numUsers){
+		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID;
+		ArrayList<Result> results = generateList(execution);
+		results = prunedLastDay(results);
+		Collections.sort(results, new SortByBestScore());
+		if (numUsers > 0){
+			return sublist(0, numUsers, results);
+		}
 		return null;
 	}
 
@@ -291,6 +305,12 @@ public class QuizResult {
 	 * @param numUsers length of quiz, if zero, return all  
 	 * */
 	public static ArrayList<Result> getAllTimeBest(int quizID, int numUsers){
+		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID;
+		ArrayList<Result> results = generateList(execution);
+		Collections.sort(results, new SortByBestScore());
+		if (numUsers > 0){
+			return sublist(0, numUsers, results);
+		}
 		return null;
 	}
 
