@@ -67,10 +67,11 @@ public class MakeQuizServlet extends HttpServlet {
 		out.println("<p>");
 		for(int i = 0; i < numOfQuestions; i++) {
 			out.println("Enter Question: ");
-			out.println("<input type = \"text\" name = \"question_response_\"" + Integer.toString(i) + "id = \"question_response_\" + <%= Integer.toString(i) %>>");
+			out.println("<input type = \"text\" name = \"question_response_\"" + Integer.toString(i) + "id = \"question_response_\"" + Integer.toString(i) + ">");
 			out.println("<br>");
 			out.println("Enter Answers (separate with comma): ");
-			out.println("<input type = \"text\" name = \"question_response_answer_\" + <%= Integer.toString(i) %> id = \"question_response_answer_\" + <%= Integer.toString(i) %>>");
+			out.println("<input type = \"text\" name = \"question_response_answer_\"" + Integer.toString(i) + "id = \"question_response_answer_\"" + Integer.toString(i) + ">");
+			out.println("<br>");
 			out.println("<br>");
 		}
 		out.println("</p>");
@@ -81,10 +82,14 @@ public class MakeQuizServlet extends HttpServlet {
 		out.println("<p>");
 		for(int i = 0; i < numOfQuestions; i++) {
 			out.println("Enter Front String: ");
-			out.println("<input type = \"text\" name = \"fill_in_the_blank_\"" + Integer.toString(i) + "id = \"fill_in_the_blank_\" + <%= Integer.toString(i) %>>");
+			out.println("<input type = \"text\" name = \"fill_in_the_blank_front_\"" + Integer.toString(i) + "id = \"fill_in_the_blank_front_\"" + Integer.toString(i) + ">");
+			out.println("<br>");
+			out.println("Enter Answer: ");
+			out.println("<input type = \"text\" name = \"fill_in_the_blank_answer_\"" + Integer.toString(i) + "id = \"fill_in_the_blank_answer_\"" + Integer.toString(i) + ">");
 			out.println("<br>");
 			out.println("Enter Back String: ");
-			out.println("<input type = \"text\" name = \"question_response_answer_\" + <%= Integer.toString(i) %> id = \"question_response_answer_\" + <%= Integer.toString(i) %>>");
+			out.println("<input type = \"text\" name = \"fill_in_the_blank_back_\"" + Integer.toString(i) + "id = \"fill_in_the_blank_back_\"" + Integer.toString(i) + ">");
+			out.println("<br>");
 			out.println("<br>");
 		}
 		out.println("</p>");
@@ -92,19 +97,31 @@ public class MakeQuizServlet extends HttpServlet {
 	}
 	
 	private void printOutMultipleChoice(int numOfQuestions, PrintWriter out) {
-		out.println("<h3>Fill in the Blank</h3>");
+		out.println("<h3>Multiple Choice</h3>");
 		out.println("<p>");
 		for(int i = 0; i < numOfQuestions; i++) {
-			
+			out.println("Enter Question: ");
+			out.println("<input type = \"text\" name = \"multiple_choice_\"" + Integer.toString(i) + "id = \"multiple_choice_\"" + Integer.toString(i) + ">");
+			out.println("<br>");
+			out.println("Enter Answer Choices (separate with commas): ");
+			out.println("<input type = \"text\" name = \"multiple_choice_answer_\"" + Integer.toString(i) + "id = \"multiple_choice_answer_\"" + Integer.toString(i) + ">");
+			out.println("<br>");
+			out.println("<br>");
 		}
 		out.println("</p>");
 	}
 	
 	private void printOutPictureResponse(int numOfQuestions, PrintWriter out) {
-		out.println("<h3>Fill in the Blank</h3>");
+		out.println("<h3>Picture Response</h3>");
 		out.println("<p>");
 		for(int i = 0; i < numOfQuestions; i++) {
-			
+			out.println("Enter Picture Link: ");
+			out.println("<input type = \"text\" name = \"picture_response_\"" + Integer.toString(i) + "id = \"picture_response_\"" + Integer.toString(i) + ">");
+			out.println("<br>");
+			out.println("Enter Answer: ");
+			out.println("<input type = \"text\" name = \"picture_response_answer_\"" + Integer.toString(i) + "id = \"picture_response_answer_\"" + Integer.toString(i) + ">");
+			out.println("<br>");
+			out.println("<br>");
 		}
 		out.println("</p>");
 	}
