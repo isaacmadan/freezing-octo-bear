@@ -32,7 +32,9 @@
 <div>Messages</div><hr>
 <div>Recent Friends' Activities</div><hr>
 <a href = "make_quiz.jsp">Make a Quiz</a><br />
-<%= out.println("<a href='profile.jsp?id="+user.getId()+"'>My profile</a><br />") %>
+<% 
+out.println("<a href='profile.jsp?id="+user.getId()+"'>My profile</a><br />"); 
+%>
 <a href="inbox.jsp">My inbox</a><br />
 <a href="logout.jsp">Logout</a>
 </body>
