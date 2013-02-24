@@ -1,4 +1,8 @@
  /build
 +/bin
 /bin
+<<<<<<< HEAD
 .classpath
+=======
+.class-path
+>>>>>>> adding gitignore
