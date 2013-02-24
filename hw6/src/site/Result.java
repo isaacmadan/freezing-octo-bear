@@ -10,7 +10,7 @@ public class Result extends Object{
 	public final int quizId;
 	public final int pointsScored;
 	public final int maxPossiblePoints;
-	public final Date timeStamp;
+	public final java.sql.Date timeStamp;
 	public final long durationOfQuiz;
 	
 	/**Constructs a new Result, doesn't ask for a resultID*/
