@@ -83,6 +83,7 @@ public class GenerateQuizServlet extends HttpServlet {
 	private void genMultipleChoice(PrintWriter out, HttpServletRequest request) {
 		for(int i = 0; i < Integer.parseInt(request.getParameter("multiple_choice_count")); i++) {
 			out.println("<p>Question: " + request.getParameter("multiple_choice_" + Integer.toString(i)) + "</p>");
+			out.println("<p>Answer Choices: " + request.getParameter("multiple_choice_answer_choice_" + Integer.toString(i)) + "</p>");
 			out.println("<p>Answer: " + request.getParameter("multiple_choice_answer_" + Integer.toString(i)) + "</p>");
 		}
 	}
