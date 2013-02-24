@@ -88,6 +88,7 @@ public class MakeQuizServlet extends HttpServlet {
 			out.println("<br>");
 		}
 		out.println("</p>");
+		
 	}
 	
 	private void printOutMultipleChoice(int numOfQuestions, PrintWriter out) {
