@@ -3,6 +3,7 @@
 /bin
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 .classpath
 =======
 .class-path
@@ -10,3 +11,6 @@
 =======
 .classpath
 >>>>>>> adding gitignore with isaac
+=======
+.classpath
+>>>>>>> adding proper .gitignore
