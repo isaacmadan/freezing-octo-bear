@@ -40,7 +40,6 @@ public class Inbox {
 			Statement stmt = con.createStatement();
 			String query = "SELECT * FROM messages WHERE to_id="+user_id;
 			ResultSet rs = stmt.executeQuery(query);
-			System.out.println("hit this");
 			while(rs.next()) {
 				
 				messageId = rs.getInt("message_id");
@@ -67,7 +66,6 @@ public class Inbox {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
 			String query = "INSERT INTO messages (to_id, from_id, content, message_type)" +
 						   " VALUES("+message.getToUser().getId()+", "+message.getFromUser().getId()+", '"+message.getNote()+"', "+message.getMessageType()+")";
-			System.out.println(query);
 			stmt.executeUpdate(query);
 			return true;
 		}

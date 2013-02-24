@@ -67,6 +67,16 @@ public class AccountManager {
 		return false; 
 	}
 	
+	public void addFriend(String from_id, String to_id) {
+		try {
+			Statement stmt = con.createStatement(); //construct search query based on inputs
+			String query = "INSERT INTO friends (x_id, y_id)" +
+						   " VALUES("+from_id+", "+to_id+")";
+			stmt.executeUpdate(query);
+		}
+		catch(Exception e) {} 
+	}
+	
 	public User getAccountById(String user_id) {
 		if(!isExistingAccountById(user_id)) return null;
 		

@@ -9,6 +9,10 @@
 <%
 	AccountManager manager = new AccountManager();
 	User thisUser = (User)session.getAttribute("user");
+	if(thisUser == null) {
+		out.println("You have to be logged in to view profiles.");
+		return;
+	}
 	
 	String user_id = request.getParameter("id");
 	User user = manager.getAccountById(user_id);
@@ -24,6 +28,12 @@
 <body>
 
 <h1><%= user.getUsername() %></h1>
+
+<form action="add_friend.jsp" method="POST">
+	<input type="hidden" name="x_id" value="<%= thisUser.getId() %>" />
+	<input type="hidden" name="y_id" value="<%= user.getId() %>" />
+	<input type="submit" value="Add as friend" />
+</form>
 
 </body>
 </html>

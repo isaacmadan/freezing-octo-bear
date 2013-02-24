@@ -33,6 +33,6 @@
 		<input type="submit" />
 	</fieldset>
 </form>
-
+<a href="inbox.jsp">Back to inbox</a>
 </body>
 </html>
