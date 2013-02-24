@@ -1,6 +1,6 @@
 package site;
 
-import java.text.DateFormat;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +19,7 @@ public class QuizResultTest {
 	 * Java date to mysql date and back?
 	 * 
 	 * */
+	/*
 	@Test
 	public void test1(){
 		Result rs = QuizResult.getResultFromID(4);
@@ -28,5 +29,18 @@ public class QuizResultTest {
 		
 		System.out.println(DateFormat.getDateTimeInstance().format(rs.timeStamp));
 		System.out.println(DateFormat.getDateTimeInstance().format(rs2.timeStamp));
+	}*/
+	
+	@Test
+	public void test2(){
+		assertTrue(!QuizResult.isEmpty());
+		QuizResult.getUserPerformanceOnQuiz(1, 3);
+		QuizResult.getUserPerformanceOnQuiz(2, 3);
+		System.out.println(QuizResult.getUserPerformanceOnQuiz(2, 3,"BY_SCORE"));
+		System.out.println(QuizResult.getBestQuizTakers(3, 0));
+		System.out.println(QuizResult.getBestQuizTakers(3, 3));
+		
+		System.out.println(QuizResult.getWorstQuizTakers(3, 0));
+		
 	}
 }
