@@ -51,26 +51,30 @@ public class MakeQuizServlet extends HttpServlet {
 		out.println("</head>");
 		out.println("<body>");
 		out.println("<form action=\"GenerateQuizServlet\" method=\"post\">");
+		out.println("<input name=\"quiz_name\" type=\"hidden\" value=\"" + request.getParameter("quiz_name") + "\">");
+		out.println("<input name=\"quiz_description\" type=\"hidden\" value=\"" + request.getParameter("quiz_description") + "\">");
 		
-		if(questionResponseStatus = true) printOutQuestionResponse(Integer.parseInt(request.getParameter("question_response_num")), out);
-		if(fillInTheBlankStatus = true) printOutFillInTheBlank(Integer.parseInt(request.getParameter("fill_in_the_blank_num")), out);
-		if(multipleChoiceStatus = true) printOutMultipleChoice(Integer.parseInt(request.getParameter("multiple_choice_num")), out);
-		if(pictureResponseStatus = true) printOutPictureResponse(Integer.parseInt(request.getParameter("picture_response_num")), out);
+		if(questionResponseStatus == true) printOutQuestionResponse(Integer.parseInt(request.getParameter("question_response_num")), out);
+		if(fillInTheBlankStatus == true) printOutFillInTheBlank(Integer.parseInt(request.getParameter("fill_in_the_blank_num")), out);
+		if(multipleChoiceStatus == true) printOutMultipleChoice(Integer.parseInt(request.getParameter("multiple_choice_num")), out);
+		if(pictureResponseStatus == true) printOutPictureResponse(Integer.parseInt(request.getParameter("picture_response_num")), out);
 		
+		out.println("<input type=\"submit\" value=\"Submit\">");
 		out.println("</form>");
 		out.println("</body>");
 		out.println("</html>");
 	}
 	
 	private void printOutQuestionResponse(int numOfQuestions, PrintWriter out) {
+		out.println("<input name=\"question_response_count\" type=\"hidden\" value=\"" + Integer.toString(numOfQuestions) + "\">");
 		out.println("<h3>Question-Response</h3>");
 		out.println("<p>");
 		for(int i = 0; i < numOfQuestions; i++) {
 			out.println("Enter Question: ");
-			out.println("<input type = \"text\" name = \"question_response_\"" + Integer.toString(i) + "id = \"question_response_\"" + Integer.toString(i) + ">");
+			out.println("<input type = \"text\" name = \"question_response_" + Integer.toString(i) + "\" id = \"question_response_" + Integer.toString(i) + "\">");
 			out.println("<br>");
 			out.println("Enter Answers (separate with comma): ");
-			out.println("<input type = \"text\" name = \"question_response_answer_\"" + Integer.toString(i) + "id = \"question_response_answer_\"" + Integer.toString(i) + ">");
+			out.println("<input type = \"text\" name = \"question_response_answer_" + Integer.toString(i) + "\" id = \"question_response_answer_" + Integer.toString(i) + "\">");
 			out.println("<br>");
 			out.println("<br>");
 		}
@@ -78,17 +82,18 @@ public class MakeQuizServlet extends HttpServlet {
 	}
 	
 	private void printOutFillInTheBlank(int numOfQuestions, PrintWriter out) {
+		out.println("<input name=\"fill_in_the_blank_count\" type=\"hidden\" value=\"" + Integer.toString(numOfQuestions) + "\">");
 		out.println("<h3>Fill in the Blank</h3>");
 		out.println("<p>");
 		for(int i = 0; i < numOfQuestions; i++) {
 			out.println("Enter Front String: ");
-			out.println("<input type = \"text\" name = \"fill_in_the_blank_front_\"" + Integer.toString(i) + "id = \"fill_in_the_blank_front_\"" + Integer.toString(i) + ">");
+			out.println("<input type = \"text\" name = \"fill_in_the_blank_front_" + Integer.toString(i) + "\" id = \"fill_in_the_blank_front_" + Integer.toString(i) + "\">");
 			out.println("<br>");
 			out.println("Enter Answer: ");
-			out.println("<input type = \"text\" name = \"fill_in_the_blank_answer_\"" + Integer.toString(i) + "id = \"fill_in_the_blank_answer_\"" + Integer.toString(i) + ">");
+			out.println("<input type = \"text\" name = \"fill_in_the_blank_answer_" + Integer.toString(i) + "\" id = \"fill_in_the_blank_answer_" + Integer.toString(i) + "\">");
 			out.println("<br>");
 			out.println("Enter Back String: ");
-			out.println("<input type = \"text\" name = \"fill_in_the_blank_back_\"" + Integer.toString(i) + "id = \"fill_in_the_blank_back_\"" + Integer.toString(i) + ">");
+			out.println("<input type = \"text\" name = \"fill_in_the_blank_back_" + Integer.toString(i) + "\" id = \"fill_in_the_blank_back_" + Integer.toString(i) + "\">");
 			out.println("<br>");
 			out.println("<br>");
 		}
@@ -97,14 +102,15 @@ public class MakeQuizServlet extends HttpServlet {
 	}
 	
 	private void printOutMultipleChoice(int numOfQuestions, PrintWriter out) {
+		out.println("<input name=\"multiple_choice_count\" type=\"hidden\" value=\"" + Integer.toString(numOfQuestions) + "\">");
 		out.println("<h3>Multiple Choice</h3>");
 		out.println("<p>");
 		for(int i = 0; i < numOfQuestions; i++) {
 			out.println("Enter Question: ");
-			out.println("<input type = \"text\" name = \"multiple_choice_\"" + Integer.toString(i) + "id = \"multiple_choice_\"" + Integer.toString(i) + ">");
+			out.println("<input type = \"text\" name = \"multiple_choice_" + Integer.toString(i) + "\" id = \"multiple_choice_" + Integer.toString(i) + "\">");
 			out.println("<br>");
 			out.println("Enter Answer Choices (separate with commas): ");
-			out.println("<input type = \"text\" name = \"multiple_choice_answer_\"" + Integer.toString(i) + "id = \"multiple_choice_answer_\"" + Integer.toString(i) + ">");
+			out.println("<input type = \"text\" name = \"multiple_choice_answer_" + Integer.toString(i) + "\" id = \"multiple_choice_answer_" + Integer.toString(i) + "\">");
 			out.println("<br>");
 			out.println("<br>");
 		}
@@ -112,14 +118,15 @@ public class MakeQuizServlet extends HttpServlet {
 	}
 	
 	private void printOutPictureResponse(int numOfQuestions, PrintWriter out) {
+		out.println("<input name=\"picture_response_count\" type=\"hidden\" value=\"" + Integer.toString(numOfQuestions) + "\">");
 		out.println("<h3>Picture Response</h3>");
 		out.println("<p>");
 		for(int i = 0; i < numOfQuestions; i++) {
 			out.println("Enter Picture Link: ");
-			out.println("<input type = \"text\" name = \"picture_response_\"" + Integer.toString(i) + "id = \"picture_response_\"" + Integer.toString(i) + ">");
+			out.println("<input type = \"text\" name = \"picture_response_" + Integer.toString(i) + "\" id = \"picture_response_" + Integer.toString(i) + "\">");
 			out.println("<br>");
 			out.println("Enter Answer: ");
-			out.println("<input type = \"text\" name = \"picture_response_answer_\"" + Integer.toString(i) + "id = \"picture_response_answer_\"" + Integer.toString(i) + ">");
+			out.println("<input type = \"text\" name = \"picture_response_answer_" + Integer.toString(i) + "\" id = \"picture_response_answer_" + Integer.toString(i) + "\">");
 			out.println("<br>");
 			out.println("<br>");
 		}
