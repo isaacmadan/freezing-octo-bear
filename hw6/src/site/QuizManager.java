@@ -30,6 +30,7 @@ public class QuizManager {
 		else this.practice_mode = true;
 		this.description = (String)request.getAttribute("quiz_description");
 		this.title = (String)request.getAttribute("quiz_title");
+		System.out.println("thhththt");
 		if(request.getAttribute("max_score") != null)
 			this.max_score = Integer.parseInt((String)request.getAttribute("max_score"));
 		if(request.getAttribute("random_question") == null) this.random_question = false;
