@@ -46,10 +46,21 @@
 %>
 </table><hr>
 
-<div><h3>My Recent Quiz Creating Activities</h3></div><hr>
+<div><h3>My Recent Quiz Creating Activities</h3></div>
+<table border="1">
+<tr><th>Date</th><th>Quiz name</th><th>Quiz Description</th></tr>
 <%
-
+	QuizManager manager = new QuizManager();
+	ArrayList<Quiz> quizzes = manager.getQuizzesByUserId(user.getId());	
+	for(Quiz quiz : quizzes) {
+		out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td>"+quiz.getTitle()+"</td><td>"+quiz.getDescription()+"</td><td></tr>");
+	}
+	if(results.size() == 0) {
+		out.println("No quiz results");
+	}
 %>
+</table><hr>
+
 <div><h3>Achievements</h3></div><hr>
 <div><h3>Messages</h3></div><hr>
 <div><h3>Recent Friends' Activities</h3></div><hr>
