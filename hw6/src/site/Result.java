@@ -2,7 +2,8 @@ package site;
 
 import java.sql.Timestamp;
 
-/**Result encapsulates all the fields relevant to a single quiz result
+/**Result encapsulates all the fields relevant to a single quiz result. All fields
+ * are final and can be accessed publicly. 
  * */
 public class Result extends Object{
 	public final int resultId;

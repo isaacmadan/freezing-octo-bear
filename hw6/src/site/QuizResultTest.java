@@ -2,6 +2,8 @@ package site;
 
 import static org.junit.Assert.assertTrue;
 
+import java.text.DateFormat;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +21,7 @@ public class QuizResultTest {
 	 * Java date to mysql date and back?
 	 * 
 	 * */
-	/*
+	
 	@Test
 	public void test1(){
 		Result rs = QuizResult.getResultFromID(4);
@@ -29,7 +31,7 @@ public class QuizResultTest {
 		
 		System.out.println(DateFormat.getDateTimeInstance().format(rs.timeStamp));
 		System.out.println(DateFormat.getDateTimeInstance().format(rs2.timeStamp));
-	}*/
+	}
 	
 	@Test
 	public void test2(){
