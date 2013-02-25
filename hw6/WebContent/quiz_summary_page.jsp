@@ -1,12 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="site.*, java.util.*"%>
+<%@ page import="site.*, java.util.*,java.sql.*,java.io.*,java.text.Format.*"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<%!private Quiz quiz;
+<%!
+/*NOTE TO OTHERS
+
+When quiz_summary_page posts to a quiz page with the parameter "quiz_id"
+When quiz_summary_page posts to a profile page with the parameter "id"
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+private Quiz quiz;
 	private AccountManager manager;
 	private User taker;
 
@@ -18,6 +36,21 @@
 					manager.getAccountById(String.valueOf(quiz.getUser_id())));
 		}
 		return users;
+	}
+	
+	private void listPerformers(PrintWriter out, ArrayList<Result> res, ArrayList<User> users){
+		for (int i = 0; i < res.size(); i++){
+			Result result = res.get(i);
+			int userId = result.userId;
+			double score = result.pointsScored / (double) result.maxPossiblePoints;
+			String score2 = Double.toString(score);
+			String date = DateFormat.getDateTimeInstance().format(result.timeStamp);
+			String resultPrintout = "Score: " + score2 + " Time Taken: " + date;
+			out.println("<a href='profile.jsp?id="+userId+"'>"+ resultPrintout + "</a>"); 
+			
+		}
+		
+		
 	}
 %>
 

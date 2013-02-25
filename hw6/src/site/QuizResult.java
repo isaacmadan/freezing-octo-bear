@@ -148,7 +148,33 @@ public class QuizResult {
 		return rs;
 	}
 
-
+	/** Returns an ordered set of Results/Strings containing past results that the 
+	 *  user has gotten on all quizzes If an order is provided, the list will be sorted
+	 *  by one of the fields. Returns newest first, highest first, longest first
+	 *  
+	 *  Quiz summary asks for: date, percent correct, by amount of time the quiz took
+	 *  @param userId
+	 *  @param quizID
+	 *  @param order - "BY_DATE" - "BY_SCORE" - "BY_DURATION". If none of the above then orders by date 
+	 */
+	public static ArrayList<Result> getUserPerformances(int userId, String order){
+		ArrayList<Result> results = new ArrayList<Result>();
+		String selectedOrder = "created_timestamp";
+		if (order.equals("BY_SCORE")){
+			String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE user_id = " + userId;
+			results = generateList(execution);
+			Collections.sort(results, new SortByBestScore());
+			return results;
+			//System.out.println(results.toString());
+		}
+		//if (order.equals("BY_DATE")) selectedOrder = "created_timestamp";
+		if (order.equals("BY_DURATION")) selectedOrder = "duration";
+		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE user_id = " + userId +
+				"  ORDER BY "+ selectedOrder + " DESC";
+		results = generateList(execution);
+		return results;
+	}
+	
 	/** Returns an ordered set of Results/Strings containing past results that the 
 	 *  user has gotten on a quiz. If an order is provided, the list will be sorted
 	 *  by one of the fields. Returns newest first, highest first, longest first
@@ -380,7 +406,7 @@ public class QuizResult {
 	 * @param numQuizzes Number of quizzes asked for, if zero, return all
 	 * */
 	public static ArrayList<Quiz> getFriendQuizzes(int userId, int numQuizzes){
-		
+
 		return null;
 	}
 
@@ -399,6 +425,25 @@ public class QuizResult {
 		return -1;
 	}
 
+	public static boolean isBestScoreOnQuiz(int userId, int quizId){
+		ArrayList<Result> results = getBestQuizTakers(quizId, 0);
+		if (results.get(0).userId == userId) return true;
+		return false; 
+	}
+
+	public static boolean isBestScoreOnAnyQuiz(int userId){
+		String execution = "SELECT DISTINCT quiz_id from results";
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			while(set.next()){
+				int quizId = set.getInt("quiz_id");	
+				ArrayList<Result> results = getBestQuizTakers(quizId, 0);
+				if (results.get(0).userId == userId) return true;
+			}
+			return false; 
+		} catch (SQLException e) {}
+		return false;
+	}
 
 	/** Returns an ArrayList of doubles, with each double representing a different
 	 * statistic 
@@ -456,7 +501,7 @@ public class QuizResult {
 		} catch (SQLException ignored) {}		
 		return -1;
 	}
-	
+
 	private static int numPlayInDay(){
 		String execution = "SELECT * FROM results WHERE created_timestamp > DATE_SUB(NOW(), INTERVAL 24 HOUR)";
 		try {
@@ -467,7 +512,7 @@ public class QuizResult {
 		return -1;
 	}
 
-	
+
 	/** Returns an ArrayList of Results, with each Result representing a different
 	 * statistic 
 	 * 
@@ -537,7 +582,7 @@ public class QuizResult {
 		} catch (SQLException ignored) {}
 		return null;
 	}
-	
+
 	private static Result recentPlayResult(int quizId){
 		String execution = "SELECT * FROM results WHERE quiz_id = " + quizId+ " ORDER BY created_timestamp DESC";
 		try {
@@ -546,5 +591,5 @@ public class QuizResult {
 		} catch (SQLException ignored) {}
 		return null;
 	}
-	
+
 }
