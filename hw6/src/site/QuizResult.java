@@ -345,8 +345,9 @@ public class QuizResult {
 		ResultSet set;
 		try {
 			set = stmt.executeQuery(execution);
+			
 			while(set.next()){
-				results.add(QuizManager.getQuiz(set.getInt("quiz_id")));
+				results.add((new QuizManager()).getQuizByQuizId(set.getInt("quiz_id")));
 			}
 		} catch (SQLException e) {}
 		return results;
