@@ -68,6 +68,20 @@ public class AccountManager {
 		return false; 
 	}
 	
+	public Achievements getAchievements(int user_id) {
+		Achievements achievements = new Achievements();
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM achievements WHERE x_id="+user_id);
+			while(rs.next()) {
+
+			}
+		}
+		catch(Exception e) {}
+		
+		return achievements;
+	}
+	
 	public HashSet<Integer> getFriends(int user_id) {
 		
 		HashSet<Integer> xFriends = new HashSet<Integer>();

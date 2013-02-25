@@ -38,6 +38,9 @@
 		out.println("<a href='profile.jsp?id="+manager.getAccountById(String.valueOf(id)).getId()+"'>"+
 		manager.getAccountById(String.valueOf(id)).getUsername()+"</a><br />");
 	}
+	if(friends.size() == 0 ) {
+		out.println("<p>No friends</p>");
+	}
 %>
 
 <br />
@@ -55,6 +58,10 @@
 	%>
 	
 </form>
+
+<h2>History</h2>
+
+<h2>Achievements</h2>
 
 </body>
 </html>
