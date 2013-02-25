@@ -30,7 +30,8 @@ public class QuizManager {
 		else this.practice_mode = true;
 		this.description = (String)request.getAttribute("quiz_description");
 		this.title = (String)request.getAttribute("quiz_title");
-		this.max_score = Integer.parseInt((String)request.getAttribute("max_score"));
+		if(request.getAttribute("max_score") != null)
+			this.max_score = Integer.parseInt((String)request.getAttribute("max_score"));
 		if(request.getAttribute("random_question") == null) this.random_question = false;
 		else this.random_question = true;
 		if(request.getAttribute("one_page") == null) this.one_page = false;
@@ -42,7 +43,7 @@ public class QuizManager {
 	public void addQuizToDataBase() {
 		try {
 			Statement stmt = con.createStatement();
-			stmt.executeQuery("INSERT INTO quizzes (user_id, practice_mode, description, title, max_score," +
+			stmt.executeUpdate("INSERT INTO quizzes (user_id, practice_mode, description, title, max_score," +
 					"random_question, one_page, immediate_correction) VALUES(" + user_id + "," + practice_mode + "," +
 					description + "," + title + "," + max_score + "," + random_question + "," + one_page + "," + immediate_correction + ");");
 			if(request.getParameter("question_response_count") != null) addQuestionResponseToDataBase();
