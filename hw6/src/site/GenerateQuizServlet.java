@@ -40,6 +40,7 @@ public class GenerateQuizServlet extends HttpServlet {
 		if(request.getParameter("fill_in_the_blank_count") == null) fillInTheBlankStatus = false;
 		if(request.getParameter("multiple_choice_count") == null) multipleChoiceStatus = false;
 		if(request.getParameter("picture_response_count") == null) pictureResponseStatus = false;
+		System.out.println("Max score is: " + request.getParameter("max_score"));
 		
 		PrintWriter out = response.getWriter();
 		QuizManager manager = new QuizManager(request);
