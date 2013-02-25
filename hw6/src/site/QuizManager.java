@@ -23,6 +23,10 @@ public class QuizManager {
 	private boolean one_page;
 	private boolean immediate_correction;
 	
+	public QuizManager() {
+		
+	}
+	
 	public QuizManager(HttpServletRequest request) {
 		con = MyDB.getConnection();
 		this.request = request;
