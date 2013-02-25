@@ -52,6 +52,8 @@ public class GenerateQuizServlet extends HttpServlet {
 		else quiz.setRandom_question(false);
 		if(request.getParameter("one_page") != null) quiz.setOne_page(true);
 		else quiz.setOne_page(false);
+		if(request.getParameter("immediate_correction") != null) quiz.setImmediate_correction(true);
+		else quiz.setImmediate_correction(false);
 		PrintWriter out = response.getWriter();
 		QuizManager manager = new QuizManager(request);
 		manager.addQuizToDataBase();
