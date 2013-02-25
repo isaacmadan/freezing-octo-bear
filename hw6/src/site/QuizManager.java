@@ -2,6 +2,7 @@ package site;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 public class QuizManager {
 
 	private Connection con;
+	private Quiz quiz;
 	private HttpServletRequest request;
 	private HttpSession session;
 	private int user_id;
@@ -25,6 +27,10 @@ public class QuizManager {
 	
 	public QuizManager() {
 		
+	}
+	
+	public QuizManager(Quiz quiz) {
+		this.quiz = quiz;
 	}
 	
 	public QuizManager(HttpServletRequest request) {
@@ -119,9 +125,26 @@ public class QuizManager {
 				quizzes.add(quiz);
 			}
 		}
-		catch(Exception e) {} 
+		catch(Exception e) {
+			System.out.println(e);
+		} 
 		
 		return quizzes;
 	}
 	
+	public Quiz getQuizByQuizId(int quiz_id) {
+		try{
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes WHERE quiz_id="+quiz_id);
+		rs.next();
+		Quiz quiz = new Quiz(rs.getInt("quiz_id"), rs.getInt("user_id"), rs.getInt("max_score"),
+					rs.getBoolean("practice_mode"), rs.getString("description"), rs.getString("title"), 
+					rs.getBoolean("random_question"), rs.getBoolean("one_page"), rs.getBoolean("immediate_correction"), 
+					rs.getTimestamp("created_timestamp"));
+		return quiz;
+		} catch (SQLException e) {
+			
+		}
+		return null;
+	}
 }
