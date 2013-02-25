@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="site.*" %>
+<%@ page import="site.*, java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,6 +15,8 @@
 	}
 	
 	String user_id = request.getParameter("id");
+	if(user_id == null || user_id.equals(""))
+		return;
 	User user = manager.getAccountById(user_id);
 	if(user != null) {
 		if(thisUser != null && user.getId() == thisUser.getId()) {
@@ -29,10 +31,29 @@
 
 <h1><%= user.getUsername() %></h1>
 
+<h2>Friends</h2>
+<%
+	HashSet<Integer> friends = manager.getFriends(Integer.parseInt(user_id));
+	for(Integer id : friends) {
+		out.println("<a href='profile.jsp?id="+manager.getAccountById(String.valueOf(id)).getId()+"'>"+
+		manager.getAccountById(String.valueOf(id)).getUsername()+"</a><br />");
+	}
+%>
+
+<br />
 <form action="add_friend.jsp" method="POST">
 	<input type="hidden" name="x_id" value="<%= thisUser.getId() %>" />
 	<input type="hidden" name="y_id" value="<%= user.getId() %>" />
-	<input type="submit" value="Add as friend" />
+	<% 
+		if(manager.areFriends(thisUser.getId(), user.getId())) {
+			out.println("<input type='hidden' name='unfriend' value='true' />");
+			out.println("<input type='submit' value='Remove as friend' />");
+		}
+		else {
+			out.println("<input type='submit' value='Add as friend' />");
+		}
+	%>
+	
 </form>
 
 </body>

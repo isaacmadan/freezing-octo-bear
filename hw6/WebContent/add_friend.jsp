@@ -12,13 +12,31 @@
 <%
 	String fromId = request.getParameter("x_id");
 	String toId = request.getParameter("y_id");
+	String unfriend = request.getParameter("unfriend");
+	String confirmation = request.getParameter("confirmation");
 	
 	AccountManager manager = new AccountManager();
-	manager.addFriend(fromId, toId);
+	
+	if(confirmation != null) {
+		if(manager.areFriends(Integer.parseInt(fromId), Integer.parseInt(toId))) {
+			out.println("<p>You guys are already friends.</p>");
+		}
+		else {
+			manager.addFriend(Integer.parseInt(fromId), Integer.parseInt(toId));
+			out.println("<p>You guys are now friends!</p>");
+		}
+	}
+	else if(unfriend == null) {
+		manager.addFriend(Integer.parseInt(fromId), Integer.parseInt(toId));
+		manager.sendFriendRequest(fromId, toId);
+		out.println("<p>You're friend request has been sent.</p>");
+	}
+	else {
+		manager.removeFriend(Integer.parseInt(fromId), Integer.parseInt(toId));
+		out.println("<p>You've removed this friend successfully.</p>");
+	}
 
 %>
-
-<p>You're friend request has been sent.</p>
 
 <a href="index.jsp">Back home</a>
 

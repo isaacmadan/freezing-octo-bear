@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashSet;
 
 public class AccountManager {
 
@@ -67,7 +68,78 @@ public class AccountManager {
 		return false; 
 	}
 	
-	public void addFriend(String from_id, String to_id) {
+	public HashSet<Integer> getFriends(int user_id) {
+		
+		HashSet<Integer> xFriends = new HashSet<Integer>();
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM friends WHERE x_id="+user_id);
+			while(rs.next()) {
+				xFriends.add(rs.getInt("y_id"));
+			}
+		}
+		catch(Exception e) {}
+		
+		HashSet<Integer> yFriends = new HashSet<Integer>();
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM friends WHERE y_id="+user_id);
+			while(rs.next()) {
+				yFriends.add(rs.getInt("x_id"));
+			}
+		}
+		catch(Exception e) {}
+		
+		xFriends.retainAll(yFriends);
+		
+		return xFriends;
+	}
+	
+	public boolean areFriends(int x_id, int y_id) {
+		boolean areFriends = false;
+		
+		int resCount = 0;
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM friends WHERE x_id="+x_id+" AND y_id="+y_id);
+			while(rs.next()) {
+				resCount++;
+			}
+			if(resCount > 0) resCount = 1;
+		}
+		catch(Exception e) {}
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM friends WHERE x_id="+y_id+" AND y_id="+x_id);
+			while(rs.next()) {
+				resCount++;
+			}
+			if(resCount > 1) resCount = 2;
+		}
+		catch(Exception e) {}
+		
+		if(resCount == 2) areFriends = true;
+		return areFriends;
+	}
+	
+	public void removeFriend(int from_id, int to_id) {
+		try {
+			Statement stmt = con.createStatement(); //construct search query based on inputs
+			String query = "DELETE FROM friends WHERE x_id="+from_id+" AND y_id="+to_id;
+			stmt.executeUpdate(query);
+		}
+		catch(Exception e) {} 
+		
+		try {
+			Statement stmt = con.createStatement(); //construct search query based on inputs
+			String query = "DELETE FROM friends WHERE x_id="+to_id+" AND y_id="+from_id;
+			stmt.executeUpdate(query);
+		}
+		catch(Exception e) {} 
+	}
+	
+	public void addFriend(int from_id, int to_id) {
 		try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
 			String query = "INSERT INTO friends (x_id, y_id)" +
@@ -75,6 +147,17 @@ public class AccountManager {
 			stmt.executeUpdate(query);
 		}
 		catch(Exception e) {} 
+	}
+	
+	public void sendFriendRequest(String from_id, String to_id) {
+		User fromUser = this.getAccountById(from_id);
+		User toUser = this.getAccountById(to_id);
+		
+		int messageType = 1; //friend request
+		String content = fromUser.getUsername()+" wants to be friends. <form action=\\'add_friend.jsp\\' method=\\'POST\\'><input type=\\'hidden\\' name=\\'confirmation\\' value=\\'true\\' /><input type=\\'hidden\\' name=\\'x_id\\' value=\\'"+toUser.getId()+"\\' /><input type=\\'hidden\\' name=\\'y_id\\' value=\\'"+fromUser.getId()+"\\' /><input type=\\'submit\\' value=\\'Add as friend\\' /></form>";
+		
+		TextMessage message = new TextMessage(fromUser,toUser,messageType,content);
+		Inbox.sendTextMessage(message);
 	}
 	
 	public User getAccountById(String user_id) {
