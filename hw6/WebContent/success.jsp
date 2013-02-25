@@ -24,7 +24,9 @@
 %>
 
 <div><h3>Admin News</h3></div><hr>
-<div><h3>Popular Quizzes</h3></div><hr>
+<div><h3>Popular Quizzes</h3></div>
+
+<hr>
 <div><h3>Recently Created Quizzes</h3></div><hr>
 <div><h3>My Recent Quiz Taking Activities</h3></div>
 
