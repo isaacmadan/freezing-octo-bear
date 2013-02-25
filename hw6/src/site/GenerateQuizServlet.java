@@ -54,8 +54,10 @@ public class GenerateQuizServlet extends HttpServlet {
 		else quiz.setOne_page(false);
 		if(request.getParameter("immediate_correction") != null) quiz.setImmediate_correction(true);
 		else quiz.setImmediate_correction(false);
+		
+		
 		PrintWriter out = response.getWriter();
-		QuizManager manager = new QuizManager(request);
+		QuizManager manager = new QuizManager(request, quiz);
 		manager.addQuizToDataBase();
 		out.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">");
 		out.println("<html>");
