@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="site.*" %>
+<%@ page import="site.*, java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,7 +12,7 @@
 <%
 	User user = (User)session.getAttribute("user");
 	if(user != null) {
-		out.println("Hi " + user.getUsername()+"!<br /><br />");
+		out.println("<h1>" + user.getUsername()+"'s Dashboard</h1>");
 		Cookie cookie = new Cookie("freezing-octo-bear",user.getUsername());
 		cookie.setMaxAge(60*60*72); //72 hours
 		response.addCookie(cookie);
@@ -23,20 +23,34 @@
 	}
 %>
 
-<div>Admin News</div><hr>
-<div>Popular Quizzes</div><hr>
-<div>Recently Created Quizzes</div><hr>
-<div>My Recent Quiz Taking Activities</div><hr>
+<div><h3>Admin News</h3></div><hr>
+<div><h3>Popular Quizzes</h3></div><hr>
+<div><h3>Recently Created Quizzes</h3></div><hr>
+<div><h3>My Recent Quiz Taking Activities</h3></div>
+
+<table border="1">
+<tr><th>Date</th><th>Quiz name</th><th>Score</th><th>Duration</th><th>You suck?</th></tr>
 <%
-	
+	QuizResult quizResult = new QuizResult();
+	ArrayList<Result> results = QuizResult.getUserPerformances(user.getId(), "BY_DATE");	
+	for(Result result : results) {
+		out.println("<tr><td>"+result.timeStamp+"</td><td>"+result.quizId+"</td><td>"
+					+result.pointsScored+"/"+result.maxPossiblePoints+"</td><td>"
+					+result.durationOfQuiz+"</td><td>yep</td></tr>");
+	}
+	if(results.size() == 0) {
+		out.println("No quiz results");
+	}
 %>
-<div>My Recent Quiz Creating Activities</div><hr>
+</table><hr>
+
+<div><h3>My Recent Quiz Creating Activities</h3></div><hr>
 <%
 
 %>
-<div>Achievements</div><hr>
-<div>Messages</div><hr>
-<div>Recent Friends' Activities</div><hr>
+<div><h3>Achievements</h3></div><hr>
+<div><h3>Messages</h3></div><hr>
+<div><h3>Recent Friends' Activities</h3></div><hr>
 <a href = "make_quiz.jsp">Make a Quiz</a><br />
 <% out.println("<a href='profile.jsp?id="+user.getId()+"'>My profile</a><br />"); %>
 <% out.println("<a href='inbox.jsp'>My inbox</a><br />"); %>
