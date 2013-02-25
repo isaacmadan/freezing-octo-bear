@@ -53,7 +53,7 @@
 	QuizManager manager = new QuizManager();
 	ArrayList<Quiz> quizzes = manager.getQuizzesByUserId(user.getId());	
 	for(Quiz quiz : quizzes) {
-		out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td>"+quiz.getTitle()+"</td><td>"+quiz.getDescription()+"</td><td></tr>");
+		out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td>"+quiz.getTitle()+"</td><td>"+quiz.getDescription()+"</td></tr>");
 	}
 	if(results.size() == 0) {
 		out.println("No quiz results");

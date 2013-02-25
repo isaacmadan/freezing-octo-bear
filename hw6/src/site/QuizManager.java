@@ -26,7 +26,7 @@ public class QuizManager {
 	private boolean immediate_correction;
 	
 	public QuizManager() {
-		
+		con = MyDB.getConnection();
 	}
 	
 	public QuizManager(Quiz quiz) {
@@ -121,6 +121,7 @@ public class QuizManager {
 				one_page = rs.getBoolean("one_page");
 				immediate_correction = rs.getBoolean("immediate_correction");
 				created_timestamp = rs.getTimestamp("created_timestamp");
+				
 				Quiz quiz = new Quiz(quiz_id, user_id, max_score, practice_mode, description, title, random_question, one_page, immediate_correction, created_timestamp);
 				quizzes.add(quiz);
 			}
