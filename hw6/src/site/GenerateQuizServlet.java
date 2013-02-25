@@ -42,6 +42,16 @@ public class GenerateQuizServlet extends HttpServlet {
 		if(request.getParameter("picture_response_count") == null) pictureResponseStatus = false;
 		System.out.println("Max score is: " + request.getParameter("max_score"));
 		
+		Quiz quiz = new Quiz();
+		quiz.setDescription(request.getParameter("quiz_description"));
+		quiz.setTitle(request.getParameter("quiz_title"));
+		quiz.setMax_score(Integer.parseInt(request.getParameter("max_score")));
+		if(request.getParameter("practice_mode") != null) quiz.setPractice_mode(true);
+		else quiz.setPractice_mode(false);
+		if(request.getParameter("random_question") != null) quiz.setRandom_question(true);
+		else quiz.setRandom_question(false);
+		if(request.getParameter("one_page") != null) quiz.setOne_page(true);
+		else quiz.setOne_page(false);
 		PrintWriter out = response.getWriter();
 		QuizManager manager = new QuizManager(request);
 		manager.addQuizToDataBase();

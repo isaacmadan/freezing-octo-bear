@@ -96,6 +96,25 @@ public class Quiz {
 		this.setQuestions(questions);
 	}
 	
+	public Quiz() {
+		
+	}
+	
+	public Quiz(int quiz_id, int user_id, int max_score,
+			boolean practice_mode, String description, String title, 
+			boolean random_question, boolean one_page, boolean immediate_correction, 
+			Timestamp created_timestamp) {
+		this.setUser_id(user_id);
+		this.setMax_score(max_score);
+		this.setPractice_mode(practice_mode);
+		this.setDescription(description);
+		this.setTitle(title);
+		this.setRandom_question(random_question);
+		this.setOne_page(one_page);
+		this.setImmediate_correction(immediate_correction);
+		this.setCreated_timestamp(created_timestamp);
+	}
+	
 	public void addQuestion(Question question) {
 		this.questions.add(question);
 	}
