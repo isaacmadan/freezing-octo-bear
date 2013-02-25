@@ -121,17 +121,21 @@ private Quiz quiz;
 		out.println("</p><p>Average Percent Correct: " + df.format(numStats.get(QuizResult.AVG_PERCENT)));
 		out.println("</p><p>Average time taken: "+ df.format(numStats.get(QuizResult.AVG_TIME)));
 		out.println("</p><p>Number of plays since yesterday: "+ df.format(numStats.get(QuizResult.NUM_DAY_PLAYS)));
-		Result rs = results.get(QuizResult.BEST_SCORE);
-		String bestScore = Double.toString(rs.pointsScored/ (double) rs.maxPossiblePoints);
-		String bestUser = manager.getAccountById(String.valueOf(rs.userId)).getUsername();
-		out.println("</p><p>Best Score: " + bestScore + " by <a href='profile.jsp?id="+rs.userId+"'>" + bestUser + "</a>" );
-		rs = results.get(QuizResult.WORST_SCORE);
-		String worstScore = Double.toString(rs.pointsScored/ (double) rs.maxPossiblePoints);
-		String worstUser = manager.getAccountById(String.valueOf(rs.userId)).getUsername();
-		out.println("</p><p>Worst Score: " + worstScore + " by <a href='profile.jsp?id="+rs.userId+"'>" + worstUser + "</a>" );
-		out.println("</p><p>");
-		out.println("</p><p>");
-		out.println("<p>");
+		
+		String tags[] = {"</p><p>Best Score: ","</p><p>Worst Score: ","</p><p>Longest Play: ","</p><p>Shortest Play: ","</p><p>Most Recent Play: ",
+				"</p><p>First Play: "				
+		};
+		
+		for (int j = 0; j < results.size(); j++){
+			Result rs = results.get(j);
+			double dscore = (rs.pointsScored/ (double) rs.maxPossiblePoints);
+			String score = df.format(dscore);
+			String userName = manager.getAccountById(String.valueOf(rs.userId)).getUsername();
+			out.println(tags[1] + score + " by <a href='profile.jsp?id="+rs.userId+"'>" + userName + "</a>" );
+		}
+		out.println("</p");
+		
+		
 	%>
 
 
