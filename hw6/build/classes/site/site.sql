@@ -22,6 +22,10 @@ CREATE TABLE quizzes (
 	practice_mode BOOLEAN,
 	max_score INT,
 	description TEXT,
+	title TEXT,
+	random_question BOOLEAN,
+	one_page BOOLEAN,
+	immediate_correction BOOLEAN,
     created_timestamp TIMESTAMP
 );
 

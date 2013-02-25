@@ -13,21 +13,34 @@ public class QuizManager {
 	private HttpServletRequest request;
 	private HttpSession session;
 	private int user_id;
+	private boolean practice_mode;
+	private String description;
+	private String title;
+	private int max_score;
+	private boolean random_question;
+	private boolean one_page;
+	private boolean immediate_correction;
 	
 	public QuizManager(HttpServletRequest request) {
 		con = MyDB.getConnection();
 		this.request = request;
 		this.session = request.getSession();
-		this.user_id = session.getAttribute(arg0);
+		this.user_id = ((User)session.getAttribute("user")).getId();
+		this.practice_mode = (Boolean) request.getAttribute("practice_mode");
+		this.description = (String)request.getAttribute("quiz_description");
+		this.title = (String)request.getAttribute("quiz_title");
+		this.max_score = Integer.parseInt((String)request.getAttribute("max_score"));
+		this.random_question = (Boolean) request.getAttribute("random_question");
+		this.one_page = (Boolean) request.getAttribute("one_page");
+		this.immediate_correction = (Boolean) request.getAttribute("immediate_correction");
 	}
 	
 	public void addQuizToDataBase() {
 		try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
-			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes WHERE user_id='"+user_id+"'");
-			while(rs.next()) {
-				
-			}
+			stmt.executeQuery("INSERT INTO quizzes (user_id, practice_mode, description, title, max_score," +
+					"random_question, one_page, immediate_correction) VALUES(" + user_id + "," + practice_mode + "," +
+					description + "," + title + "," + max_score + "," + random_question + "," + one_page + "," + immediate_correction + ");");
 		}
 		catch(Exception e) {}
 	}

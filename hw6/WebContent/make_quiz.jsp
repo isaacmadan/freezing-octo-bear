@@ -13,6 +13,14 @@
 		<input type="text" id="quiz_name" name="quiz_name"></input><br />
 		<label>Quiz Description</label>
 		<input type="text" size="100" id="quiz_description" name="quiz_description"><br />
+		<label>Allow Practice Mode?</label>
+		<input type = "checkbox" name = "practice_mode" id = "practice_mode">Yes (leave blank for no)<br />
+		<label>List Questions in Random Order?</label>
+		<input type = "checkbox" name = "random_question" id = "random_question">Yes (leave blank for no)<br />
+		<label>List Questions on One Page?</label>
+		<input type = "checkbox" name = "one_page" id = "one_page">Yes (leave blank for multiple pages)<br />
+		<label>Allow Immediate Correction?</label>
+		<input type = "checkbox" name = "immediate_correction" id = "immediate_correction">Yes (leave blank for no)<br />
 		<label>Choose All Types of Questions and Numbers</label><br />
 		&nbsp&nbsp&nbsp&nbsp<input type="checkbox" name ="question_response" id ="question_response">Question-Response<br />
 		&nbsp&nbsp&nbsp&nbsp<input type="text" size = "3" id="question_response_num" name = "question_response_num">Number of Questions<br />
