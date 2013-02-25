@@ -26,8 +26,14 @@
 <div>Admin News</div><hr>
 <div>Popular Quizzes</div><hr>
 <div>Recently Created Quizzes</div><hr>
-<div>Recent Quiz Taking Activities</div><hr>
-<div>Recent Quiz Creating Activities</div><hr>
+<div>My Recent Quiz Taking Activities</div><hr>
+<%
+	
+%>
+<div>My Recent Quiz Creating Activities</div><hr>
+<%
+
+%>
 <div>Achievements</div><hr>
 <div>Messages</div><hr>
 <div>Recent Friends' Activities</div><hr>

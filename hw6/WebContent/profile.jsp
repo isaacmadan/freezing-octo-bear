@@ -62,6 +62,16 @@
 <h2>History</h2>
 
 <h2>Achievements</h2>
+<%
+	Achievements achievements = manager.getAchievements(user.getId());
+	ArrayList<String> achievementStrings = achievements.getStrings(); 
+	for(String achievement : achievementStrings) {
+		out.println(achievement+"<br />");
+	}
+	if(achievementStrings.size() == 0 ) {
+		out.println("<p>No achievements</p>");
+	}
+%>
 
 </body>
 </html>

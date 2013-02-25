@@ -68,13 +68,65 @@ public class AccountManager {
 		return false; 
 	}
 	
+	public void updateAchievements(int user_id) {
+		int resCount = 0;
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes WHERE user_id="+user_id);
+			while(rs.next()) {
+				resCount++;
+			}
+		}
+		catch(Exception e) {}
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM quiz WHERE user_id="+user_id);
+			while(rs.next()) {
+				resCount++;
+			}
+		}
+		catch(Exception e) {}
+		
+		try {
+			Statement stmt = con.createStatement(); //construct search query based on inputs
+			if(resCount > 0) {
+				String query = "INSERT INTO achievements (amateur_author) VALUES(true)";
+				stmt.executeUpdate(query);
+			}
+			if(resCount > 4) {
+				String query = "INSERT INTO achievements (prolific_author) VALUES(true)";
+				stmt.executeUpdate(query);
+			}
+			if(resCount > 9) {
+				String query = "INSERT INTO achievements (prodigious_author) VALUES(true)";
+				stmt.executeUpdate(query);
+			}
+			int numTaken = QuizResult.numTaken(user_id);
+			if(numTaken > 9) {
+				String query = "INSERT INTO achievements (quiz_machine) VALUES(true)";
+				stmt.executeUpdate(query);
+			}
+			
+			//i am the greatest
+			//practice makes perfect
+		}
+		catch(Exception e) {} 
+	}
+	
 	public Achievements getAchievements(int user_id) {
 		Achievements achievements = new Achievements();
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM achievements WHERE x_id="+user_id);
 			while(rs.next()) {
-
+				achievements.setAmateurAuthor(rs.getBoolean("amateur_author"));
+				achievements.setProlificAuthor(rs.getBoolean("prolific_author"));
+				achievements.setProdigiousAuthor(rs.getBoolean("prodigious_author"));
+				achievements.setQuizMachine(rs.getBoolean("quiz_machine"));
+				achievements.setiAmTheGreatest(rs.getBoolean("i_am_greatest"));
+				achievements.setPracticeMakesPerfect(rs.getBoolean("practice_perfect"));
+				
 			}
 		}
 		catch(Exception e) {}
