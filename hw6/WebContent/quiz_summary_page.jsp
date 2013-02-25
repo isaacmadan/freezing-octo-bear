@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="site.*, java.util.*,java.sql.*,java.io.*"%>
+<%@ page import="site.*, java.util.*,java.sql.*,java.io.*,java.text.*"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -114,7 +114,24 @@ private Quiz quiz;
 		
 	<% 
 		ArrayList<Double> numStats = QuizResult.getNumericStatistics(quiz.getQuiz_id());
-	
+		results = QuizResult.getResultStatistics(quiz.getQuiz_id());
+		 DecimalFormat df = new DecimalFormat("#.##");
+		out.println("<p>Number of users who have taken this quiz: " + df.format(numStats.get(QuizResult.NUM_USERS)));
+		out.println("</p><p>Number of times this quiz has been taken: " + df.format(numStats.get(QuizResult.NUM_TIMES)));
+		out.println("</p><p>Average Percent Correct: " + df.format(numStats.get(QuizResult.AVG_PERCENT)));
+		out.println("</p><p>Average time taken: "+ df.format(numStats.get(QuizResult.AVG_TIME)));
+		out.println("</p><p>Number of plays since yesterday: "+ df.format(numStats.get(QuizResult.NUM_DAY_PLAYS)));
+		Result rs = results.get(QuizResult.BEST_SCORE);
+		String bestScore = Double.toString(rs.pointsScored/ (double) rs.maxPossiblePoints);
+		String bestUser = manager.getAccountById(String.valueOf(rs.userId)).getUsername();
+		out.println("</p><p>Best Score: " + bestScore + " by <a href='profile.jsp?id="+rs.userId+"'>" + bestUser + "</a>" );
+		rs = results.get(QuizResult.WORST_SCORE);
+		String worstScore = Double.toString(rs.pointsScored/ (double) rs.maxPossiblePoints);
+		String worstUser = manager.getAccountById(String.valueOf(rs.userId)).getUsername();
+		out.println("</p><p>Worst Score: " + worstScore + " by <a href='profile.jsp?id="+rs.userId+"'>" + worstUser + "</a>" );
+		out.println("</p><p>");
+		out.println("</p><p>");
+		out.println("<p>");
 	%>
 
 

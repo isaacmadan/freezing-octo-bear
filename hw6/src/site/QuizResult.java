@@ -346,7 +346,7 @@ public class QuizResult {
 		try {
 			set = stmt.executeQuery(execution);
 			while(set.next()){
-				results.add(Quiz.getQuiz(set.getInt("quiz_id")));
+				results.add(QuizManager.getQuiz(set.getInt("quiz_id")));
 			}
 		} catch (SQLException e) {}
 		return results;
@@ -445,6 +445,12 @@ public class QuizResult {
 		return false;
 	}
 
+	public static final int NUM_USERS = 0;
+	public static final int NUM_TIMES = 1;
+	public static final int AVG_PERCENT = 2;
+	public static final int AVG_TIME = 3;
+	public static final int NUM_DAY_PLAYS = 4;
+	
 	/** Returns an ArrayList of doubles, with each double representing a different
 	 * statistic 
 	 * 
@@ -512,17 +518,24 @@ public class QuizResult {
 		return -1;
 	}
 
+	public static final int BEST_SCORE = 0;
+	public static final int WORST_SCORE = 1;
+	public static final int LONGEST_TIME = 2;
+	public static final int SHORTEST_TIME = 3;
+	public static final int RECENT_PLAY = 4;
+	public static final int FIRST_PLAY = 5;
 
+	
 	/** Returns an ArrayList of Results, with each Result representing a different
 	 * statistic 
 	 * 
 	 * Relevant Statistics by Index:
-	 * 1 - Best percent score
-	 * 2 - Worst percent score
-	 * 3 - Longest time taken
-	 * 4 - Shortest time taken
-	 * 5 - Most recent play
-	 * 6 - First date played
+	 * 0 - Best percent score
+	 * 1 - Worst percent score
+	 * 2 - Longest time taken
+	 * 3 - Shortest time taken
+	 * 4 - Most recent play
+	 * 5 - First date played
 	 * 
 	 * @param quizID integer number of quiz
 	 * @return ResultList of statistics
