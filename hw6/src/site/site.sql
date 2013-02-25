@@ -74,10 +74,10 @@ CREATE TABLE messages (
 );
 
 INSERT INTO messages VALUES
-	(NULL, 1, 2, "Stop crying", 3, NOW()),
-	(NULL, 2, 1, "Now I love crying", 3, NOW()),
-	(NULL, 3, 1, "Love me baby I am lonely", 3, NOW()),
-	(NULL, 1, 2, " isaac wants to be friends. <form action='add_friend.jsp' method='POST'><input type='hidden'
+	(NULL, 1, 3, "Stop crying", 3, NOW()),
+	(NULL, 3, 1, "Now I love crying", 3, NOW()),
+	(NULL, 5, 1, "Love me baby I am lonely", 3, NOW()),
+	(NULL, 1, 3, " isaac wants to be friends. <form action='add_friend.jsp' method='POST'><input type='hidden'
  name='x_id' value='1' /><input type='hidden' name='y_id' value='1' /><input type='submit' value='Add as friend' /></form> ", 1, NOW());
 
 DROP TABLE IF EXISTS friends;
@@ -111,7 +111,7 @@ INSERT INTO results VALUES
 	(1, NULL, 2, 1, 3, 20000, NOW()),
 	(3, NULL, 2, 0, 3, 20000, NOW()),
 	(3, NULL, 3, 3, 300, 20000, NOW()),
-	(2, NULL, 3, 300, 300, 20000, NOW());
+	(5, NULL, 3, 300, 300, 20000, NOW());
 
 
 
