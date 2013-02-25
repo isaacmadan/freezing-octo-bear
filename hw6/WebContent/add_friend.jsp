@@ -18,13 +18,8 @@
 	AccountManager manager = new AccountManager();
 	
 	if(confirmation != null) {
-		if(manager.areFriends(Integer.parseInt(fromId), Integer.parseInt(toId))) {
-			out.println("<p>You guys are already friends.</p>");
-		}
-		else {
-			manager.addFriend(Integer.parseInt(fromId), Integer.parseInt(toId));
-			out.println("<p>You guys are now friends!</p>");
-		}
+		manager.addFriend(Integer.parseInt(fromId), Integer.parseInt(toId));
+		out.println("<p>You guys are now friends!</p>");
 	}
 	else if(unfriend == null) {
 		manager.addFriend(Integer.parseInt(fromId), Integer.parseInt(toId));
