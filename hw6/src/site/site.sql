@@ -17,8 +17,8 @@ DROP TABLE IF EXISTS quizzes;
  -- remove table if it already exists and start from scratch
 
 CREATE TABLE quizzes (
-	user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	quiz_id INT,
+	quiz_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT,
 	practice_mode BOOLEAN,
 	max_score INT,
 	description TEXT,
@@ -62,7 +62,7 @@ DROP TABLE IF EXISTS friends;
  -- remove table if it already exists and start from scratch
 
 CREATE TABLE friends (
-	message_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	message_id INT,
     x_id INT,
     y_id INT,
     created_timestamp TIMESTAMP

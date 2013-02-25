@@ -42,6 +42,8 @@ public class GenerateQuizServlet extends HttpServlet {
 		if(request.getParameter("picture_response_count") == null) pictureResponseStatus = false;
 		
 		PrintWriter out = response.getWriter();
+		QuizManager manager = new QuizManager(request);
+		manager.addQuizToDataBase();
 		out.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">");
 		out.println("<html>");
 		out.println("<head>");

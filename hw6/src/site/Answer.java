@@ -6,6 +6,14 @@ public class Answer {
 
 	private HashSet<String> answers;
 	
+	public Answer(String strToSplit, String symbol) {
+		String[] result = strToSplit.split(symbol);
+		answers = new HashSet<String>();
+		for(int i = 0; i < result.length; i++) {
+			answers.add(result[i]);
+		}
+	}
+	
 	public Answer(HashSet<String> answers) {
 		this.setAnswers(answers);
 	}
