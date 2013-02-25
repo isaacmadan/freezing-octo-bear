@@ -12,10 +12,10 @@ public class Result extends Object{
 	public final int maxPossiblePoints;
 	public final java.sql.Timestamp timeStamp;
 	public final long durationOfQuiz;
-	
+
 	/**Constructs a new Result, doesn't ask for a resultID*/
 	public Result(int takerID, int quizID, int pointsScored,int maxPointsPossible, Timestamp timeTaken, long duration){
-		this.resultId = QuizResult.getNewId();
+		this.resultId = 0;
 		this.userId = takerID;
 		this.quizId = quizID;
 		this.pointsScored = pointsScored;
@@ -23,7 +23,7 @@ public class Result extends Object{
 		this.timeStamp = timeTaken;
 		this.durationOfQuiz = duration;
 	}
-	
+
 	/**Constructs an old Result, give it the old id
 	 * If you want a copy of a Result, use QuizResult.getResult(ID);
 	 * 
@@ -38,7 +38,7 @@ public class Result extends Object{
 		this.timeStamp = timeTaken;
 		this.durationOfQuiz = duration;
 	}
-	
+
 	@Override
 	public String toString() {
 		String str = "Result: "+ this.resultId + " User: " + this.userId; 
@@ -54,5 +54,5 @@ public class Result extends Object{
 	public String dateString(){
 		return "NOt implemented yet";
 	}
-	
+
 }

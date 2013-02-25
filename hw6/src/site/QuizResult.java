@@ -1,7 +1,6 @@
 package site;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -43,8 +42,8 @@ public class QuizResult {
 	 * 
 	 * */
 	public static void addResult(int quizTakerId, int quizId, int pointsScored, int maxPossiblePoints, long duration ){
-		String execution = "INSERT INTO " + RESULT_DATABASE + " VALUES('"+quizTakerId+"', '"+getNewId()+
-				"', '"+quizId+"', '"+pointsScored+"', '"+maxPossiblePoints+"', '"+duration+"', NOW()";  
+		String execution = "INSERT INTO " + RESULT_DATABASE + " VALUES('"+quizTakerId+
+				"', '"+quizId+"', '"+pointsScored+"', '"+maxPossiblePoints+"', '"+duration;  
 		try {
 			stmt.executeUpdate(execution);
 		} catch (SQLException e) {
@@ -98,7 +97,7 @@ public class QuizResult {
 		}
 		return result;
 	}
-	
+
 	/**Give it a sql string and this will return an ArrayList*/
 	private static ArrayList<Result> generateList(String execution){
 		ArrayList<Result> results = new ArrayList<Result>();
@@ -163,11 +162,11 @@ public class QuizResult {
 		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE user_id = " + userId + " AND quiz_id = " + quizID +
 				"  ORDER BY created_timestamp DESC";
 		ArrayList<Result> results = generateList(execution);
-//		System.out.println(results.toString());
+		//		System.out.println(results.toString());
 		return results;
 	}
 
-	
+
 	public static ArrayList<Result> getUserPerformanceOnQuiz(int userId, int quizId, String order){
 		ArrayList<Result> results = new ArrayList<Result>();
 		String selectedOrder = "created_timestamp";
@@ -176,7 +175,7 @@ public class QuizResult {
 			results = generateList(execution);
 			Collections.sort(results, new SortByBestScore());
 			return results;
-				//System.out.println(results.toString());
+			//System.out.println(results.toString());
 		}
 		//if (order.equals("BY_DATE")) selectedOrder = "created_timestamp";
 		if (order.equals("BY_DURATION")) selectedOrder = "duration";
@@ -201,7 +200,6 @@ public class QuizResult {
 			return 0;
 		}
 	}
-	//TODO make sure the sorting is in the correct direction
 	/**Sort by lowest score, then longest duration*/
 	private static class SortByWorstScore implements Comparator<Result>{
 		public int compare(Result a, Result b){
@@ -216,7 +214,7 @@ public class QuizResult {
 			return 0;
 		}
 	}
-	
+
 	private static ArrayList<Result> sublist(int indexStart, int indexEnd, ArrayList<Result> result){
 		ArrayList<Result> results = new ArrayList<Result>();
 		for(int i = indexStart; i < indexEnd; i ++){
@@ -224,7 +222,16 @@ public class QuizResult {
 		}
 		return results;
 	}
-	
+
+	/**Because no generics*/
+	private static ArrayList<Quiz> subQlist(int indexStart, int indexEnd, ArrayList<Quiz> result){
+		ArrayList<Quiz> results = new ArrayList<Quiz>();
+		for(int i = indexStart; i < indexEnd; i ++){
+			results.add(result.get(i));
+		}
+		return results;
+	}
+
 	/** Returns a sorted ArrayList of Results for the highest scores for a quiz
 	 * @param quizID integer ID number of quiz
 	 * @param numUsers length of quiz, if zero, return all 
@@ -255,52 +262,42 @@ public class QuizResult {
 		return results;
 	}
 
-	/**Removes all entries from more than a 24 hours ago*/
-	private static ArrayList<Result> prunedLastDay(ArrayList<Result> results){
-		 ArrayList<Result> newResults = new  ArrayList<Result> ();
-		java.util.Date now = new java.util.Date();
-		Timestamp stamp =  new Timestamp(now.getTime());
-		for(int i = 0; i < results.size(); i ++){
-			if (results.get(i).timeStamp.after(stamp)) newResults.add(results.get(i));
-		}
-		return newResults;
-	}
-
-	
 	/** Returns a ArrayList of Results for a quiz in the last day WITH no repeated users.
 	 *  Sorted by date
+	 *  TODO test
 	 * @param quizID integer ID number of quiz
 	 * @param numUsers length of quiz, if zero, return all  
 	 * */
 	public static ArrayList<Result> getRecentTakers(int quizID, int numUsers){
 		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID
-				+ " ORDER BY created_timestamp";
+				+ " AND created_timestamp > DATE_SUB(NOW(), INTERVAL 24 HOUR) ORDER BY created_timestamp";
 		ArrayList<Result> results = generateList(execution);
-		results = prunedLastDay(results);
 		if (numUsers > 0){
 			return sublist(0, numUsers, results);
 		}
-		return null;
+		return results;
 	}
 
 	/** Returns a sorted ArrayList of Results for the highest scores for a quiz
 	 * in the last day, WITH repeated users. Sorted by score
+	 * TODO test
 	 * @param quizID integer ID number of quiz
 	 * @param numUsers length of quiz, if zero, return all  
 	 * */
 	public static ArrayList<Result> getRecentHighScores(int quizID, int numUsers){
-		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID;
+		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID +
+				" AND created_timestamp > DATE_SUB(NOW(), INTERVAL 24 HOUR)";
 		ArrayList<Result> results = generateList(execution);
-		results = prunedLastDay(results);
 		Collections.sort(results, new SortByBestScore());
 		if (numUsers > 0){
 			return sublist(0, numUsers, results);
 		}
-		return null;
+		return results;
 	}
 
 	/** Returns a sorted ArrayList of Results for the highest scores for a quiz
 	 * ever 
+	 * TODO test
 	 * @param quizID integer ID number of quiz
 	 * @param numUsers length of quiz, if zero, return all  
 	 * */
@@ -311,37 +308,67 @@ public class QuizResult {
 		if (numUsers > 0){
 			return sublist(0, numUsers, results);
 		}
-		return null;
+		return results;
+	}
+
+
+	/**Give it a sql string and this will return an ArrayList
+	 * TODO test*/
+	private static ArrayList<Quiz> generateQuizList(String execution) {
+		ArrayList<Quiz> results = new ArrayList<Quiz>();
+		ResultSet set;
+		try {
+			set = stmt.executeQuery(execution);
+			while(set.next()){
+				results.add(Quiz.getQuiz(set.getInt("quiz_id")));
+			}
+		} catch (SQLException e) {}
+		return results;
 	}
 
 	/**Returns a sorted ArrayList of Quizzes for the most popular quizzes
-	 * 
+	 * TODO test
 	 * @param numQuizzes number of quizzes asked for, if zero, return all 
 	 * */
 	public static ArrayList<Quiz> getPopularQuizzes(int numQuizzes){
-		return null;
+		String execution = "SELECT quiz_id, COUNT(*) from results GROUP by quiz_id" +
+				" ORDER BY COUNT(*) DESC";
+		ArrayList<Quiz> quizzes = generateQuizList(execution);
+		if (numQuizzes > 0){
+			return subQlist(0, numQuizzes, quizzes);
+		}
+		return quizzes;
 	}
 
+
 	/**Returns an ArrayList of quizzes sorted by time taken by a given user
-	 * 
+	 * TODO test
 	 * @param userId id of user
 	 * @param numQuizzes Number of quizzes asked for, if zero, return all
 	 * */
 	public static ArrayList<Quiz> getRecentQuizTakers(int userId, int numQuizzes){
-		return null;
+		String execution = "SELECT * FROM results WHERE user_id = " + userId + " ORDER BY created_timestamp ";
+		ArrayList<Quiz> quizzes = generateQuizList(execution);
+		if (numQuizzes > 0){
+			return subQlist(0, numQuizzes, quizzes);
+		}
+		return quizzes;
 	}
 
+
 	/**Returns an ArrayList of quizzes sorted by time created by a given user
-	 * 
+	 * TODO implement these somewhere that matters
+	 * TODO test
 	 * @param userId id of user
 	 * @param numQuizzes Number of quizzes asked for, if zero, return all
 	 * */
-	public static ArrayList<Quiz> getCreatedQuizzesByUser(int userId, int numQuizzes){
+	public static ArrayList<Quiz> getQuizzesCreatedByUser(int userId, int numQuizzes){
 		return null;
 	}
 
 	/**Returns an ArrayList of quizzes created by anybody, sorted by time 
-	 * 
+	 * TODO move these to somewhere that makes more sense
+	 * TODO test 
 	 * @param numQuizzes Number of quizzes asked for, if zero, return all
 	 * */
 	public static ArrayList<Quiz> getRecentlyCreated(int numQuizzes){
@@ -349,18 +376,26 @@ public class QuizResult {
 	}
 
 	/**Returns an ArrayList of quizzes taken by friends of a given user, sorted by time 
-	 * 
+	 * TODO Implement these once friends works
 	 * @param numQuizzes Number of quizzes asked for, if zero, return all
 	 * */
 	public static ArrayList<Quiz> getFriendQuizzes(int userId, int numQuizzes){
+		
 		return null;
 	}
 
 	/**Returns the number of quizzes that a given user has taken
 	 * Returns -1 on failure
+	 * TODO test
 	 * @param userId integer ID
 	 * */
 	public static int numTaken(int userId){
+		String execution = "SELECT COUNT(*) from results WHERE user_id = " + userId;
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			set.first();
+			return set.getInt("Count(*)");
+		} catch (SQLException e) {}
 		return -1;
 	}
 
@@ -373,14 +408,8 @@ public class QuizResult {
 	 * 0 - Number of users who have taken this quiz
 	 * 1 - Number of times this quiz has been taken
 	 * 2 - Average Percent Correct
-	 * 3 - Best percent score
-	 * 4 - Worst percent score
-	 * 5 - Average time taken
-	 * 6 - Longest time taken
-	 * 7 - Shortest time taken
-	 * 8 - Most recent play
-	 * 9 - First date played
-	 * 10 - Number of plays within the last day
+	 * 3 - Average time taken
+	 * 4 - Number of plays within the last day
 	 * 
 	 * @param quizID integer number of quiz
 	 * @return DoubleList of statistics
@@ -389,37 +418,133 @@ public class QuizResult {
 		return null;
 	}
 
-	/** Returns an ArrayList of Dates, with each Date representing a different
-	 * statistic 
-	 * 
-	 * Relevant Statistics by Index:
-	 * 0 - Most recent play
-	 * 1 - First date played
-	 * 2 - Number of plays within the last day
-	 * 
-	 * @param quizID integer number of quiz
-	 * @return DateList of statistics
-	 * */
-
-	public static ArrayList<Date> getDateStatistics(int quizID){
-		return null;
-	}
-
-	/**Give a new quizresult an ID that no other quiz has used
-	 * If something goes wrong, gives a resultID of -1
-	 * @return The number of results + 1
-	 * */
-
-	public  static int getNewId() {	
-		String execution = "SELECT * FROM " + RESULT_DATABASE;  
+	private static  int numUsersTaken(int quizId){
+		String execution = "SELECT COUNT(*) from results GROUP BY user_id";
 		try {
 			ResultSet set = stmt.executeQuery(execution);
 			set.last();
-			return set.getRow() + 1;
-		} catch (SQLException e) {
-
-		}
+			return set.getRow();
+		} catch (SQLException e) {}
 		return -1;
-
 	}
+
+	private static  int numTimesTaken(int quizId){
+		String execution = "SELECT COUNT(*) from results WHERE quiz_id = " + quizId;
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			set.first();
+			return set.getInt("COUNT(*)");
+		} catch (SQLException ignored) {}
+		return -1;
+	}
+
+	private static double averageCorrect(){
+		String execution = "SELECT AVG(user_score/max_score) FROM results";
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			set.first();
+			return set.getDouble(1);
+		} catch (SQLException ignored) {}		
+		return -1;
+	}
+
+	private static double averageDuration(){
+		String execution = "SELECT AVG(duration) FROM results";
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			return set.getLong(1);
+		} catch (SQLException ignored) {}		
+		return -1;
+	}
+	
+	private static int numPlayInDay(){
+		String execution = "SELECT * FROM results WHERE created_timestamp > DATE_SUB(NOW(), INTERVAL 24 HOUR)";
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			set.last();
+			return set.getRow();
+		} catch (SQLException ignored) {}		
+		return -1;
+	}
+
+	
+	/** Returns an ArrayList of Results, with each Result representing a different
+	 * statistic 
+	 * 
+	 * Relevant Statistics by Index:
+	 * 1 - Best percent score
+	 * 2 - Worst percent score
+	 * 3 - Longest time taken
+	 * 4 - Shortest time taken
+	 * 5 - Most recent play
+	 * 6 - First date played
+	 * 
+	 * @param quizID integer number of quiz
+	 * @return ResultList of statistics
+	 * */
+	public static ArrayList<Result> getResultStatistics(int quizId){
+		ArrayList<Result> stats = new ArrayList<Result>();
+		stats.add(bestScoreResult(quizId));
+		stats.add(worstScoreResult(quizId));
+		stats.add(longestTimeResult(quizId));
+		stats.add(shortestTimeResult(quizId));
+		stats.add(recentPlayResult(quizId));
+		stats.add(firstPlayResult(quizId));
+		return stats;
+	}
+
+	private static Result worstScoreResult(int quizId){
+		String execution = "SELECT * FROM results WHERE quiz_id = " + quizId+ " ORDER BY user_score / max_score";
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			return generateResult(set, 1);
+		} catch (SQLException ignored) {}
+		return null;
+	}
+
+	private static Result bestScoreResult(int quizId){
+		String execution = "SELECT * FROM results WHERE quiz_id = " + quizId+ " ORDER BY user_score / max_score DESC";
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			return generateResult(set, 1);
+		} catch (SQLException ignored) {}
+		return null;
+	}
+
+	private static Result longestTimeResult(int quizId){
+		String execution = "SELECT * FROM results WHERE quiz_id = " + quizId+ " ORDER BY duration DESC";
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			return generateResult(set, 1);
+		} catch (SQLException ignored) {}
+		return null;
+	}
+
+	private static Result shortestTimeResult(int quizId){
+		String execution = "SELECT * FROM results WHERE quiz_id = " + quizId+ " ORDER BY duration";
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			return generateResult(set, 1);
+		} catch (SQLException ignored) {}
+		return null;
+	}
+
+	private static Result firstPlayResult(int quizId){
+		String execution = "SELECT * FROM results WHERE quiz_id = " + quizId+ " ORDER BY created_timestamp";
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			return generateResult(set, 1);
+		} catch (SQLException ignored) {}
+		return null;
+	}
+	
+	private static Result recentPlayResult(int quizId){
+		String execution = "SELECT * FROM results WHERE quiz_id = " + quizId+ " ORDER BY created_timestamp DESC";
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			return generateResult(set, 1);
+		} catch (SQLException ignored) {}
+		return null;
+	}
+	
 }
