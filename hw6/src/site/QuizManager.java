@@ -26,13 +26,17 @@ public class QuizManager {
 		this.request = request;
 		this.session = request.getSession();
 		this.user_id = ((User)session.getAttribute("user")).getId();
-		this.practice_mode = (Boolean) request.getAttribute("practice_mode");
+		if(request.getAttribute("practice_mode") == null) this.practice_mode = false;
+		else this.practice_mode = true;
 		this.description = (String)request.getAttribute("quiz_description");
 		this.title = (String)request.getAttribute("quiz_title");
 		this.max_score = Integer.parseInt((String)request.getAttribute("max_score"));
-		this.random_question = (Boolean) request.getAttribute("random_question");
-		this.one_page = (Boolean) request.getAttribute("one_page");
-		this.immediate_correction = (Boolean) request.getAttribute("immediate_correction");
+		if(request.getAttribute("random_question") == null) this.random_question = false;
+		else this.random_question = true;
+		if(request.getAttribute("one_page") == null) this.one_page = false;
+		else this.one_page = true;
+		if(request.getAttribute("immediate_correction") == null) this.immediate_correction = false;
+		else this.immediate_correction = true;
 	}
 	
 	public void addQuizToDataBase() {
