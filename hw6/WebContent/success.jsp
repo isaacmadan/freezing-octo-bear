@@ -108,10 +108,11 @@
 
 <div><h3>Achievements</h3>
 <%
+accountManager.updateAchievements(user.getId());
 Achievements achievements = accountManager.getAchievements(user.getId());
 ArrayList<String> achievementsStrings = achievements.getStrings();
 for(String achievement : achievementsStrings) {
-	out.println(achievement);
+	out.println(achievement+"<br />");
 }
 if(achievementsStrings.size() == 0)
 	out.println("No achievements");

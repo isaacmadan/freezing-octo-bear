@@ -77,48 +77,49 @@ public class AccountManager {
 				resCount++;
 			}
 		}
-		catch(Exception e) {}
+		catch(Exception e) { System.out.println(e); }
 		
+		int userCount = 0;
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM quiz WHERE user_id="+user_id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM achievements WHERE user_id="+user_id);
 			while(rs.next()) {
-				resCount++;
+				userCount++;
+			}
+			if(userCount == 0) {
+				stmt = con.createStatement();
+				stmt.executeUpdate("INSERT INTO achievements (user_id) VALUES("+user_id+")");
 			}
 		}
-		catch(Exception e) {}
+		catch(Exception e) { System.out.println(e); }
 		
 		try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
 			if(resCount > 0) {
-				String query = "INSERT INTO achievements (amateur_author) VALUES(true)";
-				stmt.executeUpdate(query);
+				stmt.executeUpdate("UPDATE achievements SET amateur_author=true WHERE user_id="+user_id);
 			}
 			if(resCount > 4) {
-				String query = "INSERT INTO achievements (prolific_author) VALUES(true)";
-				stmt.executeUpdate(query);
+				stmt.executeUpdate("UPDATE achievements SET prolific_author=true WHERE user_id="+user_id);
 			}
 			if(resCount > 9) {
-				String query = "INSERT INTO achievements (prodigious_author) VALUES(true)";
-				stmt.executeUpdate(query);
+				stmt.executeUpdate("UPDATE achievements SET prodigious_author=true WHERE user_id="+user_id);
 			}
 			int numTaken = QuizResult.numTaken(user_id);
 			if(numTaken > 9) {
-				String query = "INSERT INTO achievements (quiz_machine) VALUES(true)";
-				stmt.executeUpdate(query);
+				stmt.executeUpdate("UPDATE achievements SET quiz_machine=true WHERE user_id="+user_id);
 			}
 			
 			//i am the greatest
 			//practice makes perfect
 		}
-		catch(Exception e) {} 
+		catch(Exception e) { System.out.println(e); } 
 	}
 	
 	public Achievements getAchievements(int user_id) {
 		Achievements achievements = new Achievements();
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM achievements WHERE x_id="+user_id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM achievements WHERE user_id="+user_id);
 			while(rs.next()) {
 				achievements.setAmateurAuthor(rs.getBoolean("amateur_author"));
 				achievements.setProlificAuthor(rs.getBoolean("prolific_author"));
@@ -129,7 +130,7 @@ public class AccountManager {
 				
 			}
 		}
-		catch(Exception e) {}
+		catch(Exception e) {System.out.println(e);}
 		
 		return achievements;
 	}
