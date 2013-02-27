@@ -53,7 +53,8 @@ public class Result extends Object{
 
 	/**Returns a formatted date string from a Result*/
 	public String dateString(){
-		return "NOt implemented yet";
+		return  java.text.DateFormat.getDateTimeInstance().format(
+				this.timeStamp);
 	}
 
 }

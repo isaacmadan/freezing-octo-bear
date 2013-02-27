@@ -30,7 +30,6 @@ public class QuizResult {
 		} catch (SQLException e) {
 
 		}
-		System.out.println("Initialized connection");
 	}
 	/**Adds a result to the SQL results database, either by passing in a bunch of parameters
 	 * Or first generating a Result and passing it in. 
@@ -47,7 +46,6 @@ public class QuizResult {
 		try {
 			stmt.executeUpdate(execution);
 		} catch (SQLException e) {
-			System.out.print("Failed result addition");
 		}
 	}
 
@@ -57,7 +55,6 @@ public class QuizResult {
 		try {
 			stmt.executeUpdate(execution);
 		} catch (SQLException e) {
-			System.out.print("Failed result addition");
 		}
 	}
 
@@ -130,7 +127,6 @@ public class QuizResult {
 		Result rs = null;
 		String ID = Integer.toString(resultID);
 		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE result_id= '" +ID+ "'";  
-		System.out.println(execution);
 		try {
 			ResultSet set = stmt.executeQuery(execution);
 			set.first();
@@ -187,7 +183,6 @@ public class QuizResult {
 	public static ArrayList<Result> getUserPerformanceOnQuiz(int userId, int quizID){
 		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE user_id = " + userId + " AND quiz_id = " + quizID +
 				"  ORDER BY created_timestamp DESC";
-		System.out.println(execution);
 		ArrayList<Result> results = generateList(execution);
 		//		System.out.println(results.toString());
 		return results;

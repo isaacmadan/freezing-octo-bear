@@ -21,43 +21,39 @@
 		ArrayList<User> users = new ArrayList<User>();
 		for (int i = 0; i < res.size(); i++) {
 			int id = res.get(i).userId;
-			
-			System.out.println(res.get(i).toString());
-			users.add(i,
-					manager.getAccountById(String.valueOf(id)));
+			users.add(i, manager.getAccountById(String.valueOf(id)));
 		}
 		return users;
 	}
 
-	/*I'm going to need a function that can display a single result*/
-
+	/**Writes html for single table entry in a html table listing results*/
 	private static void listResult(JspWriter out, Result result, User user) {
-		
-		
 		double score = result.pointsScored / (double) result.maxPossiblePoints;
 		DecimalFormat df = new DecimalFormat("% 0");
 		String score2 = df.format(score);
 		String date = java.text.DateFormat.getDateTimeInstance().format(
 				result.timeStamp);
-		try { 
-			out.println("<tr><td>"+user.getUsername()+"</td><td>"+score2+"</td><td>"+result.durationOfQuiz+"</td><td>"+date);
-		} catch (IOException ignored) {}
-		
+				try { 
+					out.println("<tr><td> <a href='profile.jsp?id="
+							+ result.userId + "'>" + user.getUsername() + "</a>" + 
+							"</td><td>"+score2+"</td><td>"+result.durationOfQuiz+"</td><td>"+date);
+				} catch (IOException ignored) {}		
 	}
 
-	//TODO TEST 
+	/**Writes html for entire table of results and the corresponding users*/
 	private static void listPerformers(JspWriter out, ArrayList<Result> res,
 			ArrayList<User> users) {
-		if (res == null || users == null) return;
+		if (res == null || users == null)
+			return;
 		try {
 			out.println("<table border=\"1\">");
 			out.println("<tr><th>User</th><th>Percent Score</th><th>Duration of Quiz</th><th>TimeTaken</th></tr>");
-			for (int i = 0; i < res.size(); i++){
+			for (int i = 0; i < res.size(); i++) {
 				Result result = res.get(i);
 				User user = users.get(i);
 				listResult(out, result, user);
 			}
-		out.println("</table><hr>");
+			out.println("</table><hr>");
 		} catch (IOException ignored) {
 		}
 	}%>
@@ -65,25 +61,24 @@
 <%
 	// SETUP
 	manager = new AccountManager();
-	//quiz = Quiz.getQuiz(Integer.parseInt(request
-	//		.getParameter("quiz_id")));
-	quiz = (new QuizManager()).getQuizByQuizId(7);
-	taker = manager.getAccountById("1");
+	quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request
+			.getParameter("quiz_id")));
+	//quiz = (new QuizManager()).getQuizByQuizId(7);
+	//taker = manager.getAccountById("1");
 	new QuizResult();
-	
-	
-	
-	//taker = (User) session.getAttribute("user");
-	if (taker == null){
-		RequestDispatcher dispath = request.getRequestDispatcher("unauthorized.jsp");
-		dispath.forward(request, response);	
+
+	taker = (User) session.getAttribute("user");
+	if (taker == null) {
+		RequestDispatcher dispath = request
+				.getRequestDispatcher("unauthorized.jsp");
+		dispath.forward(request, response);
 	}
-	if (quiz == null){
-		RequestDispatcher dispath = request.getRequestDispatcher("unauthorized.jsp");
-		dispath.forward(request, response);		
+	if (quiz == null) {
+		RequestDispatcher dispath = request
+				.getRequestDispatcher("unauthorized.jsp");
+		dispath.forward(request, response);
 	}
-	
-	
+
 	/*Each quiz should have a summary page which includes
 	 The text description of the quiz.
 	 The creator of the quiz (hot linked to the creators user page).
@@ -102,51 +97,69 @@
 </head>
 <body>
 	<h1>
-		<%=quiz.getTitle()
-		%>
+		<%=quiz.getTitle()%>
 		Summary
 	</h1>
-	
- <%System.out.println(quiz.getUser_id() + " " + quiz.getQuiz_id()); %>
+
+	<br />
+	<div>
+		<h3></h3>
+	</div>
 
 	Quiz Writer:
 	<a href="profile.jsp?id=" <%=quiz.getUser_id()%>> <%=manager.getAccountById(String.valueOf(quiz.getUser_id()))
 					.getUsername()%></a>
-					
-	<br /><div><h3> Your past scores with this quiz:</h3></div>
+
+	<br />
+	<div>
+		<h3>Your past scores with this quiz:</h3>
+	</div>
 	<%
 		// List of user's past performance on specific quiz
 		ArrayList<Result> results = QuizResult.getUserPerformanceOnQuiz(
 				taker.getId(), quiz.getQuiz_id());
+		listPerformers(out, results, resultsToUsers(results));
 	%>
-	<br /><div><h3> Best Scores of all time:</h3></div>
+	<br />
+	<div>
+		<h3>Best Scores of all time:</h3>
+	</div>
 	<%
 		// List of highest performers of all time
 		results = QuizResult.getBestQuizTakers(quiz.getQuiz_id(), 0);
 		ArrayList<User> bestAllTime = resultsToUsers(results);
 		listPerformers(out, results, bestAllTime);
 	%>
-	<br /> <div><h3>Best Scores in the last day:</h3></div>
+	<br />
+	<div>
+		<h3>Best Scores in the last day:</h3>
+	</div>
 	<%
 		// List of recent best scores in the last day
 		results = QuizResult.getRecentHighScores(quiz.getQuiz_id(), 0);
 		ArrayList<User> bestLastDay = resultsToUsers(results);
 		listPerformers(out, results, bestLastDay);
 	%>
-	<br /> <div><h3>Recent Quiz Scores: </h3></div>
+	<br />
+	<div>
+		<h3>Recent Quiz Scores:</h3>
+	</div>
 	<%
 		// List of recent 
 		results = QuizResult.getRecentTakers(quiz.getQuiz_id(), 0);
 		ArrayList<User> lastDay = resultsToUsers(results);
 		listPerformers(out, results, lastDay);
 	%>
-<br /> <div><h3> Statistics for this Quiz </h3></div> 
+	<br />
+	<div>
+		<h3>Statistics for this Quiz</h3>
+	</div>
 	<%
 		ArrayList<Double> numStats = QuizResult.getNumericStatistics(quiz
 				.getQuiz_id());
 		results = QuizResult.getResultStatistics(quiz.getQuiz_id());
 		DecimalFormat df = new DecimalFormat("% 0");
-		DecimalFormat df2 = new DecimalFormat ("#");
+		DecimalFormat df2 = new DecimalFormat("#");
 		out.println("<p>Number of users who have taken this quiz: "
 				+ (df2.format(numStats.get(QuizResult.NUM_USERS))));
 		out.println("</p><p>Number of times this quiz has been taken: "
@@ -156,22 +169,24 @@
 		out.println("</p><p>Average time taken: "
 				+ df2.format((numStats.get(QuizResult.AVG_TIME))));
 		out.println("</p><p>Number of plays since yesterday: "
-				+df2.format((numStats.get(QuizResult.NUM_DAY_PLAYS))));
+				+ df2.format((numStats.get(QuizResult.NUM_DAY_PLAYS))));
 
 		String tags[] = { "</p><p>Best Score: ", "</p><p>Worst Score: ",
 				"</p><p>Longest Play: ", "</p><p>Shortest Play: ",
 				"</p><p>Most Recent Play: ", "</p><p>First Play: " };
 
 		results = QuizResult.getResultStatistics(quiz.getQuiz_id());
-		
+
 		for (int j = 0; j < results.size(); j++) {
 			Result rs = results.get(j);
 			double dscore = (rs.pointsScored / (double) rs.maxPossiblePoints);
 			String score = df.format(dscore);
 			String userName = manager.getAccountById(
 					String.valueOf(rs.userId)).getUsername();
+
 			out.println(tags[j] + score + " by <a href='profile.jsp?id="
-					+ rs.userId + "'>" + userName + "</a>");
+					+ rs.userId + "'>" + userName + "</a> on "
+					+ rs.dateString());
 		}
 		out.println("</p");
 	%>
