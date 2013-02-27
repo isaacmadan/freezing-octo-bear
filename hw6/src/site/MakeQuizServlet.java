@@ -155,6 +155,7 @@ public class MakeQuizServlet extends HttpServlet {
 			out.println("<br>");
 			out.println("Enter Answer Choices (separate with commas): ");
 			out.println("<input type = \"text\" name = \"multiple_choice_answer_choice_" + Integer.toString(i) + "\" id = \"multiple_choice_answer_choice_" + Integer.toString(i) + "\">");
+			out.println("<br>");
 			out.println("Enter Answer: ");
 			out.println("<input type = \"text\" name = \"multiple_choice_answer_" + Integer.toString(i) + "\" id = \"multiple_choice_answer_" + Integer.toString(i) + "\">");
 			out.println("<br>");

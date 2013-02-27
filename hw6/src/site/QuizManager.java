@@ -91,16 +91,77 @@ public class QuizManager {
 		} catch(Exception e) { }
 	}
 	
-	public void addFillInTheBlankToDataBase() {
-		
+	public void addFillInTheBlankToDataBase(String front, String back, String answer) {
+		try {
+			Statement stmt = con.createStatement();
+			String addingToQuestionDB = "INSERT INTO questions (quiz_id, point_value, question_type)"
+					+ "VALUES(" + this.quiz_id + ",1,2)";
+			stmt.executeUpdate(addingToQuestionDB, Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = stmt.getGeneratedKeys();
+			int question_id = 0;
+			if (rs.next()){
+				question_id = rs.getInt(1);
+			}
+			String addingToFITBDB = "INSERT INTO fill_in_the_blanks (question_id, string_1,"
+					+ "string_2) VALUES(" + question_id + ",\"" + front + "\",\"" + back + "\")";
+			stmt.executeUpdate(addingToFITBDB);
+			String addingToAnswersDB = "INSERT INTO answers (question_id, string)" +
+					" VALUES(" + question_id + ",\"" + answer + "\")";
+			stmt.executeUpdate(addingToAnswersDB);
+		} catch (Exception e) {
+			
+		}
 	}
 
-	public void addMultipleChoiceToDataBase() {
-	
+	public void addMultipleChoiceToDataBase(String question, String choices, String answer) {
+		try {
+			Statement stmt = con.createStatement();
+			String addingToQuestionDB = "INSERT INTO questions (quiz_id, point_value, question_type)"
+					+ "VALUES(" + this.quiz_id + ",1,3)";
+			stmt.executeUpdate(addingToQuestionDB, Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = stmt.getGeneratedKeys();
+			int question_id = 0;
+			if (rs.next()){
+				question_id = rs.getInt(1);
+			}
+			String addingToMCDB = "INSERT INTO multiple_choices (question_id, string) VALUES(" 
+					+ question_id + ",\"" + question + "\")";
+			stmt.executeUpdate(addingToMCDB, Statement.RETURN_GENERATED_KEYS);
+			rs = stmt.getGeneratedKeys();
+			int multiple_choices_id = 0;
+			if (rs.next()){
+				multiple_choices_id = rs.getInt(1);
+			}
+			String addingToMCCDB = "INSERT INTO multiple_choices_choices (" +
+					"multiple_choices_id, string) VALUES(" + multiple_choices_id + ",\""
+					+ choices + "\")";
+			stmt.executeUpdate(addingToMCCDB);
+			String addingToAnswersDB = "INSERT INTO answers (question_id, string)" +
+					" VALUES(" + question_id + ",\"" + answer + "\")";
+			stmt.executeUpdate(addingToAnswersDB);
+		} catch (Exception e) {
+			
+		}
 	}
 
-	public void addPictureResponseToDataBase() {
-	
+	public void addPictureResponseToDataBase(String str, String answer) {
+		try {
+			Statement stmt = con.createStatement();
+			String addingToQuestionDB = "INSERT INTO questions (quiz_id, point_value, question_type)"
+					+ "VALUES(" + this.quiz_id + ",1,4)";
+			stmt.executeUpdate(addingToQuestionDB, Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = stmt.getGeneratedKeys();
+			int question_id = 0;
+			if (rs.next()){
+				question_id = rs.getInt(1);
+			}
+			String addingToPRDB = "INSERT INTO picture_responses (question_id, string)"
+					+ " VALUES(" + question_id + ",\"" + str + "\")";
+			stmt.executeUpdate(addingToPRDB);
+			String addingToAnswersDB = "INSERT INTO answers (question_id, string)" +
+					" VALUES(" + question_id + ",\"" + answer + "\")";
+			stmt.executeUpdate(addingToAnswersDB);
+		} catch(Exception e) { }
 	}
 	
 	public ArrayList<Quiz> getQuizzesByUserId(int user_id) {

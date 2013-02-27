@@ -94,6 +94,9 @@ public class GenerateQuizServlet extends HttpServlet {
 	
 	private void genFillInTheBlank(PrintWriter out, HttpServletRequest request, QuizManager manager) {
 		for(int i = 0; i < Integer.parseInt(request.getParameter("fill_in_the_blank_count")); i++) {
+			manager.addFillInTheBlankToDataBase(request.getParameter("fill_in_the_blank_front_" + Integer.toString(i)),
+					request.getParameter("fill_in_the_blank_back_" + Integer.toString(i)), 
+					request.getParameter("fill_in_the_blank_answer_" + Integer.toString(i)));
 			out.println("<p>Question: " + request.getParameter("fill_in_the_blank_front_" + Integer.toString(i)) 
 					+ " _____ " + request.getParameter("fill_in_the_blank_back_" + Integer.toString(i)) + "</p>");
 			out.println("<p>Answer: " + request.getParameter("fill_in_the_blank_answer_" + Integer.toString(i)) + "</p>");
@@ -102,6 +105,9 @@ public class GenerateQuizServlet extends HttpServlet {
 
 	private void genMultipleChoice(PrintWriter out, HttpServletRequest request, QuizManager manager) {
 		for(int i = 0; i < Integer.parseInt(request.getParameter("multiple_choice_count")); i++) {
+			manager.addMultipleChoiceToDataBase(request.getParameter("multiple_choice_" + Integer.toString(i)),
+					request.getParameter("multiple_choice_answer_choice_" + Integer.toString(i)), 
+					request.getParameter("multiple_choice_answer_" + Integer.toString(i)));
 			out.println("<p>Question: " + request.getParameter("multiple_choice_" + Integer.toString(i)) + "</p>");
 			out.println("<p>Answer Choices: " + request.getParameter("multiple_choice_answer_choice_" + Integer.toString(i)) + "</p>");
 			out.println("<p>Answer: " + request.getParameter("multiple_choice_answer_" + Integer.toString(i)) + "</p>");
@@ -110,6 +116,8 @@ public class GenerateQuizServlet extends HttpServlet {
 
 	private void genPictureResponse(PrintWriter out, HttpServletRequest request, QuizManager manager) {
 		for(int i = 0; i < Integer.parseInt(request.getParameter("picture_response_count")); i++) {
+			manager.addPictureResponseToDataBase(request.getParameter("picture_response_" + Integer.toString(i)),
+					request.getParameter("picture_response_answer_" + Integer.toString(i)));
 			out.println("<p>Question: " + request.getParameter("picture_response_" + Integer.toString(i)) + "</p>");
 			out.println("<p>Answer: " + request.getParameter("picture_response_answer_" + Integer.toString(i)) + "</p>");
 		}
