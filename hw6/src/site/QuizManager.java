@@ -154,4 +154,20 @@ public class QuizManager {
 		}
 		return null;
 	}
+	
+	public ArrayList<Quiz> getWholeQuizTable() {
+		ArrayList<Quiz> table = new ArrayList<Quiz>();
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
+			while(rs.next()) {
+				Quiz quiz = new Quiz(rs.getInt("quiz_id"), rs.getInt("user_id"), rs.getInt("max_score"),
+						rs.getBoolean("practice_mode"), rs.getString("description"), rs.getString("title"), 
+						rs.getBoolean("random_question"), rs.getBoolean("one_page"), rs.getBoolean("immediate_correction"), 
+						rs.getTimestamp("created_timestamp"));
+				table.add(quiz);
+			}
+		} catch (Exception e) { }
+		return table;
+	}
 }
