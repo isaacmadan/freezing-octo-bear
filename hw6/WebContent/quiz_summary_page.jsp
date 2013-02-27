@@ -33,11 +33,12 @@
 		String score2 = df.format(score);
 		String date = java.text.DateFormat.getDateTimeInstance().format(
 				result.timeStamp);
-				try { 
-					out.println("<tr><td> <a href='profile.jsp?id="
-							+ result.userId + "'>" + user.getUsername() + "</a>" + 
-							"</td><td>"+score2+"</td><td>"+result.durationOfQuiz+"</td><td>"+date);
-				} catch (IOException ignored) {}		
+		try {
+			out.println("<tr><td> <a href='profile.jsp?id=" + result.userId
+					+ "'>" + user.getUsername() + "</a>" + "</td><td>" + score2
+					+ "</td><td>" + result.durationOfQuiz + "</td><td>" + date);
+		} catch (IOException ignored) {
+		}
 	}
 
 	/**Writes html for entire table of results and the corresponding users*/
@@ -45,6 +46,9 @@
 			ArrayList<User> users) {
 		if (res == null || users == null)
 			return;
+		if (res.size() == 0) {
+			return;
+		}
 		try {
 			out.println("<table border=\"1\">");
 			out.println("<tr><th>User</th><th>Percent Score</th><th>Duration of Quiz</th><th>TimeTaken</th></tr>");
@@ -110,10 +114,17 @@
 	Quiz Writer:
 	<a href="profile.jsp?id=<%=quiz.getUser_id()%>"> <%=manager.getAccountById(String.valueOf(quiz.getUser_id()))
 					.getUsername()%></a>
-
+	<%
+	boolean taken = true;
+	if (QuizResult.getBestQuizTakers(quiz.getQuiz_id(), 0).size() == 0){
+		taken = false;
+		out.println("<br /><br />Nobody has taken this quiz");
+	}
+	
+	%>
 	<br />
 	<div>
-		<h3>Your past scores with this quiz:</h3>
+		<h3><% if(taken){ out.println("Your past scores with this quiz:");}%></h3>
 	</div>
 	<%
 		// List of user's past performance on specific quiz
@@ -121,9 +132,10 @@
 				taker.getId(), quiz.getQuiz_id());
 		listPerformers(out, results, resultsToUsers(results));
 	%>
+	 
 	<br />
 	<div>
-		<h3>Best Scores of all time:</h3>
+		<h3><% if(taken){ out.println("Best Scores of all time:");}%></h3>
 	</div>
 	<%
 		// List of highest performers of all time
@@ -133,7 +145,7 @@
 	%>
 	<br />
 	<div>
-		<h3>Best Scores in the last day:</h3>
+		<h3><% if(taken){ out.println("Best Scores in the last day:");}%></h3>
 	</div>
 	<%
 		// List of recent best scores in the last day
@@ -143,7 +155,7 @@
 	%>
 	<br />
 	<div>
-		<h3>Recent Quiz Scores:</h3>
+		<h3><% if(taken){ out.println("Recent Quiz Scores");}%></h3>
 	</div>
 	<%
 		// List of recent 
@@ -153,55 +165,58 @@
 	%>
 	<br />
 	<div>
-		<h3>Statistics for this Quiz</h3>
+		<h3><% if(taken){ out.println("Statistics for this Quiz");}%></h3>
 	</div>
 	<%
 		ArrayList<Double> numStats = QuizResult.getNumericStatistics(quiz
 				.getQuiz_id());
 		results = QuizResult.getResultStatistics(quiz.getQuiz_id());
-	if (results != null){			
-		DecimalFormat df = new DecimalFormat("0%");
-		DecimalFormat df2 = new DecimalFormat("#");
-		out.println("<p>Number of users who have taken this quiz: "
-				+ (df2.format(numStats.get(QuizResult.NUM_USERS))));
-		out.println("</p><p>Number of times this quiz has been taken: "
-				+ (df2.format(numStats.get(QuizResult.NUM_TIMES))));
-		out.println("</p><p>Average Percent Correct: "
-				+ df.format(numStats.get(QuizResult.AVG_PERCENT)));
-		out.println("</p><p>Average time taken: "
-				+ df2.format((numStats.get(QuizResult.AVG_TIME))));
-		out.println("</p><p>Number of plays since yesterday: "
-				+ df2.format((numStats.get(QuizResult.NUM_DAY_PLAYS))));
+		if (results != null) {
+			DecimalFormat df = new DecimalFormat("0%");
+			DecimalFormat df2 = new DecimalFormat("#");
+			out.println("<p>Number of users who have taken this quiz: "
+					+ (df2.format(numStats.get(QuizResult.NUM_USERS))));
+			out.println("</p><p>Number of times this quiz has been taken: "
+					+ (df2.format(numStats.get(QuizResult.NUM_TIMES))));
+			out.println("</p><p>Average Percent Correct: "
+					+ df.format(numStats.get(QuizResult.AVG_PERCENT)));
+			out.println("</p><p>Average time taken: "
+					+ df2.format((numStats.get(QuizResult.AVG_TIME))));
+			out.println("</p><p>Number of plays since yesterday: "
+					+ df2.format((numStats.get(QuizResult.NUM_DAY_PLAYS))));
 
-		String tags[] = { "</p><p>Best Score: ", "</p><p>Worst Score: ",
-				"</p><p>Longest Play: ", "</p><p>Shortest Play: ",
-				"</p><p>Most Recent Play: ", "</p><p>First Play: " };
+			String tags[] = { "</p><p>Best Score: ",
+					"</p><p>Worst Score: ", "</p><p>Longest Play: ",
+					"</p><p>Shortest Play: ", "</p><p>Most Recent Play: ",
+					"</p><p>First Play: " };
 
-		results = QuizResult.getResultStatistics(quiz.getQuiz_id());
-	System.out.println(results.toString());
+			results = QuizResult.getResultStatistics(quiz.getQuiz_id());
 
-		for (int j = 0; j < results.size(); j++) {
-			Result rs = results.get(j);
-			double dscore;
-			if (rs.maxPossiblePoints != 0){
-			dscore = (rs.pointsScored / (double) rs.maxPossiblePoints);
-			} else {
-				dscore = -1;
+			for (int j = 0; j < results.size(); j++) {
+				Result rs = results.get(j);
+				double dscore;
+				if (rs.maxPossiblePoints != 0) {
+					dscore = (rs.pointsScored / (double) rs.maxPossiblePoints);
+				} else {
+					dscore = -1;
+				}
+				String score = df.format(dscore);
+				String userName = manager.getAccountById(
+						String.valueOf(rs.userId)).getUsername();
+
+				out.println(tags[j] + score
+						+ " by <a href='profile.jsp?id=" + rs.userId + "'>"
+						+ userName + "</a> on " + rs.dateString());
 			}
-			String score = df.format(dscore);
-			String userName = manager.getAccountById(
-					String.valueOf(rs.userId)).getUsername();
-
-			out.println(tags[j] + score + " by <a href='profile.jsp?id="
-					+ rs.userId + "'>" + userName + "</a> on "
-					+ rs.dateString());
+			out.println("</p>");
 		}
-		out.println("</p");
-	} else {
-		out.println("<p>Nobody has taken this quiz yet</p>");
-	}
 	%>
 
+<% out.println("<a href='index.jsp?id="+taker.getId()+"'>My Homepage</a><br />"); %>	
+<a href = "make_quiz.jsp">Make a Quiz</a><br />
+<% out.println("<a href='profile.jsp?id="+taker.getId()+"'>My profile</a><br />"); %>
+<% out.println("<a href='inbox.jsp'>My inbox</a><br />"); %>
+<a href="logout.jsp">Logout</a>
 
 </body>
 </html>
