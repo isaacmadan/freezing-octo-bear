@@ -16,7 +16,7 @@
 	private Quiz quiz;
 	private AccountManager manager;
 	private User taker;
-	private User challenger;
+	private User challenger = null;
 	
 	private ArrayList<User> resultsToUsers(ArrayList<Result> res) {
 		ArrayList<User> users = new ArrayList<User>();
@@ -72,7 +72,7 @@
 	quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request
 			.getParameter("quiz_id")));
 	if (quiz == null) {
-		out.println("Sorry this quiz is fucked");
+		out.println("Sorry this quiz is corrupted. We can't display it.");
 		return;
 	}
 	new QuizResult();
@@ -112,7 +112,20 @@
 
 	<br />
 	<div>
-		<h3></h3>
+		<h3>
+		<%
+			if(request.getParameter("challenger_id") != null) {
+				challenger = manager.getAccountById(request.getParameter("challenger_id"));
+			}
+			int challengerBestScore = -1;
+			if(request.getParameter("challenger_best_score") != null) {
+				challengerBestScore = Integer.parseInt(request.getParameter("challenger_best_score"));
+			}
+			if(challenger != null) {
+				out.println(challenger.getUsername()+" has challenged you! Their best score is " + challengerBestScore + ".");
+			}
+		%>
+		</h3>
 	</div>
 
 	Quiz Writer:
@@ -123,6 +136,19 @@
 	<form action="quiz_taker.jsp" method="POST">
 		<input type="hidden" name="quiz_id" value="<%=quiz.getQuiz_id()%>" />
 		<input type='submit' value='Take this Quiz!' />
+	</form>
+	
+	<form action="challenge.jsp" method="POST">
+		<input type="hidden" name="challenger_id" value="<%=taker.getId()%>" />
+		<select name="friend_id">
+  			<% 
+  			HashSet<Integer> friends = manager.getFriends(taker.getId()); 
+  			for(Integer userId : friends) {
+  				out.println("<option value='"+userId+"'>"+manager.getAccountById(String.valueOf(userId)).getUsername()+"</option>");
+  			}
+  			%>
+		</select>
+		<input type="submit" value="Challenge this friend" />
 	</form>
 
 	<%
