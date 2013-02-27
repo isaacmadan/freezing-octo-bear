@@ -61,10 +61,10 @@
 <%
 	// SETUP
 	manager = new AccountManager();
-	quiz = (new QuizManager()).getQuizByQuizId(7);
+	//quiz = (new QuizManager()).getQuizByQuizId(7);
 	//taker = manager.getAccountById("1");
-	//taker = (User) session.getAttribute("user");
-quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request
+	taker = (User) session.getAttribute("user");
+	quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request
 			.getParameter("quiz_id")));
 
 	new QuizResult();
