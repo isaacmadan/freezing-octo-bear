@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
     pageEncoding="US-ASCII"%>
+<%@ page import="site.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,6 +8,24 @@
 <title>Making a Quiz</title>
 </head>
 <body>
+
+<!-- NO TOUCH - USER AUTH CODE -->
+<%
+	if(session == null) {
+		RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
+		dispatch.forward(request, response);
+		return;
+	}
+	
+	User user = (User)session.getAttribute("user");
+	if(user == null) {
+		RequestDispatcher dispatch = request.getRequestDispatcher("unauthorized.jsp");
+		dispatch.forward(request, response);
+		return;
+	}
+%>
+<!-- END -->
+
 <form action="MakeQuizServlet" method="POST">
 	<fieldset>
 		<label>Name of Quiz</label>

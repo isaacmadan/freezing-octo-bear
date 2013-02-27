@@ -3,12 +3,13 @@ package site;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.ServletContext;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class MakeQuizServlet
@@ -36,6 +37,23 @@ public class MakeQuizServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		/**DONT TOUCH THIS -- USER AUTH CODE **/
+		HttpSession session = request.getSession();
+		if(session == null) {
+			RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
+			dispatch.forward(request, response);
+			return;
+		}
+		
+		User user = (User)session.getAttribute("user");
+		if(user == null) {
+			RequestDispatcher dispatch = request.getRequestDispatcher("unauthorized.jsp");
+			dispatch.forward(request, response);
+			return;
+		}
+		/** END **/
+		
 		boolean questionResponseStatus = true, fillInTheBlankStatus = true, multipleChoiceStatus = true, pictureResponseStatus = true;
 		if(request.getParameter("question_response") == null) questionResponseStatus = false;
 		if(request.getParameter("fill_in_the_blank") == null) fillInTheBlankStatus = false;

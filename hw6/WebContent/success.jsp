@@ -121,6 +121,13 @@ if(achievementsStrings.size() == 0)
 
 <div><h3>Messages</h3></div><hr>
 <div><h3>Recent Friends' Activities</h3></div><hr>
+<div><h3>Search</h3>
+	<form action="search.jsp" method="GET">
+		<input type="text" name="query" />
+		<input type="submit" value="Search" />
+	</form>
+</div>
+<hr>
 <a href = "make_quiz.jsp">Make a Quiz</a><br />
 <% out.println("<a href='profile.jsp?id="+user.getId()+"'>My profile</a><br />"); %>
 <% out.println("<a href='inbox.jsp'>My inbox</a><br />"); %>
