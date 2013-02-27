@@ -84,14 +84,13 @@ DROP TABLE IF EXISTS friends;
  -- remove table if it already exists and start from scratch
 
 CREATE TABLE friends (
-	message_id INT,
     x_id INT,
     y_id INT,
     created_timestamp TIMESTAMP
 );
 
 INSERT INTO friends VALUES
-	(4, 2, 1, NOW());
+	(2, 1, NOW());
 
 DROP TABLE IF EXISTS results;
  -- remove table if it already exists and start from scratch

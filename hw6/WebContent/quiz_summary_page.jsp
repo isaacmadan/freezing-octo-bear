@@ -24,7 +24,7 @@
 			
 			System.out.println(res.get(i).toString());
 			users.add(i,
-					manager.getAccountById(String.valueOf(quiz.getUser_id())));
+					manager.getAccountById(String.valueOf(id)));
 		}
 		return users;
 	}
