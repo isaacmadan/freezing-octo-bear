@@ -73,4 +73,21 @@ public class Inbox {
 		
 		return false;
 	}
+	
+	public static boolean deleteTextMessage(int messageId) {
+		Connection con = MyDB.getConnection();
+		
+		//if(messageId == 0)
+		//	return false;
+		
+		try {
+			Statement stmt = con.createStatement();
+			String query = "DELETE FROM messages WHERE message_id="+messageId;
+			stmt.executeUpdate(query);
+			return true;
+		}
+		catch(Exception e) { System.out.println(e); }
+		
+		return false;
+	}
 }

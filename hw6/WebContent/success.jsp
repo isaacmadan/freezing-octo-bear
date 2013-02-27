@@ -24,21 +24,40 @@
 %>
 
 <div><h3>Admin News</h3></div><hr>
-<div><h3>Popular Quizzes</h3></div>
+<div><h3>Popular Quizzes</h3>
+<table border="1">
+<tr><th>Date</th><th>Quiz name</th><th>Description</th><th>Created by</th></tr>
+<%
+	QuizResult quizResult = new QuizResult();
+	ArrayList<Quiz> popularQuizzes  = QuizResult.getPopularQuizzes(0);
+	AccountManager accountManager = new AccountManager();
+	
+	int length = 10;
+	if(popularQuizzes.size() < length) length = popularQuizzes.size();
+	for(int i = 0; i < length; i++) {
+		Quiz quiz = popularQuizzes.get(i);
+		if(quiz == null)
+			out.println("<tr><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td></tr>");
+		else
+			out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td>"+quiz.getTitle()+"</td><td>"+quiz.getDescription()+"</td><td><a href='profile.jsp?id="+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getId()+"'>"+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+"</a></td></tr>");
+	}
+%>
+</table>
+
+</div>
 
 <hr>
 <div><h3>Recently Created Quizzes</h3></div><hr>
 <div><h3>My Recent Quiz Taking Activities</h3></div>
 
 <table border="1">
-<tr><th>Date</th><th>Quiz name</th><th>Score</th><th>Duration</th><th>You suck?</th></tr>
+<tr><th>Date</th><th>Quiz name</th><th>Score</th><th>Duration</th></tr>
 <%
-	QuizResult quizResult = new QuizResult();
 	ArrayList<Result> results = QuizResult.getUserPerformances(user.getId(), "BY_DATE");	
 	for(Result result : results) {
 		out.println("<tr><td>"+result.timeStamp+"</td><td>"+result.quizId+"</td><td>"
 					+result.pointsScored+"/"+result.maxPossiblePoints+"</td><td>"
-					+result.durationOfQuiz+"</td><td>yep</td></tr>");
+					+result.durationOfQuiz+"</td></tr>");
 	}
 	if(results.size() == 0) {
 		out.println("No quiz results");

@@ -28,15 +28,21 @@
 
 <a href="compose.jsp">Send a message</a>
 
+<form action="DeleteTextMessageServlet" method="POST">
 <table border="1">
-	<tr><th>Date</th><th>From</th><th>Message</th></tr>
+	<tr><th>Date</th><th>From</th><th>Message</th><th>Delete</th></tr>
 	<%
 		ArrayList<TextMessage> messages = Inbox.getMessagesById(user.getId());
+		out.println("<input type='hidden' name='num_messages' value='"+messages.size()+"' />");
 		for(int i=0; i<messages.size(); i++) {
-			out.println("<tr><td>"+messages.get(i).getTimestamp()+"</td><td>"+messages.get(i).getFromUser().getUsername()+"</td><td>"+messages.get(i).getNote()+"</td></tr>");
+			out.println("<tr><td>"+messages.get(i).getTimestamp()+"</td><td>"+messages.get(i).getFromUser().getUsername()+"</td><td>"+messages.get(i).getNote()+"</td><td><input type='checkbox' name='delete_"+i+"' value='"+messages.get(i).getMessageId()+"' /></td></tr>");
 		}
 	%>
-</table><br />
+</table>
+<input type="submit" />
+</form>
+
+<br />
 <a href="index.jsp">Back home</a>
 </body>
 </html>
