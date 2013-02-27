@@ -61,13 +61,14 @@
 <%
 	// SETUP
 	manager = new AccountManager();
-	quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request
-			.getParameter("quiz_id")));
-	//quiz = (new QuizManager()).getQuizByQuizId(7);
+	quiz = (new QuizManager()).getQuizByQuizId(7);
 	//taker = manager.getAccountById("1");
+	//taker = (User) session.getAttribute("user");
+quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request
+			.getParameter("quiz_id")));
+
 	new QuizResult();
 
-	taker = (User) session.getAttribute("user");
 	if (taker == null) {
 		RequestDispatcher dispath = request
 				.getRequestDispatcher("unauthorized.jsp");
@@ -107,7 +108,7 @@
 	</div>
 
 	Quiz Writer:
-	<a href="profile.jsp?id=" <%=quiz.getUser_id()%>> <%=manager.getAccountById(String.valueOf(quiz.getUser_id()))
+	<a href="profile.jsp?id=<%=quiz.getUser_id()%>"> <%=manager.getAccountById(String.valueOf(quiz.getUser_id()))
 					.getUsername()%></a>
 
 	<br />
