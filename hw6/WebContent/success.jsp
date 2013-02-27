@@ -39,7 +39,7 @@
 		if(quiz == null)
 			out.println("<tr><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td></tr>");
 		else
-			out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td>"+quiz.getTitle()+"</td><td>"+quiz.getDescription()+"</td><td><a href='profile.jsp?id="+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getId()+"'>"+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+"</a></td></tr>");
+			out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td><td><a href='profile.jsp?id="+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getId()+"'>"+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+"</a></td></tr>");
 	}
 %>
 </table>
@@ -61,7 +61,7 @@
 		if(quiz == null)
 			out.println("<tr><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td></tr>");
 		else
-			out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td>"+quiz.getTitle()+"</td><td>"+quiz.getDescription()+"</td><td><a href='profile.jsp?id="+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getId()+"'>"+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+"</a></td></tr>");
+			out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td><td><a href='profile.jsp?id="+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getId()+"'>"+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+"</a></td></tr>");
 	}
 %>
 
@@ -76,9 +76,15 @@
 <%
 	ArrayList<Result> results = QuizResult.getUserPerformances(user.getId(), "BY_DATE");	
 	for(Result result : results) {
-		out.println("<tr><td>"+result.timeStamp+"</td><td>"+result.quizId+"</td><td>"
-					+result.pointsScored+"/"+result.maxPossiblePoints+"</td><td>"
+		Quiz quiz = manager.getQuizByQuizId(result.quizId);
+		String titleString = String.valueOf(result.quizId);
+		if(quiz != null) {
+			titleString = quiz.getTitle();
+		}
+		out.println("<tr><td>"+result.timeStamp+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"
+					+titleString+"</a></td><td>"+result.pointsScored+"/"+result.maxPossiblePoints+"</td><td>"
 					+result.durationOfQuiz+"</td></tr>");
+		
 	}
 	if(results.size() == 0) {
 		out.println("No quiz results");
@@ -92,7 +98,7 @@
 <%
 	ArrayList<Quiz> quizzes = manager.getQuizzesByUserId(user.getId());	
 	for(Quiz quiz : quizzes) {
-		out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td>"+quiz.getTitle()+"</td><td>"+quiz.getDescription()+"</td></tr>");
+		out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td></tr>");
 	}
 	if(results.size() == 0) {
 		out.println("No quiz results");
