@@ -114,6 +114,12 @@
 	Quiz Writer:
 	<a href="profile.jsp?id=<%=quiz.getUser_id()%>"> <%=manager.getAccountById(String.valueOf(quiz.getUser_id()))
 					.getUsername()%></a>
+					
+	<form action="quiz_taker.jsp" method="POST">
+	<input type="hidden" name="quiz_id" value="<%= quiz.getQuiz_id() %>" />
+	<input type='submit' value='Take this Quiz!' />
+	</form>
+					
 	<%
 	boolean taken = true;
 	if (QuizResult.getBestQuizTakers(quiz.getQuiz_id(), 0).size() == 0){
