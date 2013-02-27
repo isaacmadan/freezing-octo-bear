@@ -46,6 +46,10 @@ public class QuizResultTest {
 		double score = 3/(double)7;
 		DecimalFormat df = new DecimalFormat ("% 0");
 		System.out.println(df.format(score));
+		double score2 = 323423.0;
+		System.out.println("score: " + score2);
+		DecimalFormat df2 = new DecimalFormat ("#");
+		System.out.println(df2.format(score2));
 		
 	}
 	

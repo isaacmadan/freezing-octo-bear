@@ -21,6 +21,8 @@
 		ArrayList<User> users = new ArrayList<User>();
 		for (int i = 0; i < res.size(); i++) {
 			int id = res.get(i).userId;
+			
+			System.out.println(res.get(i).toString());
 			users.add(i,
 					manager.getAccountById(String.valueOf(quiz.getUser_id())));
 		}
@@ -30,7 +32,8 @@
 	/*I'm going to need a function that can display a single result*/
 
 	private static void listResult(JspWriter out, Result result, User user) {
-		int userId = result.userId;
+		
+		
 		double score = result.pointsScored / (double) result.maxPossiblePoints;
 		DecimalFormat df = new DecimalFormat("% 0");
 		String score2 = df.format(score);
@@ -45,6 +48,7 @@
 	//TODO TEST 
 	private static void listPerformers(JspWriter out, ArrayList<Result> res,
 			ArrayList<User> users) {
+		if (res == null || users == null) return;
 		try {
 			out.println("<table border=\"1\">");
 			out.println("<tr><th>User</th><th>Percent Score</th><th>Duration of Quiz</th><th>TimeTaken</th></tr>");
@@ -59,12 +63,13 @@
 	}%>
 
 <%
+	// SETUP
 	manager = new AccountManager();
 	//quiz = Quiz.getQuiz(Integer.parseInt(request
 	//		.getParameter("quiz_id")));
 	quiz = (new QuizManager()).getQuizByQuizId(7);
 	taker = manager.getAccountById("1");
-	
+	new QuizResult();
 	
 	
 	
@@ -101,7 +106,8 @@
 		%>
 		Summary
 	</h1>
- <%System.out.println(quiz.getUser_id() + quiz.getQuiz_id()); %>
+	
+ <%System.out.println(quiz.getUser_id() + " " + quiz.getQuiz_id()); %>
 
 	Quiz Writer:
 	<a href="profile.jsp?id=" <%=quiz.getUser_id()%>> <%=manager.getAccountById(String.valueOf(quiz.getUser_id()))
@@ -140,16 +146,17 @@
 				.getQuiz_id());
 		results = QuizResult.getResultStatistics(quiz.getQuiz_id());
 		DecimalFormat df = new DecimalFormat("% 0");
+		DecimalFormat df2 = new DecimalFormat ("#");
 		out.println("<p>Number of users who have taken this quiz: "
-				+ df.format(numStats.get(QuizResult.NUM_USERS)));
+				+ (df2.format(numStats.get(QuizResult.NUM_USERS))));
 		out.println("</p><p>Number of times this quiz has been taken: "
-				+ df.format(numStats.get(QuizResult.NUM_TIMES)));
+				+ (df2.format(numStats.get(QuizResult.NUM_TIMES))));
 		out.println("</p><p>Average Percent Correct: "
 				+ df.format(numStats.get(QuizResult.AVG_PERCENT)));
 		out.println("</p><p>Average time taken: "
-				+ df.format(numStats.get(QuizResult.AVG_TIME)));
+				+ df2.format((numStats.get(QuizResult.AVG_TIME))));
 		out.println("</p><p>Number of plays since yesterday: "
-				+ df.format(numStats.get(QuizResult.NUM_DAY_PLAYS)));
+				+df2.format((numStats.get(QuizResult.NUM_DAY_PLAYS))));
 
 		String tags[] = { "</p><p>Best Score: ", "</p><p>Worst Score: ",
 				"</p><p>Longest Play: ", "</p><p>Shortest Play: ",
@@ -163,7 +170,7 @@
 			String score = df.format(dscore);
 			String userName = manager.getAccountById(
 					String.valueOf(rs.userId)).getUsername();
-			out.println(tags[1] + score + " by <a href='profile.jsp?id="
+			out.println(tags[j] + score + " by <a href='profile.jsp?id="
 					+ rs.userId + "'>" + userName + "</a>");
 		}
 		out.println("</p");

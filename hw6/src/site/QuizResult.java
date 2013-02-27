@@ -512,7 +512,8 @@ public class QuizResult {
 		String execution = "SELECT AVG(duration) FROM results WHERE quiz_id = " + quizId;
 		try {
 			ResultSet set = stmt.executeQuery(execution);
-			return set.getLong(1);
+			set.first();
+			return (double) set.getLong(1);
 		} catch (SQLException ignored) {}		
 		return -1;
 	}
@@ -549,6 +550,7 @@ public class QuizResult {
 	 * @param quizID integer number of quiz
 	 * @return ResultList of statistics
 	 * */
+	
 	public static ArrayList<Result> getResultStatistics(int quizId){
 		ArrayList<Result> stats = new ArrayList<Result>();
 		stats.add(bestScoreResult(quizId));
