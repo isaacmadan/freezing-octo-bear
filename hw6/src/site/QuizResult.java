@@ -187,6 +187,7 @@ public class QuizResult {
 	public static ArrayList<Result> getUserPerformanceOnQuiz(int userId, int quizID){
 		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE user_id = " + userId + " AND quiz_id = " + quizID +
 				"  ORDER BY created_timestamp DESC";
+		System.out.println(execution);
 		ArrayList<Result> results = generateList(execution);
 		//		System.out.println(results.toString());
 		return results;
@@ -252,6 +253,7 @@ public class QuizResult {
 	/**Because no generics*/
 	private static ArrayList<Quiz> subQlist(int indexStart, int indexEnd, ArrayList<Quiz> result){
 		ArrayList<Quiz> results = new ArrayList<Quiz>();
+		if (indexEnd > results.size()) indexEnd = results.size() - 1;
 		for(int i = indexStart; i < indexEnd; i ++){
 			results.add(result.get(i));
 		}
@@ -467,31 +469,37 @@ public class QuizResult {
 	 * @return DoubleList of statistics
 	 * */
 	public static ArrayList<Double> getNumericStatistics(int quizID){
-		return null;
+		ArrayList<Double> stats = new ArrayList<Double>();
+		stats.add(numUsersTaken(quizID));
+		stats.add(numTimesTaken(quizID));
+		stats.add(averageCorrect(quizID));
+		stats.add(averageDuration(quizID));
+		stats.add(numPlayInDay(quizID));
+		return stats;
 	}
 
-	private static  int numUsersTaken(int quizId){
+	private static double numUsersTaken(int quizId){
 		String execution = "SELECT COUNT(*) from results GROUP BY user_id";
 		try {
 			ResultSet set = stmt.executeQuery(execution);
 			set.last();
-			return set.getRow();
+			return (double) set.getRow();
 		} catch (SQLException e) {}
 		return -1;
 	}
 
-	private static  int numTimesTaken(int quizId){
+	private static double numTimesTaken(int quizId){
 		String execution = "SELECT COUNT(*) from results WHERE quiz_id = " + quizId;
 		try {
 			ResultSet set = stmt.executeQuery(execution);
 			set.first();
-			return set.getInt("COUNT(*)");
+			return set.getDouble("COUNT(*)");
 		} catch (SQLException ignored) {}
 		return -1;
 	}
 
-	private static double averageCorrect(){
-		String execution = "SELECT AVG(user_score/max_score) FROM results";
+	private static double averageCorrect(int quizId){
+		String execution = "SELECT AVG(user_score/max_score) FROM results WHERE quiz_id = "+quizId;
 		try {
 			ResultSet set = stmt.executeQuery(execution);
 			set.first();
@@ -500,8 +508,8 @@ public class QuizResult {
 		return -1;
 	}
 
-	private static double averageDuration(){
-		String execution = "SELECT AVG(duration) FROM results";
+	private static double averageDuration(int quizId){
+		String execution = "SELECT AVG(duration) FROM results WHERE quiz_id = " + quizId;
 		try {
 			ResultSet set = stmt.executeQuery(execution);
 			return set.getLong(1);
@@ -509,12 +517,12 @@ public class QuizResult {
 		return -1;
 	}
 
-	private static int numPlayInDay(){
-		String execution = "SELECT * FROM results WHERE created_timestamp > DATE_SUB(NOW(), INTERVAL 24 HOUR)";
+	private static double numPlayInDay(int quizId){
+		String execution = "SELECT * FROM results WHERE created_timestamp > DATE_SUB(NOW(), INTERVAL 24 HOUR) AND quiz_id = " + quizId;
 		try {
 			ResultSet set = stmt.executeQuery(execution);
 			set.last();
-			return set.getRow();
+			return (double) set.getRow();
 		} catch (SQLException ignored) {}		
 		return -1;
 	}

@@ -60,11 +60,25 @@
 
 <%
 	manager = new AccountManager();
-	quiz = Quiz.getQuiz(Integer.parseInt(request
-			.getParameter("quiz_id")));
-	taker = manager.getAccountById(String.valueOf(request
-			.getParameter("user_id")));
-
+	//quiz = Quiz.getQuiz(Integer.parseInt(request
+	//		.getParameter("quiz_id")));
+	quiz = (new QuizManager()).getQuizByQuizId(7);
+	taker = manager.getAccountById("1");
+	
+	
+	
+	
+	//taker = (User) session.getAttribute("user");
+	if (taker == null){
+		RequestDispatcher dispath = request.getRequestDispatcher("unauthorized.jsp");
+		dispath.forward(request, response);	
+	}
+	if (quiz == null){
+		RequestDispatcher dispath = request.getRequestDispatcher("unauthorized.jsp");
+		dispath.forward(request, response);		
+	}
+	
+	
 	/*Each quiz should have a summary page which includes
 	 The text description of the quiz.
 	 The creator of the quiz (hot linked to the creators user page).
@@ -83,13 +97,16 @@
 </head>
 <body>
 	<h1>
-		<%=quiz.getTitle()%>
+		<%=quiz.getTitle()
+		%>
 		Summary
 	</h1>
+ <%System.out.println(quiz.getUser_id() + quiz.getQuiz_id()); %>
 
 	Quiz Writer:
 	<a href="profile.jsp?id=" <%=quiz.getUser_id()%>> <%=manager.getAccountById(String.valueOf(quiz.getUser_id()))
 					.getUsername()%></a>
+					
 	<br /><div><h3> Your past scores with this quiz:</h3></div>
 	<%
 		// List of user's past performance on specific quiz
