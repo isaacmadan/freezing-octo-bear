@@ -29,7 +29,7 @@
 	/**Writes html for single table entry in a html table listing results*/
 	private static void listResult(JspWriter out, Result result, User user) {
 		double score = result.pointsScored / (double) result.maxPossiblePoints;
-		DecimalFormat df = new DecimalFormat("% 0");
+		DecimalFormat df = new DecimalFormat("0%");
 		String score2 = df.format(score);
 		String date = java.text.DateFormat.getDateTimeInstance().format(
 				result.timeStamp);
@@ -158,7 +158,7 @@
 		ArrayList<Double> numStats = QuizResult.getNumericStatistics(quiz
 				.getQuiz_id());
 		results = QuizResult.getResultStatistics(quiz.getQuiz_id());
-		DecimalFormat df = new DecimalFormat("% 0");
+		DecimalFormat df = new DecimalFormat("0%");
 		DecimalFormat df2 = new DecimalFormat("#");
 		out.println("<p>Number of users who have taken this quiz: "
 				+ (df2.format(numStats.get(QuizResult.NUM_USERS))));

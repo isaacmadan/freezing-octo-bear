@@ -44,7 +44,7 @@ public class QuizResultTest {
 		System.out.println(QuizResult.getWorstQuizTakers(3, 0));
 		*/
 		double score = 3/(double)7;
-		DecimalFormat df = new DecimalFormat ("% 0");
+		DecimalFormat df = new DecimalFormat ("0%");
 		System.out.println(df.format(score));
 		double score2 = 323423.0;
 		System.out.println("score: " + score2);
