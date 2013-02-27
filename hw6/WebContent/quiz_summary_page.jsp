@@ -70,10 +70,10 @@
 	taker = (User) session.getAttribute("user");
 	quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request
 			.getParameter("quiz_id")));
-if (quiz == null) {
-	out.println("Sorry this quiz is fucked");
-	return;
-}
+	if (quiz == null) {
+		out.println("Sorry this quiz is fucked");
+		return;
+	}
 	new QuizResult();
 
 	if (taker == null) {
@@ -117,25 +117,29 @@ if (quiz == null) {
 	Quiz Writer:
 	<a href="profile.jsp?id=<%=quiz.getUser_id()%>"> <%=manager.getAccountById(String.valueOf(quiz.getUser_id()))
 					.getUsername()%></a>
-	<p>
-	</p>
-					
+	<p></p>
+
 	<form action="quiz_taker.jsp" method="POST">
-	<input type="hidden" name="quiz_id" value="<%= quiz.getQuiz_id() %>" />
-	<input type='submit' value='Take this Quiz!' />
+		<input type="hidden" name="quiz_id" value="<%=quiz.getQuiz_id()%>" />
+		<input type='submit' value='Take this Quiz!' />
 	</form>
-					
+
 	<%
-	boolean taken = true;
-	if (QuizResult.getBestQuizTakers(quiz.getQuiz_id(), 0).size() == 0){
-		taken = false;
-		out.println("<br /><br />Nobody has taken this quiz");
-	}
-	
+		boolean taken = true;
+		if (QuizResult.getBestQuizTakers(quiz.getQuiz_id(), 0).size() == 0) {
+			taken = false;
+			out.println("<br /><br />Nobody has taken this quiz");
+		}
 	%>
 	<br />
 	<div>
-		<h3><% if(taken){ out.println("Your past scores with this quiz:");}%></h3>
+		<h3>
+			<%
+				if (taken) {
+					out.println("Your past scores with this quiz:");
+				}
+			%>
+		</h3>
 	</div>
 	<%
 		// List of user's past performance on specific quiz
@@ -143,10 +147,16 @@ if (quiz == null) {
 				taker.getId(), quiz.getQuiz_id());
 		listPerformers(out, results, resultsToUsers(results));
 	%>
-	 
+
 	<br />
 	<div>
-		<h3><% if(taken){ out.println("Best Scores of all time:");}%></h3>
+		<h3>
+			<%
+				if (taken) {
+					out.println("Best Scores of all time:");
+				}
+			%>
+		</h3>
 	</div>
 	<%
 		// List of highest performers of all time
@@ -156,7 +166,13 @@ if (quiz == null) {
 	%>
 	<br />
 	<div>
-		<h3><% if(taken){ out.println("Best Scores in the last day:");}%></h3>
+		<h3>
+			<%
+				if (taken) {
+					out.println("Best Scores in the last day:");
+				}
+			%>
+		</h3>
 	</div>
 	<%
 		// List of recent best scores in the last day
@@ -166,7 +182,13 @@ if (quiz == null) {
 	%>
 	<br />
 	<div>
-		<h3><% if(taken){ out.println("Recent Quiz Scores");}%></h3>
+		<h3>
+			<%
+				if (taken) {
+					out.println("Recent Quiz Scores");
+				}
+			%>
+		</h3>
 	</div>
 	<%
 		// List of recent 
@@ -176,7 +198,13 @@ if (quiz == null) {
 	%>
 	<br />
 	<div>
-		<h3><% if(taken){ out.println("Statistics for this Quiz");}%></h3>
+		<h3>
+			<%
+				if (taken) {
+					out.println("Statistics for this Quiz");
+				}
+			%>
+		</h3>
 	</div>
 	<%
 		ArrayList<Double> numStats = QuizResult.getNumericStatistics(quiz
@@ -223,11 +251,20 @@ if (quiz == null) {
 		}
 	%>
 
-<% out.println("<a href='index.jsp?id="+taker.getId()+"'>My Homepage</a><br />"); %>	
-<a href = "make_quiz.jsp">Make a Quiz</a><br />
-<% out.println("<a href='profile.jsp?id="+taker.getId()+"'>My profile</a><br />"); %>
-<% out.println("<a href='inbox.jsp'>My inbox</a><br />"); %>
-<a href="logout.jsp">Logout</a>
+	<%
+		out.println("<a href='index.jsp?id=" + taker.getId()
+				+ "'>My Homepage</a><br />");
+	%>
+	<a href="make_quiz.jsp">Make a Quiz</a>
+	<br />
+	<%
+		out.println("<a href='profile.jsp?id=" + taker.getId()
+				+ "'>My profile</a><br />");
+	%>
+	<%
+		out.println("<a href='inbox.jsp'>My inbox</a><br />");
+	%>
+	<a href="logout.jsp">Logout</a>
 
 </body>
 </html>
