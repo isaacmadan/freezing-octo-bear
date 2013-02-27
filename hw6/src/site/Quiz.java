@@ -104,6 +104,7 @@ public class Quiz {
 			boolean practice_mode, String description, String title, 
 			boolean random_question, boolean one_page, boolean immediate_correction, 
 			Timestamp created_timestamp) {
+		this.setQuiz_id(quiz_id);
 		this.setUser_id(user_id);
 		this.setMax_score(max_score);
 		this.setPractice_mode(practice_mode);

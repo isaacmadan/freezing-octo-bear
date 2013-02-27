@@ -38,33 +38,41 @@ public class QuizManager {
 		this.request = request;
 		this.session = request.getSession();
 		this.user_id = ((User)session.getAttribute("user")).getId();
-		if(request.getAttribute("practice_mode") == null) this.practice_mode = false;
-		else this.practice_mode = true;
-		this.description = (String)request.getAttribute("quiz_description");
-		this.title = (String)request.getAttribute("quiz_title");
-		System.out.println("thhththt");
-		if(request.getAttribute("max_score") != null)
-			this.max_score = Integer.parseInt((String)request.getAttribute("max_score"));
-		if(request.getAttribute("random_question") == null) this.random_question = false;
-		else this.random_question = true;
-		if(request.getAttribute("one_page") == null) this.one_page = false;
-		else this.one_page = true;
-		if(request.getAttribute("immediate_correction") == null) this.immediate_correction = false;
-		else this.immediate_correction = true;
+		if(quiz.isPractice_mode()) this.practice_mode = true;
+		else this.practice_mode = false;
+		if(quiz.getDescription() != null) this.description = quiz.getDescription();
+		else this.description = "";
+		if(quiz.getTitle() != null) this.title = quiz.getTitle();
+		else this.title = "";
+		if(quiz.getMax_score() != 0) this.max_score = quiz.getMax_score();
+		else this.max_score = 0;
+		if(quiz.isRandom_question()) this.random_question = true;
+		else this.random_question = false;
+		if(quiz.isOne_page()) this.one_page = true;
+		else this.one_page = false;
+		if(quiz.isImmediate_correction()) this.immediate_correction = true;
+		else this.immediate_correction = false;
+		this.quiz = quiz;
 	}
 	
-	public void addQuizToDataBase() {
+	public String addQuizToDataBase() {
 		try {
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("INSERT INTO quizzes (user_id, practice_mode, description, title, max_score," +
-					"random_question, one_page, immediate_correction) VALUES(" + user_id + "," + practice_mode + "," +
-					description + "," + title + "," + max_score + "," + random_question + "," + one_page + "," + immediate_correction + ");");
+			String exeStr = "INSERT INTO quizzes (user_id, practice_mode, description, title, max_score," +
+					"random_question, one_page, immediate_correction) VALUES(" + user_id + "," + practice_mode + ",\"" +
+					description + "\",\"" + title + "\"," + max_score + "," + random_question + "," + one_page + "," + immediate_correction + ");";
+			
+			//stmt.executeUpdate(exeStr);
+			/*
 			if(request.getParameter("question_response_count") != null) addQuestionResponseToDataBase();
 			if(request.getParameter("fill_in_the_blank_count") != null) addFillInTheBlankToDataBase();
 			if(request.getParameter("multiple_choice_count") != null) addMultipleChoiceToDataBase();
 			if(request.getParameter("picture_response_count") != null) addPictureResponseToDataBase();
+			*/
+			return exeStr;
 		}
 		catch(Exception e) { }
+		return "";
 	}
 	
 	private void addQuestionResponseToDataBase() {
