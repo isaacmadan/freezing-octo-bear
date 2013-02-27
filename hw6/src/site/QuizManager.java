@@ -33,7 +33,7 @@ public class QuizManager {
 		this.quiz = quiz;
 	}
 	
-	public QuizManager(HttpServletRequest request) {
+	public QuizManager(HttpServletRequest request, Quiz quiz) {
 		con = MyDB.getConnection();
 		this.request = request;
 		this.session = request.getSession();
