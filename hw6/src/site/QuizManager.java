@@ -17,6 +17,7 @@ public class QuizManager {
 	private HttpServletRequest request;
 	private HttpSession session;
 	private int user_id;
+	private int quiz_id;
 	private boolean practice_mode;
 	private String description;
 	private String title;
@@ -53,6 +54,7 @@ public class QuizManager {
 		if(quiz.isImmediate_correction()) this.immediate_correction = true;
 		else this.immediate_correction = false;
 		this.quiz = quiz;
+		this.quiz_id = quiz.getQuiz_id();
 	}
 	
 	public void addQuizToDataBase() {
@@ -63,38 +65,41 @@ public class QuizManager {
 					description + "\",\"" + title + "\"," + max_score + "," + random_question + "," + one_page + "," + immediate_correction + ");";
 			
 			stmt.executeUpdate(exeStr);
-			/*
-			if(request.getParameter("question_response_count") != null) addQuestionResponseToDataBase();
-			if(request.getParameter("fill_in_the_blank_count") != null) addFillInTheBlankToDataBase();
-			if(request.getParameter("multiple_choice_count") != null) addMultipleChoiceToDataBase();
-			if(request.getParameter("picture_response_count") != null) addPictureResponseToDataBase();
-			*/
 		}
 		catch(Exception e) { }
 	}
 	
-	private void addQuestionResponseToDataBase() {
-		/*try {
+	public void addQuestionResponseToDataBase(String str, String answer) {
+		try {
 			Statement stmt = con.createStatement();
-			for(int i = 0; i < Integer.parseInt(request.getParameter("question_response_count")); i++) {
-				String addingToQuestionDB = "INSERT INTO questions (quiz_id, point_value, question_type)"
-						+ "VALUES(" + ;
+			String addingToQuestionDB = "INSERT INTO questions (quiz_id, point_value, question_type)"
+					+ "VALUES(" + this.quiz_id + ",1,1)";
+			stmt.executeUpdate(addingToQuestionDB, Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = stmt.getGeneratedKeys();
+			int question_id = 0;
+			if (rs.next()){
+				question_id = rs.getInt("question_id");
 			}
-			stmt.executeQuery("INSERT INTO quizzes (user_id, practice_mode, description, title, max_score," +
-					"random_question, one_page, immediate_correction) VALUES(" + user_id + "," + practice_mode + "," +
-					description + "," + title + "," + max_score + "," + random_question + "," + one_page + "," + immediate_correction + ");");
-		} catch(Exception e) { }*/
+			String addingToQRDB = "INSERT INTO question_responses (question_id, string)"
+					+ " VALUES(" + question_id + ",\"" + str + "\")";
+			stmt.executeUpdate(addingToQRDB, Statement.RETURN_GENERATED_KEYS);
+			rs = stmt.getGeneratedKeys();
+			String addingToAnswersDB = "INSERT INTO answers (question_id, string)" +
+					" VALUES(" + question_id + ",\"" + answer + "\")";
+			stmt.executeUpdate(addingToAnswersDB);
+			
+		} catch(Exception e) { }
 	}
 	
-	private void addFillInTheBlankToDataBase() {
+	public void addFillInTheBlankToDataBase() {
 		
 	}
 
-	private void addMultipleChoiceToDataBase() {
+	public void addMultipleChoiceToDataBase() {
 	
 	}
 
-	private void addPictureResponseToDataBase() {
+	public void addPictureResponseToDataBase() {
 	
 	}
 	

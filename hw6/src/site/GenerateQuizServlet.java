@@ -40,7 +40,6 @@ public class GenerateQuizServlet extends HttpServlet {
 		if(request.getParameter("fill_in_the_blank_count") == null) fillInTheBlankStatus = false;
 		if(request.getParameter("multiple_choice_count") == null) multipleChoiceStatus = false;
 		if(request.getParameter("picture_response_count") == null) pictureResponseStatus = false;
-		System.out.println("Max score is: " + request.getParameter("max_score"));
 		
 		Quiz quiz = new Quiz();
 		if(request.getParameter("quiz_description") != null) quiz.setDescription(request.getParameter("quiz_description"));
@@ -74,24 +73,26 @@ public class GenerateQuizServlet extends HttpServlet {
 		if(request.getParameter("quiz_description") != null)out.println("<p>" + request.getParameter("quiz_description") + "</p>");
 		else out.println("<p>No Description</p>");
 		
-		if(request.getParameter("question_response_count") != null) genQuestionResponse(out, request);
-		if(request.getParameter("fill_in_the_blank_count") != null) genFillInTheBlank(out, request);
-		if(request.getParameter("multiple_choice_count") != null) genMultipleChoice(out, request);
-		if(request.getParameter("picture_response_count") != null) genPictureResponse(out, request);
+		if(request.getParameter("question_response_count") != null) genQuestionResponse(out, request, manager);
+		if(request.getParameter("fill_in_the_blank_count") != null) genFillInTheBlank(out, request, manager);
+		if(request.getParameter("multiple_choice_count") != null) genMultipleChoice(out, request, manager);
+		if(request.getParameter("picture_response_count") != null) genPictureResponse(out, request, manager);
 		
 		out.println("<a href = \"index.jsp\">Go Back to Home Page</a>");
 		out.println("</body>");
 		out.println("</html>");
 	}
 
-	private void genQuestionResponse(PrintWriter out, HttpServletRequest request) {
+	private void genQuestionResponse(PrintWriter out, HttpServletRequest request, QuizManager manager) {
 		for(int i = 0; i < Integer.parseInt(request.getParameter("question_response_count")); i++) {
+			manager.addQuestionResponseToDataBase(request.getParameter("question_response_" + Integer.toString(i)),
+					request.getParameter("question_response_answer_" + Integer.toString(i)));
 			out.println("<p>Question: " + request.getParameter("question_response_" + Integer.toString(i)) + "</p>");
 			out.println("<p>Answer: " + request.getParameter("question_response_answer_" + Integer.toString(i)) + "</p>");
 		}
 	}
 	
-	private void genFillInTheBlank(PrintWriter out, HttpServletRequest request) {
+	private void genFillInTheBlank(PrintWriter out, HttpServletRequest request, QuizManager manager) {
 		for(int i = 0; i < Integer.parseInt(request.getParameter("fill_in_the_blank_count")); i++) {
 			out.println("<p>Question: " + request.getParameter("fill_in_the_blank_front_" + Integer.toString(i)) 
 					+ " _____ " + request.getParameter("fill_in_the_blank_back_" + Integer.toString(i)) + "</p>");
@@ -99,7 +100,7 @@ public class GenerateQuizServlet extends HttpServlet {
 		}
 	}
 
-	private void genMultipleChoice(PrintWriter out, HttpServletRequest request) {
+	private void genMultipleChoice(PrintWriter out, HttpServletRequest request, QuizManager manager) {
 		for(int i = 0; i < Integer.parseInt(request.getParameter("multiple_choice_count")); i++) {
 			out.println("<p>Question: " + request.getParameter("multiple_choice_" + Integer.toString(i)) + "</p>");
 			out.println("<p>Answer Choices: " + request.getParameter("multiple_choice_answer_choice_" + Integer.toString(i)) + "</p>");
@@ -107,7 +108,7 @@ public class GenerateQuizServlet extends HttpServlet {
 		}
 	}
 
-	private void genPictureResponse(PrintWriter out, HttpServletRequest request) {
+	private void genPictureResponse(PrintWriter out, HttpServletRequest request, QuizManager manager) {
 		for(int i = 0; i < Integer.parseInt(request.getParameter("picture_response_count")); i++) {
 			out.println("<p>Question: " + request.getParameter("picture_response_" + Integer.toString(i)) + "</p>");
 			out.println("<p>Answer: " + request.getParameter("picture_response_answer_" + Integer.toString(i)) + "</p>");
