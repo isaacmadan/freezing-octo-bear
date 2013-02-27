@@ -39,7 +39,7 @@
 		}
 	%>
 </table>
-<input type="submit" />
+<input type="submit" value="Update inbox"/>
 </form>
 
 <br />
