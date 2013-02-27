@@ -159,6 +159,7 @@
 		ArrayList<Double> numStats = QuizResult.getNumericStatistics(quiz
 				.getQuiz_id());
 		results = QuizResult.getResultStatistics(quiz.getQuiz_id());
+	if (results != null){			
 		DecimalFormat df = new DecimalFormat("0%");
 		DecimalFormat df2 = new DecimalFormat("#");
 		out.println("<p>Number of users who have taken this quiz: "
@@ -177,10 +178,16 @@
 				"</p><p>Most Recent Play: ", "</p><p>First Play: " };
 
 		results = QuizResult.getResultStatistics(quiz.getQuiz_id());
+	System.out.println(results.toString());
 
 		for (int j = 0; j < results.size(); j++) {
 			Result rs = results.get(j);
-			double dscore = (rs.pointsScored / (double) rs.maxPossiblePoints);
+			double dscore;
+			if (rs.maxPossiblePoints != 0){
+			dscore = (rs.pointsScored / (double) rs.maxPossiblePoints);
+			} else {
+				dscore = -1;
+			}
 			String score = df.format(dscore);
 			String userName = manager.getAccountById(
 					String.valueOf(rs.userId)).getUsername();
@@ -190,6 +197,9 @@
 					+ rs.dateString());
 		}
 		out.println("</p");
+	} else {
+		out.println("<p>Nobody has taken this quiz yet</p>");
+	}
 	%>
 
 

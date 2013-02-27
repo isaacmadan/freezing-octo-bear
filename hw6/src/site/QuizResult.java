@@ -554,6 +554,7 @@ public class QuizResult {
 		stats.add(shortestTimeResult(quizId));
 		stats.add(recentPlayResult(quizId));
 		stats.add(firstPlayResult(quizId));
+		if (stats.get(1) == null) return null;
 		return stats;
 	}
 
