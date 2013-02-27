@@ -53,10 +53,14 @@ public class MakeQuizServlet extends HttpServlet {
 		out.println("<form action=\"GenerateQuizServlet\" method=\"post\">");
 		out.println("<input name=\"quiz_name\" type=\"hidden\" value=\"" + request.getParameter("quiz_name") + "\">");
 		out.println("<input name=\"quiz_description\" type=\"hidden\" value=\"" + request.getParameter("quiz_description") + "\">");
-		out.println("<input name=\"practice_mode\" type=\"hidden\" value=\"" + request.getParameter("practice_mode") + "\">");
-		out.println("<input name=\"random_question\" type=\"hidden\" value=\"" + request.getParameter("random_question") + "\">");
-		out.println("<input name=\"one_page\" type=\"hidden\" value=\"" + request.getParameter("one_page") + "\">");
-		out.println("<input name=\"immediate_correction\" type=\"hidden\" value=\"" + request.getParameter("immediate_correction") + "\">");
+		if(request.getParameter("practice_mode") != null)
+			out.println("<input name=\"practice_mode\" type=\"hidden\" value=\"" + request.getParameter("practice_mode") + "\">");
+		if(request.getParameter("random_question") != null)
+			out.println("<input name=\"random_question\" type=\"hidden\" value=\"" + request.getParameter("random_question") + "\">");
+		if(request.getParameter("one_page") != null)
+			out.println("<input name=\"one_page\" type=\"hidden\" value=\"" + request.getParameter("one_page") + "\">");
+		if(request.getParameter("immediate_correction") != null)
+			out.println("<input name=\"immediate_correction\" type=\"hidden\" value=\"" + request.getParameter("immediate_correction") + "\">");
 		int maxScore = 0;
 		
 		if(questionResponseStatus == true) {

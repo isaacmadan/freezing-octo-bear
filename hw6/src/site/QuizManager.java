@@ -55,24 +55,22 @@ public class QuizManager {
 		this.quiz = quiz;
 	}
 	
-	public String addQuizToDataBase() {
+	public void addQuizToDataBase() {
 		try {
 			Statement stmt = con.createStatement();
 			String exeStr = "INSERT INTO quizzes (user_id, practice_mode, description, title, max_score," +
 					"random_question, one_page, immediate_correction) VALUES(" + user_id + "," + practice_mode + ",\"" +
 					description + "\",\"" + title + "\"," + max_score + "," + random_question + "," + one_page + "," + immediate_correction + ");";
 			
-			//stmt.executeUpdate(exeStr);
+			stmt.executeUpdate(exeStr);
 			/*
 			if(request.getParameter("question_response_count") != null) addQuestionResponseToDataBase();
 			if(request.getParameter("fill_in_the_blank_count") != null) addFillInTheBlankToDataBase();
 			if(request.getParameter("multiple_choice_count") != null) addMultipleChoiceToDataBase();
 			if(request.getParameter("picture_response_count") != null) addPictureResponseToDataBase();
 			*/
-			return exeStr;
 		}
 		catch(Exception e) { }
-		return "";
 	}
 	
 	private void addQuestionResponseToDataBase() {

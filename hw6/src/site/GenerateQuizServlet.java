@@ -45,7 +45,7 @@ public class GenerateQuizServlet extends HttpServlet {
 		Quiz quiz = new Quiz();
 		if(request.getParameter("quiz_description") != null) quiz.setDescription(request.getParameter("quiz_description"));
 		else quiz.setDescription(null);
-		if(request.getParameter("quiz_title") != null) quiz.setTitle(request.getParameter("quiz_title"));
+		if(request.getParameter("quiz_name") != null) quiz.setTitle(request.getParameter("quiz_name"));
 		else quiz.setTitle(null);
 		if(request.getParameter("max_score") != null) quiz.setMax_score(Integer.parseInt(request.getParameter("max_score")));
 		else quiz.setMax_score(0);
@@ -61,7 +61,7 @@ public class GenerateQuizServlet extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		QuizManager manager = new QuizManager(request, quiz);
-		String result = manager.addQuizToDataBase();
+		manager.addQuizToDataBase();
 		out.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">");
 		out.println("<html>");
 		out.println("<head>");
@@ -69,7 +69,6 @@ public class GenerateQuizServlet extends HttpServlet {
 		out.println("<title>Here is the Quiz!</title>");
 		out.println("</head>");
 		out.println("<body>");
-		out.println("<h5>The result is: " + result + "</h5>");
 		if(request.getParameter("quiz_name") != null) out.println("<h3>" + request.getParameter("quiz_name") + "</h3>");
 		else out.println("<h3>No Name</h3>");
 		if(request.getParameter("quiz_description") != null)out.println("<p>" + request.getParameter("quiz_description") + "</p>");
