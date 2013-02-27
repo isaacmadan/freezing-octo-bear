@@ -70,7 +70,10 @@
 	taker = (User) session.getAttribute("user");
 	quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request
 			.getParameter("quiz_id")));
-
+if (quiz == null) {
+	out.println("Sorry this quiz is fucked");
+	return;
+}
 	new QuizResult();
 
 	if (taker == null) {
@@ -114,6 +117,8 @@
 	Quiz Writer:
 	<a href="profile.jsp?id=<%=quiz.getUser_id()%>"> <%=manager.getAccountById(String.valueOf(quiz.getUser_id()))
 					.getUsername()%></a>
+	<p>
+	</p>
 					
 	<form action="quiz_taker.jsp" method="POST">
 	<input type="hidden" name="quiz_id" value="<%= quiz.getQuiz_id() %>" />
