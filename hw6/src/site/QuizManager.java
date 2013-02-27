@@ -54,7 +54,6 @@ public class QuizManager {
 		if(quiz.isImmediate_correction()) this.immediate_correction = true;
 		else this.immediate_correction = false;
 		this.quiz = quiz;
-		this.quiz_id = quiz.getQuiz_id();
 	}
 	
 	public void addQuizToDataBase() {
@@ -63,8 +62,10 @@ public class QuizManager {
 			String exeStr = "INSERT INTO quizzes (user_id, practice_mode, description, title, max_score," +
 					"random_question, one_page, immediate_correction) VALUES(" + user_id + "," + practice_mode + ",\"" +
 					description + "\",\"" + title + "\"," + max_score + "," + random_question + "," + one_page + "," + immediate_correction + ");";
-			
-			stmt.executeUpdate(exeStr);
+			stmt.executeUpdate(exeStr, Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = stmt.getGeneratedKeys();
+			if(rs.next())
+				this.quiz_id = rs.getInt(1);
 		}
 		catch(Exception e) { }
 	}
@@ -78,7 +79,7 @@ public class QuizManager {
 			ResultSet rs = stmt.getGeneratedKeys();
 			int question_id = 0;
 			if (rs.next()){
-				question_id = rs.getInt("question_id");
+				question_id = rs.getInt(1);
 			}
 			String addingToQRDB = "INSERT INTO question_responses (question_id, string)"
 					+ " VALUES(" + question_id + ",\"" + str + "\")";
@@ -87,7 +88,6 @@ public class QuizManager {
 			String addingToAnswersDB = "INSERT INTO answers (question_id, string)" +
 					" VALUES(" + question_id + ",\"" + answer + "\")";
 			stmt.executeUpdate(addingToAnswersDB);
-			
 		} catch(Exception e) { }
 	}
 	
