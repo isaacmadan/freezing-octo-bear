@@ -16,7 +16,8 @@
 	private Quiz quiz;
 	private AccountManager manager;
 	private User taker;
-
+	private User challenger;
+	
 	private ArrayList<User> resultsToUsers(ArrayList<Result> res) {
 		ArrayList<User> users = new ArrayList<User>();
 		for (int i = 0; i < res.size(); i++) {
