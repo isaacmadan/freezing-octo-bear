@@ -5,15 +5,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Quiz Result</title>
 </head>
 <body>
 Congrats, you have finished the quiz:
 
 Your results:
 
-Retake quiz
-Review answers
 
+
+<br>
+<a href = "index.jsp">Back to Home</a>
 </body>
 </html>

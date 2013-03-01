@@ -24,66 +24,112 @@ public class Quiz {
 	public void populateQuiz() {
 		try{
 			Connection con = (Connection) MyDB.getConnection();
+			Connection con2 = (Connection) MyDB.getConnection();
 			Statement stmt = con.createStatement();
+			Statement stmt2 = con2.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM questions WHERE quiz_id="+quiz_id);
+			//System.out.println("SELECT * FROM questions WHERE quiz_id="+quiz_id);
 			ArrayList<Question> questions = new ArrayList<Question>();
 			while(rs.next()) {
 				int type = rs.getInt("question_type");
+				System.out.println("Question type is: " + type);
 				int question_id = rs.getInt("question_id");
+				System.out.println("Question ID is: " + question_id);
 				if(type == 1) {
 					String getFromQRDB = "SELECT * FROM question_responses WHERE question_id = "
 							+ question_id;
-					rs = stmt.executeQuery(getFromQRDB);
+					
+					ResultSet rss = null;
+					try{
+						rss = stmt2.executeQuery(getFromQRDB);
+					} catch(Exception e) { System.out.println("1: " + e); }
 					Answer answer = new Answer();
-					Question question = new QuestionResponseQuestion(rs.getInt("question_id"), 
-							quiz_id, 1, type, answer, rs.getInt("question_response_id"), rs.getString("string"));
+					Question question = null;
+					while(rss.next()) {
+						System.out.println("Question ID is: " + rss.getInt("question_id"));
+						question = new QuestionResponseQuestion(rss.getInt("question_id"), 
+							quiz_id, 1, type, answer, rss.getInt("question_responses_id"), rss.getString("string"));
+					}
 					String getFromAnswer = "SELECT * FROM answers WHERE question_id = " + question_id;
-					rs = stmt.executeQuery(getFromAnswer);
-					answer.addAnswer(rs.getString("string"));
+					while(rss.next()) {
+						rss = stmt2.executeQuery(getFromAnswer);
+						answer.addAnswer(rss.getString("string"));
+					}
 					questions.add(question);
+					System.out.println("added a question of type 1");
 				}
 				else if(type == 2) {
 					String getFromFITBDB = "SELECT * FROM fill_in_the_blanks WHERE question_id = "
 							+ question_id;
-					rs = stmt.executeQuery(getFromFITBDB);
+					ResultSet rss = stmt2.executeQuery(getFromFITBDB);
 					Answer answer = new Answer();
-					Question question = new FillInTheBlankQuestion(rs.getInt("question_id"),
-							quiz_id, 1, type, answer, rs.getInt("fill_in_the_blank_id"), 
-							rs.getString("string_1"), rs.getString("string_2"));
+					Question question = null;
+					while(rss.next()) {
+						question = new FillInTheBlankQuestion(rss.getInt("question_id"),
+							quiz_id, 1, type, answer, rss.getInt("fill_in_the_blanks_id"), 
+							rss.getString("string_1"), rss.getString("string_2"));
+					}
 					String getFromAnswer = "SELECT * FROM answers WHERE question_id = " + question_id;
-					rs = stmt.executeQuery(getFromAnswer);
-					answer.addAnswer(rs.getString("string"));
+					rss = stmt2.executeQuery(getFromAnswer);
+					while(rss.next()) {
+						answer.addAnswer(rss.getString("string"));
+					}
 					questions.add(question);	
+					System.out.println("added a question of type 2");
 				}
 				else if(type == 3) {
 					String getFromMCDB = "SELECT * FROM multiple_choices WHERE question_id = "
 							+ question_id;
-					rs = stmt.executeQuery(getFromMCDB);
+					ResultSet rss = stmt2.executeQuery(getFromMCDB);
 					Answer answer = new Answer();
 					ArrayList<MultipleChoiceChoices> choices = new ArrayList<MultipleChoiceChoices>();
-					Question question = new MultipleChoiceQuestion(rs.getInt("question_id"),
-							quiz_id, 1, type, answer, rs.getInt("multiple_choice_id"), 
-							rs.getString("string"), choices);
+					Question question = null;
+					int mc_id = 0;
+					while(rss.next()) {
+						question = new MultipleChoiceQuestion(rss.getInt("question_id"),
+							quiz_id, 1, type, answer, rss.getInt("multiple_choice_id"), 
+							rss.getString("string"), choices);
+						mc_id = rss.getInt("multiple_choice_id");
+					}
+					String getFromMCCDB = "SELECT * FROM multiple_choices_choices WHERE multiple_choices_id = "
+							+ mc_id;
 					
-					
-					MultipleChoiceChoices(String choiceString)
-							
-							
-							
-							
-							
+					rss = stmt2.executeQuery(getFromMCCDB);
+					while(rss.next()) {
+						choices.add(new MultipleChoiceChoices(rss.getString("string")));
+					}
 					String getFromAnswer = "SELECT * FROM answers WHERE question_id = " + question_id;
-					rs = stmt.executeQuery(getFromAnswer);
-					answer.addAnswer(rs.getString("string"));
+					rss = stmt2.executeQuery(getFromAnswer);
+					while(rss.next()) {
+						answer.addAnswer(rss.getString("string"));
+					}
 					questions.add(question);
+					System.out.println("added a question of type 3");
 				}
 				else {
-					
+					String getFromPRDB = "SELECT * FROM picture_responses WHERE question_id = "
+							+ question_id;
+					ResultSet rss = stmt2.executeQuery(getFromPRDB);
+					Answer answer = new Answer();
+					Question question = null;
+					while(rss.next()) {
+						question = new PictureResponseQuestion(rss.getInt("question_id"),
+							quiz_id, 1, type, answer, rss.getInt("picture_responses_id"), 
+							rss.getString("string"));
+					}
+					String getFromAnswer = "SELECT * FROM answers WHERE question_id = " + question_id;
+					rss = stmt2.executeQuery(getFromAnswer);
+					while(rss.next()) {
+						answer.addAnswer(rss.getString("string"));
+					}
+					questions.add(question);
+					System.out.println("added a question of type 4");
 				}	
+				System.out.println("finishes one loop");
 			}
 			this.setQuestions(questions);
 		} catch(Exception e) {
-			
+			e.printStackTrace();
 		}
 	}
 	
