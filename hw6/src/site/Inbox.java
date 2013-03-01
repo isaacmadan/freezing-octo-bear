@@ -25,6 +25,43 @@ public class Inbox {
 		this.messages = messages;
 	}
 	
+	/**
+	 * 
+	 * @param user_id
+	 * @param interval the number of days prior to receive messages until (typically 3)
+	 * @return
+	 */
+	public static ArrayList<TextMessage> getRecentMessagesById(int user_id, int interval) {
+		ArrayList<TextMessage> messages = new ArrayList<TextMessage>();
+		
+		int messageId = 0;
+		String date = "";
+		String fromUserId = "";
+		String content = "";
+		int messageType = 0;
+		
+		AccountManager manager = new AccountManager();
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String query = "SELECT * FROM messages WHERE to_id="+user_id+" AND created_timestamp >= ( CURDATE() - INTERVAL "+interval+" DAY ) ORDER BY created_timestamp DESC";
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				
+				messageId = rs.getInt("message_id");
+				date = String.valueOf(rs.getTimestamp("created_timestamp"));
+				fromUserId = rs.getString("from_id");
+				content = rs.getString("content");
+				messageType = rs.getInt("message_type");
+				TextMessage message = new TextMessage(messageId, manager.getAccountById(fromUserId), manager.getAccountById(String.valueOf(user_id)), messageType, content, date);
+				messages.add(message);
+			}
+		}
+		catch(Exception e) { System.out.println(e); }
+		
+		return messages;
+	}
+	
 	public static ArrayList<TextMessage> getMessagesById(int user_id) {
 		ArrayList<TextMessage> messages = new ArrayList<TextMessage>();
 		
@@ -38,7 +75,7 @@ public class Inbox {
 		Connection con = MyDB.getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			String query = "SELECT * FROM messages WHERE to_id="+user_id;
+			String query = "SELECT * FROM messages WHERE to_id="+user_id+" ORDER BY created_timestamp DESC";
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
 				

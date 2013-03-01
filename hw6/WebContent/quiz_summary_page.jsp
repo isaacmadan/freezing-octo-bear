@@ -117,18 +117,21 @@
 			if(request.getParameter("challenger_id") != null) {
 				challenger = manager.getAccountById(request.getParameter("challenger_id"));
 			}
-			int challengerBestScore = -1;
+			String challengerBestScore = "";
 			if(request.getParameter("challenger_best_score") != null) {
-				challengerBestScore = Integer.parseInt(request.getParameter("challenger_best_score"));
+				challengerBestScore = request.getParameter("challenger_best_score");
 			}
 			if(challenger != null) {
-				out.println(challenger.getUsername()+" has challenged you! Their best score is " + challengerBestScore + ".");
+				String bestScoreString = "Their best score is " + challengerBestScore + ".";
+				if(challengerBestScore.equals("-1"))
+					bestScoreString = "They haven't taken this quiz yet.";
+				out.println(challenger.getUsername()+" has challenged you! " + bestScoreString);
 			}
 		%>
 		</h3>
 	</div>
 
-	Quiz Writer:
+	Quiz Author:
 	<a href="profile.jsp?id=<%=quiz.getUser_id()%>"> <%=manager.getAccountById(String.valueOf(quiz.getUser_id()))
 					.getUsername()%></a>
 	<p></p>
@@ -140,6 +143,7 @@
 	
 	<form action="challenge.jsp" method="POST">
 		<input type="hidden" name="challenger_id" value="<%=taker.getId()%>" />
+		<input type="hidden" name="quiz_id" value="<%=quiz.getQuiz_id()%>" />
 		<select name="friend_id">
   			<% 
   			HashSet<Integer> friends = manager.getFriends(taker.getId()); 

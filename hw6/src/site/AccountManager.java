@@ -216,6 +216,22 @@ public class AccountManager {
 		catch(Exception e) {} 
 	}
 	
+	public void sendChallenge(String challengerScore, String quizId, String from_id, String to_id) {
+		User fromUser = this.getAccountById(from_id);
+		User toUser = this.getAccountById(to_id);
+
+		int messageType = 2; //challenge
+		String content = fromUser.getUsername()+" has challenged you to a quiz. " +
+				"<form action=\\'quiz_summary_page.jsp\\' method=\\'POST\\'>" +
+				"<input type=\\'hidden\\' name=\\'challenger_best_score\\' value=\\'"+challengerScore+"\\' />" +
+				"<input type=\\'hidden\\' name=\\'challenger_id\\' value=\\'"+fromUser.getId()+"\\' />" +
+				"<input type=\\'hidden\\' name=\\'quiz_id\\' value=\\'"+quizId+"\\' />" +
+				"<input type=\\'submit\\' value=\\'Take the quiz!\\' /></form>";
+		
+		TextMessage message = new TextMessage(fromUser,toUser,messageType,content);
+		Inbox.sendTextMessage(message);
+	}
+	
 	public void sendFriendRequest(String from_id, String to_id) {
 		User fromUser = this.getAccountById(from_id);
 		User toUser = this.getAccountById(to_id);

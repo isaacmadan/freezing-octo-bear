@@ -120,7 +120,26 @@ if(achievementsStrings.size() == 0)
 </div>
 <hr>
 
-<div><h3>Messages</h3></div><hr>
+<div><h3>Messages</h3>
+
+	<%
+		//AccountManager manager = new AccountManager();
+		ArrayList<TextMessage> messages = Inbox.getRecentMessagesById(user.getId(), 3);
+		out.println("You've received "+messages.size()+" new messages in the past 3 days.<br />");
+		int numNotes = 0;
+		int numChallenges = 0;
+		int numFriendRequests = 0;
+		if(messages.size() > 0) {
+			for(TextMessage message : messages) {
+				if(message.getMessageType() == 1) numFriendRequests++;
+				if(message.getMessageType() == 2) numChallenges++;
+				if(message.getMessageType() == 3) numNotes++;
+			}
+			out.println("("+numFriendRequests+" Friend Requests, "+numChallenges+" Challenges, and "+numNotes+" Notes)");
+		}
+	%>
+
+</div><hr>
 <div><h3>Recent Friends' Activities</h3></div><hr>
 <div><h3>Search</h3>
 	<form action="search.jsp" method="GET">
@@ -130,8 +149,9 @@ if(achievementsStrings.size() == 0)
 </div>
 <hr>
 <a href = "make_quiz.jsp">Make a Quiz</a><br />
-<% out.println("<a href='profile.jsp?id="+user.getId()+"'>My profile</a><br />"); %>
+<% out.println("<a href='profile.jsp?id="+user.getId()+"'>My public profile</a><br />"); %>
 <% out.println("<a href='inbox.jsp'>My inbox</a><br />"); %>
+<% out.println("<a href='history.jsp'>My performance history</a><br />"); %>
 <a href="logout.jsp">Logout</a>
 </body>
 </html>

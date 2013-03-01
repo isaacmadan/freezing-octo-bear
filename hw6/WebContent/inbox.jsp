@@ -32,10 +32,13 @@
 <table border="1">
 	<tr><th>Date</th><th>From</th><th>Message</th><th>Delete</th></tr>
 	<%
+		AccountManager manager = new AccountManager();
 		ArrayList<TextMessage> messages = Inbox.getMessagesById(user.getId());
 		out.println("<input type='hidden' name='num_messages' value='"+messages.size()+"' />");
 		for(int i=0; i<messages.size(); i++) {
-			out.println("<tr><td>"+messages.get(i).getTimestamp()+"</td><td>"+messages.get(i).getFromUser().getUsername()+"</td><td>"+messages.get(i).getNote()+"</td><td><input type='checkbox' name='delete_"+i+"' value='"+messages.get(i).getMessageId()+"' /></td></tr>");
+			User fromUser = messages.get(i).getFromUser();
+			
+			out.println("<tr><td>"+messages.get(i).getTimestamp()+"</td><td>"+"<a href='profile.jsp?id="+fromUser.getId()+"'>"+fromUser.getUsername()+"</a>"+"</td><td>"+messages.get(i).getNote()+"</td><td><input type='checkbox' name='delete_"+i+"' value='"+messages.get(i).getMessageId()+"' /></td></tr>");
 		}
 	%>
 </table>
