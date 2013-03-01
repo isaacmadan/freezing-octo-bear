@@ -140,7 +140,23 @@ if(achievementsStrings.size() == 0)
 	%>
 
 </div><hr>
-<div><h3>Recent Friends' Activities</h3></div><hr>
+<div><h3>Recent Friends' Activities</h3>
+
+<%
+	HashSet<Integer> friendsIds = accountManager.getFriends(user.getId());
+	for(Integer friendId : friendsIds) {
+		User friend = accountManager.getAccountById(String.valueOf(friendId));
+		out.println("<h4>"+friend.getUsername()+"</h4>");
+		Achievements friendAchievements = accountManager.getAchievements(friend.getId());
+		ArrayList<String> friendAchievementsStrings = friendAchievements.getStrings();
+		out.println("Earned: ");
+		for(String str : friendAchievementsStrings) {
+			out.println(str);
+		}
+	}
+%>
+
+</div><hr>
 <div><h3>Search</h3>
 	<form action="search.jsp" method="GET">
 		<input type="text" name="query" />
