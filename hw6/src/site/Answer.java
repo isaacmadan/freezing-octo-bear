@@ -6,6 +6,10 @@ public class Answer {
 
 	private HashSet<String> answers;
 	
+	public Answer() {
+		answers = new HashSet<String>();
+	}
+	
 	public Answer(String strToSplit, String symbol) {
 		String[] result = strToSplit.split(symbol);
 		answers = new HashSet<String>();

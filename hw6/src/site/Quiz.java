@@ -1,7 +1,12 @@
 package site;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+
+import com.mysql.jdbc.Connection;
 
 /**	quiz_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	user_id INT,
@@ -15,6 +20,72 @@ import java.util.ArrayList;
     created_timestamp TIMESTAMP*/
 
 public class Quiz {
+	
+	public void populateQuiz() {
+		try{
+			Connection con = (Connection) MyDB.getConnection();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM questions WHERE quiz_id="+quiz_id);
+			ArrayList<Question> questions = new ArrayList<Question>();
+			while(rs.next()) {
+				int type = rs.getInt("question_type");
+				int question_id = rs.getInt("question_id");
+				if(type == 1) {
+					String getFromQRDB = "SELECT * FROM question_responses WHERE question_id = "
+							+ question_id;
+					rs = stmt.executeQuery(getFromQRDB);
+					Answer answer = new Answer();
+					Question question = new QuestionResponseQuestion(rs.getInt("question_id"), 
+							quiz_id, 1, type, answer, rs.getInt("question_response_id"), rs.getString("string"));
+					String getFromAnswer = "SELECT * FROM answers WHERE question_id = " + question_id;
+					rs = stmt.executeQuery(getFromAnswer);
+					answer.addAnswer(rs.getString("string"));
+					questions.add(question);
+				}
+				else if(type == 2) {
+					String getFromFITBDB = "SELECT * FROM fill_in_the_blanks WHERE question_id = "
+							+ question_id;
+					rs = stmt.executeQuery(getFromFITBDB);
+					Answer answer = new Answer();
+					Question question = new FillInTheBlankQuestion(rs.getInt("question_id"),
+							quiz_id, 1, type, answer, rs.getInt("fill_in_the_blank_id"), 
+							rs.getString("string_1"), rs.getString("string_2"));
+					String getFromAnswer = "SELECT * FROM answers WHERE question_id = " + question_id;
+					rs = stmt.executeQuery(getFromAnswer);
+					answer.addAnswer(rs.getString("string"));
+					questions.add(question);	
+				}
+				else if(type == 3) {
+					String getFromMCDB = "SELECT * FROM multiple_choices WHERE question_id = "
+							+ question_id;
+					rs = stmt.executeQuery(getFromMCDB);
+					Answer answer = new Answer();
+					ArrayList<MultipleChoiceChoices> choices = new ArrayList<MultipleChoiceChoices>();
+					Question question = new MultipleChoiceQuestion(rs.getInt("question_id"),
+							quiz_id, 1, type, answer, rs.getInt("multiple_choice_id"), 
+							rs.getString("string"), choices);
+					
+					
+					MultipleChoiceChoices(String choiceString)
+							
+							
+							
+							
+							
+					String getFromAnswer = "SELECT * FROM answers WHERE question_id = " + question_id;
+					rs = stmt.executeQuery(getFromAnswer);
+					answer.addAnswer(rs.getString("string"));
+					questions.add(question);
+				}
+				else {
+					
+				}	
+			}
+			this.setQuestions(questions);
+		} catch(Exception e) {
+			
+		}
+	}
 	
 	public int getUser_id() {
 		return user_id;

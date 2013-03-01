@@ -13,7 +13,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <%
-	setup(request, session, out);
+	setup(request, response, session, out);
 %>
 
 <title><%=thisQuiz.getTitle()%></title>
@@ -34,7 +34,29 @@
 <%!
 
 
-private void setup(HttpServletRequest request, HttpSession session, JspWriter out) {
+private void setup(HttpServletRequest request, HttpServletResponse response, HttpSession session, JspWriter out) {
+// NO TOUCH, USER AUTH CODE
+		if(session == null) {
+			RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
+			try {
+				dispatch.forward(request, response);
+			} catch (Exception e) {
+				
+			}
+			return;
+		}
+		
+		User user = (User)session.getAttribute("user");
+		if(user == null) {
+			RequestDispatcher dispatch = request.getRequestDispatcher("unauthorized.jsp");
+			try {
+				dispatch.forward(request, response);
+			} catch (Exception e) {	
+				
+			}
+			return;
+		}
+// END
 		thisQuiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request
 				.getParameter("quiz_id")));
 		taker = (User) session.getAttribute("user");
@@ -50,18 +72,17 @@ private void setup(HttpServletRequest request, HttpSession session, JspWriter ou
 			}
 		} catch (IOException ignored) {
 		}
+		thisQuiz.populateQuiz(); // fills quiz with questions
 		
-		questions = (new Quiz()).getQuestions();
+		questions = thisQuiz.getQuestions();
 		answers = new ArrayList<Answer>();
 		for(int i = 0; i < questions.size(); i++){
 			Question q = questions.get(i);
 			Answer a = q.getAnswer();
 			answers.add(a);
 		}
+		
 	}
-
-
-	
 %>
 
 
