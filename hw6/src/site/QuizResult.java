@@ -40,9 +40,7 @@ public class QuizResult {
 				",NULL, "+quizId+", "+pointsScored+", "+maxPossiblePoints+", "+duration + ",NOW())";  
 		String execution2 = "SELECT LAST_INSERT_ID()";
 		try {
-			System.out.println(execution);
 			stmt.executeUpdate(execution);
-			System.out.println("HERE");
 			ResultSet set = stmt.executeQuery(execution2);
 			set.first();
 			return set.getInt("LAST_INSERT_ID()");

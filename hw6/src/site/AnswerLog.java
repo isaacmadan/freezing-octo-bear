@@ -40,7 +40,7 @@ public class AnswerLog{
 		}
 	}
 	
-	public static void cacheUserAnswer(int quiz_id, int user_id, int result_id, String answer) {
+	public static void cacheUserAnswer(int questionId, int userId, int resultId, String answer) {
 		
 	}
 	

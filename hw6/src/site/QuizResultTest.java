@@ -53,8 +53,8 @@ public class QuizResultTest {
 	
 	@Test
 	public void test3(){
-		int last = QuizResult.addResult(1, 2, 3, 5, 10101);
-		System.out.println("Last added ID = " + last);
+		new AdminControl();
+		System.out.println(AdminControl.getAnnouncements(2));
 	}
 	
 	@After
