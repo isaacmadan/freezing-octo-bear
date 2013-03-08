@@ -42,6 +42,8 @@
 	<p><%=thisQuiz.getDescription()%></p>
 	<form action="finished_quiz.jsp" method="POST">
 		<%
+		out.println("<input type = \"hidden\" name = \"count\" value = \"" + Integer.toString(questions.size())
+				+ "\">");
 		for(int i = 0; i < questions.size(); i++) {
 			int type = questions.get(i).getQuestionType();
 			if(type == 1) {

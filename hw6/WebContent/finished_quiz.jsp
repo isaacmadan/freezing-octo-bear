@@ -12,12 +12,32 @@
 <title>Quiz Result</title>
 </head>
 <body>
-Congrats, you have finished the quiz:
-
+<p>
+Congrats, you have finished the quiz!
+</p>
+<p>
 Your results:
+<br>
+<%
+String str = request.getParameter("count");
+
+//for(int i = 0; i = Integer.parseInt(str); i++) {
+	
+//}
 
 
 
+
+
+%>
+<%= str %>
+	user_score INT,
+	max_score INT,
+	duration INT,
+    created_timestamp TIMESTAMP
+
+
+</p>
 <br>
 <a href = "index.jsp">Back to Home</a>
 </body>
