@@ -33,20 +33,18 @@ public class QuizResult {
 	}
 	/**Adds a result to the SQL results database, either by passing in a bunch of parameters
 	 * Or first generating a Result and passing it in. 
-	 * 
-	 * The first type takes care of the timestamp and other things by itself
-	 * 
-	 * How do you add dates to an sql?
-	 * These are not functional yet, because I don't know how dates work yet
-	 * 
+	 * And returns the result Id that it creates. Returns -1 on failure
 	 * */
-	public static void addResult(int quizTakerId, int quizId, int pointsScored, int maxPossiblePoints, long duration ){
+	public static int addResult(int quizTakerId, int quizId, int pointsScored, int maxPossiblePoints, long duration ){
 		String execution = "INSERT INTO " + RESULT_DATABASE + " VALUES('"+quizTakerId+
 				"', '"+quizId+"', '"+pointsScored+"', '"+maxPossiblePoints+"', '"+duration;  
+		String execution2 = "SELECT LAST_INSERT_ID()";
 		try {
 			stmt.executeUpdate(execution);
+			return 0;
 		} catch (SQLException e) {
 		}
+		return -1;
 	}
 
 	public static void addResult(Result r){
