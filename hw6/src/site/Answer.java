@@ -1,5 +1,9 @@
 package site;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashSet;
 
 public class Answer {
@@ -42,4 +46,21 @@ public class Answer {
 	public void setAnswers(HashSet<String> answers) {
 		this.answers = answers;
 	}
+	
+	public Answer getAnswerForQuestion(int questionID){
+			Connection con = MyDB.getConnection();
+			try {
+				Statement stmt = con.createStatement();
+				String execution = "Select * from answers WHERE question_id = " + Integer.toString(questionID);
+				ResultSet set = stmt.executeQuery(execution);
+				set.first();
+				Answer result = (new Answer(set.getString("string"),","));
+				MyDB.close();
+				return result;
+			} catch (SQLException e) {
+				MyDB.close();
+				return (new Answer("FailedQuery"," "));
+			}
+			
+		}
 }
