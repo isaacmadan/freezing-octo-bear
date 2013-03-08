@@ -19,18 +19,24 @@ Congrats, you have finished the quiz!
 Your results:
 <br>
 <%
-String str = request.getParameter("count");
-
-//for(int i = 0; i = Integer.parseInt(str); i++) {
-	
-//}
-
+int limit = Integer.parseInt(request.getParameter("count"));
+int quizID = Integer.parseInt(request.getParameter("quiz_id"));
+QuizResult result = new QuizResult();
+QuizManager manager = new QuizManager();
+Quiz quiz = manager.getQuizByQuizId(quizID);
+int score = 0;
+for(int i = 0; i < limit; i++) {
+	Answer answer = quiz.getAnswer(quizID);
+	if(answer.contains(request.getParameter("answer_" + Integer.toString(i)))) {
+		score++;
+	}
+}
+int maxScore = quiz.getMax_score();
 
 
 
 
 %>
-<%= str %>
 	user_score INT,
 	max_score INT,
 	duration INT,
