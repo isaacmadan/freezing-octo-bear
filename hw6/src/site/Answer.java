@@ -55,7 +55,7 @@ public class Answer {
 				ResultSet set = stmt.executeQuery(execution);
 				set.first();
 				Answer result = (new Answer(set.getString("string"),","));
-				MyDB.close();
+				//MyDB.close();
 				return result;
 			} catch (SQLException e) {
 				MyDB.close();

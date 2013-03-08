@@ -9,6 +9,22 @@
 <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- NO TOUCH - USER AUTH CODE -->
+<%
+	if(session == null) {
+		RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
+		dispatch.forward(request, response);
+		return;
+	}
+	
+	User user = (User)session.getAttribute("user");
+	if(user == null) {
+		RequestDispatcher dispatch = request.getRequestDispatcher("unauthorized.jsp");
+		dispatch.forward(request, response);
+		return;
+	}
+%>
+<!-- END -->
 <title>Quiz Result</title>
 </head>
 <body>
@@ -32,6 +48,7 @@ ArrayList<Answer> answers;
 quiz.populateQuiz(); // fills quiz with questions
 questions = quiz.getQuestions();
 answers = new ArrayList<Answer>();
+out.println(questions.size() + "<br>");
 for(int i = 0; i < questions.size(); i++){
 	Question q = questions.get(i);
 	out.println(q.getQuestionId() + "<br>");
