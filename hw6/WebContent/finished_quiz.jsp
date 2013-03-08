@@ -19,28 +19,37 @@ Congrats, you have finished the quiz!
 Your results:
 <br>
 <%
+Quiz quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request.getParameter("quiz_id")));
+try {
+	if (quiz == null) {
+		out.println("There is something wrong with the quiz");
+		return;
+	}
+} catch (IOException ignored) {
+}
+ArrayList<Question> questions;
+ArrayList<Answer> answers;
+quiz.populateQuiz(); // fills quiz with questions
+questions = quiz.getQuestions();
+answers = new ArrayList<Answer>();
+for(int i = 0; i < questions.size(); i++){
+	Question q = questions.get(i);
+	Answer a = q.getAnswer();
+	answers.add(a);
+}
+
 int limit = Integer.parseInt(request.getParameter("count"));
 int quizID = Integer.parseInt(request.getParameter("quiz_id"));
 QuizResult result = new QuizResult();
-QuizManager manager = new QuizManager();
-Quiz quiz = manager.getQuizByQuizId(quizID);
 int score = 0;
 for(int i = 0; i < limit; i++) {
-	Answer answer = quiz.getAnswer(quizID);
-	if(answer.contains(request.getParameter("answer_" + Integer.toString(i)))) {
+	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i)))) {
 		score++;
 	}
 }
 int maxScore = quiz.getMax_score();
-
-
-
-
 %>
-	user_score INT,
-	max_score INT,
-	duration INT,
-    created_timestamp TIMESTAMP
+<%=score %>/<%=maxScore %>
 
 
 </p>
