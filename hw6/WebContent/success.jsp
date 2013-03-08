@@ -16,7 +16,7 @@
 <%
 	User user = (User)session.getAttribute("user");
 	if(user != null) {
-		out.println("<h1>" + user.getUsername()+"'s Dashboard</h1>");
+		//out.println(user.getUsername()+"'s Dashboard");
 		Cookie cookie = new Cookie("freezing-octo-bear",user.getUsername());
 		cookie.setMaxAge(60*60*72); //72 hours
 		response.addCookie(cookie);
@@ -29,6 +29,44 @@
 		dispatch.forward(request, response);
 	}
 %>
+
+<div class="header">Quizzard</div>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/cufon/1.09i/cufon-yui.js" type="text/javascript"></script>
+<script src="titillium-text.cufonfonts.js" type="text/javascript"></script>
+<script type="text/javascript">
+Cufon.replace('.titilliumtext22l_thin', { fontFamily: 'TitilliumText22L-Thin', hover: true }); 
+Cufon.replace('.titilliumtext22l_light', { fontFamily: 'TitilliumText22L-Light', hover: true }); 
+Cufon.replace('.titilliumtext22l_regular', { fontFamily: 'TitilliumText22L-Regular', hover: true }); 
+Cufon.replace('.titilliumtext22l_medium', { fontFamily: 'TitilliumText22L-Medium', hover: true }); 
+Cufon.replace('.titilliumtext22l_bold', { fontFamily: 'TitilliumText22L-Bold', hover: true }); 
+Cufon.replace('.titilliumtext22l_xbold', { fontFamily: 'TitilliumText22L-XBold', hover: true }); 
+
+Cufon.replace('.header,.subheader,.nav', { fontFamily: 'TitilliumText22L-Regular', hover: true }); 
+</script>
+
+<div class="nav">
+	<div id="links">
+	<ul>
+		<li><a href = "make_quiz.jsp">Make a Quiz</a></li>
+		<li><% out.println("<a href='profile.jsp?id="+user.getId()+"'>My public profile</a>"); %></li>
+		<li><% out.println("<a href='inbox.jsp'>My inbox</a>"); %></li>
+		<li><% out.println("<a href='history.jsp'>My performance history</a>"); %></li>
+		<li><a href="logout.jsp">Logout</a></li>
+	</ul>
+	</div>
+</div>
+
+<div class='subheader'>
+<%= user.getUsername() %>
+<div id='search'>
+	<form action="search.jsp" method="GET">
+		<input type="text" name="query" value="Search for a user or quiz..." />
+		<input type="submit" value="Search" />
+	</form>
+</div>
+</div>
+
+<div class='content'>
 
 <div><h3>Admin News</h3></div><hr>
 <div><h3>Popular Quizzes</h3>
@@ -174,17 +212,8 @@ if(achievementsStrings.size() == 0)
 %>
 
 </div><hr>
-<div><h3>Search</h3>
-	<form action="search.jsp" method="GET">
-		<input type="text" name="query" />
-		<input type="submit" value="Search" />
-	</form>
-</div>
-<hr>
-<a href = "make_quiz.jsp">Make a Quiz</a><br />
-<% out.println("<a href='profile.jsp?id="+user.getId()+"'>My public profile</a><br />"); %>
-<% out.println("<a href='inbox.jsp'>My inbox</a><br />"); %>
-<% out.println("<a href='history.jsp'>My performance history</a><br />"); %>
-<a href="logout.jsp">Logout</a>
+</div><!-- end of content div -->
+
+<div class='footer'>Quizzard 2013.</div>
 </body>
 </html>

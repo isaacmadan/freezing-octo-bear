@@ -181,7 +181,7 @@ public class QuizManager {
 		
 		try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
-			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes WHERE user_id="+user_id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes WHERE user_id="+user_id+" ORDER BY created_timestamp DESC");
 			while(rs.next()) {
 				quiz_id = rs.getInt("quiz_id");
 				//user_id = rs.getInt("user_id");

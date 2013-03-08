@@ -61,6 +61,12 @@ CREATE TABLE answers (
     created_timestamp TIMESTAMP
 );
 
+CREATE TABLE user_answers (
+	result_id INT,
+	question_id INT,
+	string TEXT,
+);
+
 DROP TABLE IF EXISTS messages;
  -- remove table if it already exists and start from scratch
 
@@ -84,14 +90,13 @@ DROP TABLE IF EXISTS friends;
  -- remove table if it already exists and start from scratch
 
 CREATE TABLE friends (
-	message_id INT,
     x_id INT,
     y_id INT,
     created_timestamp TIMESTAMP
 );
 
 INSERT INTO friends VALUES
-	(4, 2, 1, NOW());
+	(2, 1, NOW());
 
 DROP TABLE IF EXISTS results;
  -- remove table if it already exists and start from scratch
@@ -107,12 +112,8 @@ CREATE TABLE results (
 );
 
 INSERT INTO results VALUES
-	(1, NULL, 2, 3, 3, 20000, NOW()),
-	(1, NULL, 2, 1, 3, 20000, NOW()),
-	(3, NULL, 2, 0, 3, 20000, NOW()),
-	(3, NULL, 3, 3, 300, 20000, NOW()),
-	(5, NULL, 3, 300, 300, 20000, NOW());
-
+	(1, NULL, 1, 3, 3, 20000, NOW()),
+	(1, NULL, 1, 1, 3, 20000, NOW()),
 
 
 DROP TABLE IF EXISTS question_responses;

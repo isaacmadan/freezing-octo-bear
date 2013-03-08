@@ -45,7 +45,7 @@ public class SendTextMessageServlet extends HttpServlet {
 		TextMessage message = new TextMessage(fromUser,toUser,messageType,content);
 		boolean result = Inbox.sendTextMessage(message);
 		
-		PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter();		
 		if(result) {
 			out.println("<p>Your message was sent successfully.<br />");
 			out.println("<a href='inbox.jsp'>Back to inbox</a>.</p>");
