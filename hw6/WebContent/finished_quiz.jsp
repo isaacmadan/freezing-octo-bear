@@ -66,14 +66,14 @@ Duration:
 <%
 long start_time = Long.parseLong(request.getParameter("start_time"));
 long millis = System.currentTimeMillis() - start_time;
-String.format("%d min, %d sec", 
+String dur = String.format("%d min, %d sec", 
 	    TimeUnit.MILLISECONDS.toMinutes(millis),
 	    TimeUnit.MILLISECONDS.toSeconds(millis) - 
 	    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
 	);
 %>
 
-<%=( - ))/1000 %><br>
+Duration: <%= dur %><br>
 Score: <%=score%>/<%=maxScore %>
 </p>
 <br>
