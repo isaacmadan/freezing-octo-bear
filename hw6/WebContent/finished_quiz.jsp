@@ -38,12 +38,9 @@ for(int i = 0; i < questions.size(); i++){
 	Answer a = Answer.getAnswerForQuestion(q.getQuestionId());
 	answers.add(a);
 }
-
-int limit = Integer.parseInt(request.getParameter("count"));
-int quizID = Integer.parseInt(request.getParameter("quiz_id"));
 QuizResult result = new QuizResult();
 int score = 0;
-for(int i = 0; i < limit; i++) {
+for(int i = 0; i < questions.size(); i++) {
 	out.println(answers.get(i).getAnswers());
 	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i)))) {
 		score++;
