@@ -47,7 +47,7 @@ public class Answer {
 		this.answers = answers;
 	}
 	
-	public Answer getAnswerForQuestion(int questionID){
+	public static Answer getAnswerForQuestion(int questionID){
 			Connection con = MyDB.getConnection();
 			try {
 				Statement stmt = con.createStatement();

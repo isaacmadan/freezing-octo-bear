@@ -34,7 +34,8 @@ questions = quiz.getQuestions();
 answers = new ArrayList<Answer>();
 for(int i = 0; i < questions.size(); i++){
 	Question q = questions.get(i);
-	Answer a = q.getAnswer();
+	out.println(q.getQuestionId() + "<br>");
+	Answer a = Answer.getAnswerForQuestion(q.getQuestionId());
 	answers.add(a);
 }
 
@@ -43,13 +44,15 @@ int quizID = Integer.parseInt(request.getParameter("quiz_id"));
 QuizResult result = new QuizResult();
 int score = 0;
 for(int i = 0; i < limit; i++) {
+	out.println(answers.get(i).getAnswers());
 	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i)))) {
 		score++;
 	}
 }
 int maxScore = quiz.getMax_score();
 %>
-<%=score %>/<%=maxScore %>
+
+<%=score%>/<%=maxScore %>
 
 
 </p>
