@@ -71,6 +71,7 @@
 			}	
 		}
 		%>
+		<input type ="hidden" name = "start_time" value = "<%=System.currentTimeMillis() %>" />
 		<input type="hidden" name="quiz_id" value="<%=thisQuiz.getQuiz_id()%>" />
 		<input type='submit' value='Submit Answers' />
 	</form>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="site.*, java.util.*,java.sql.*,java.io.*,java.text.*"%>
+    <%@ page import="site.*, java.util.*,java.sql.*,java.io.*,java.text.*,java.util.concurrent.TimeUnit"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -48,27 +48,33 @@ ArrayList<Answer> answers;
 quiz.populateQuiz(); // fills quiz with questions
 questions = quiz.getQuestions();
 answers = new ArrayList<Answer>();
-out.println(questions.size() + "<br>");
 for(int i = 0; i < questions.size(); i++){
 	Question q = questions.get(i);
-	out.println(q.getQuestionId() + "<br>");
 	Answer a = Answer.getAnswerForQuestion(q.getQuestionId());
 	answers.add(a);
 }
 QuizResult result = new QuizResult();
 int score = 0;
 for(int i = 0; i < questions.size(); i++) {
-	out.println(answers.get(i).getAnswers());
 	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i)))) {
 		score++;
 	}
 }
 int maxScore = quiz.getMax_score();
 %>
+Duration: 
+<%
+long start_time = Long.parseLong(request.getParameter("start_time"));
+long millis = System.currentTimeMillis() - start_time;
+String.format("%d min, %d sec", 
+	    TimeUnit.MILLISECONDS.toMinutes(millis),
+	    TimeUnit.MILLISECONDS.toSeconds(millis) - 
+	    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
+	);
+%>
 
-<%=score%>/<%=maxScore %>
-
-
+<%=( - ))/1000 %><br>
+Score: <%=score%>/<%=maxScore %>
 </p>
 <br>
 <a href = "index.jsp">Back to Home</a>
