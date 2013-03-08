@@ -1,7 +1,5 @@
 package site;
 
-import java.text.DecimalFormat;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,14 +41,20 @@ public class QuizResultTest {
 		
 		System.out.println(QuizResult.getWorstQuizTakers(3, 0));
 		*/
-		double score = 3/(double)7;
+		/*double score = 3/(double)7;
 		DecimalFormat df = new DecimalFormat ("0%");
 		System.out.println(df.format(score));
 		double score2 = 323423.0;
 		System.out.println("score: " + score2);
 		DecimalFormat df2 = new DecimalFormat ("#");
 		System.out.println(df2.format(score2));
-		
+		*/
+	}
+	
+	@Test
+	public void test3(){
+		int last = QuizResult.addResult(1, 2, 3, 5, 10101);
+		System.out.println("Last added ID = " + last);
 	}
 	
 	@After

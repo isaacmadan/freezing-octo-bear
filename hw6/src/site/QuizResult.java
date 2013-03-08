@@ -36,24 +36,19 @@ public class QuizResult {
 	 * And returns the result Id that it creates. Returns -1 on failure
 	 * */
 	public static int addResult(int quizTakerId, int quizId, int pointsScored, int maxPossiblePoints, long duration ){
-		String execution = "INSERT INTO " + RESULT_DATABASE + " VALUES('"+quizTakerId+
-				"', '"+quizId+"', '"+pointsScored+"', '"+maxPossiblePoints+"', '"+duration;  
+		String execution = "INSERT INTO " + RESULT_DATABASE + " VALUES("+quizTakerId+
+				",NULL, "+quizId+", "+pointsScored+", "+maxPossiblePoints+", "+duration + ",NOW())";  
 		String execution2 = "SELECT LAST_INSERT_ID()";
 		try {
+			System.out.println(execution);
 			stmt.executeUpdate(execution);
-			return 0;
+			System.out.println("HERE");
+			ResultSet set = stmt.executeQuery(execution2);
+			set.first();
+			return set.getInt("LAST_INSERT_ID()");
 		} catch (SQLException e) {
 		}
 		return -1;
-	}
-
-	public static void addResult(Result r){
-		String execution = "INSERT INTO " + RESULT_DATABASE + " VALUES('"+r.userId+"', '"+r.resultId+
-				"', '"+r.quizId+"', '"+r.pointsScored+"', '"+r.maxPossiblePoints+"', '"+r.durationOfQuiz+"', '"+r.timeStamp+"'";  
-		try {
-			stmt.executeUpdate(execution);
-		} catch (SQLException e) {
-		}
 	}
 
 	/**Call to see if the quizresult database is empty
