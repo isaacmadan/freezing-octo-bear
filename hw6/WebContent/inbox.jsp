@@ -32,7 +32,6 @@
 
 <a href="compose.jsp">Send a message</a>
 
-<form action="DeleteTextMessageServlet" method="POST">
 <table border="1">
 	<tr><th>Date</th><th>From</th><th>Message</th><th>Delete</th></tr>
 	<%
@@ -42,12 +41,19 @@
 		for(int i=0; i<messages.size(); i++) {
 			User fromUser = messages.get(i).getFromUser();
 			
-			out.println("<tr><td>"+messages.get(i).getTimestamp()+"</td><td>"+"<a href='profile.jsp?id="+fromUser.getId()+"'>"+fromUser.getUsername()+"</a>"+"</td><td>"+messages.get(i).getNote()+"</td><td><input type='checkbox' name='delete_"+i+"' value='"+messages.get(i).getMessageId()+"' /></td></tr>");
+			out.println("<tr><td>"+messages.get(i).getTimestamp()+"</td><td>"
+						+"<a href='profile.jsp?id="+fromUser.getId()+"'>"
+						+fromUser.getUsername()+"</a>"+"</td><td>"+messages.get(i).getNote()
+						+"</td><td>"
+						+"<form action='DeleteTextMessageServlet' method='POST'>"
+						+"<input type='hidden' name='num_messages' value='1' />"
+						+"<input type='hidden' name='delete_"+i+"' value='"
+						+messages.get(i).getMessageId()+"' />"
+						+"<input type='submit' value='Delete' />"
+						+"</form></td></tr>");
 		}
 	%>
 </table>
-<input type="submit" value="Update inbox"/>
-</form>
 
 <br />
 <a href="index.jsp">Back home</a>

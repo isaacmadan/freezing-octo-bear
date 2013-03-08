@@ -237,7 +237,12 @@ public class AccountManager {
 		User toUser = this.getAccountById(to_id);
 		
 		int messageType = 1; //friend request
-		String content = fromUser.getUsername()+" wants to be friends. <form action=\\'add_friend.jsp\\' method=\\'POST\\'><input type=\\'hidden\\' name=\\'confirmation\\' value=\\'true\\' /><input type=\\'hidden\\' name=\\'x_id\\' value=\\'"+toUser.getId()+"\\' /><input type=\\'hidden\\' name=\\'y_id\\' value=\\'"+fromUser.getId()+"\\' /><input type=\\'submit\\' value=\\'Add as friend\\' /></form>";
+		String content = fromUser.getUsername()+" wants to be friends. " +
+				"<form action=\\'add_friend.jsp\\' method=\\'POST\\'>" +
+				"<input type=\\'hidden\\' name=\\'confirmation\\' value=\\'true\\' />" +
+				"<input type=\\'hidden\\' name=\\'x_id\\' value=\\'"+toUser.getId()+"\\' />" +
+				"<input type=\\'hidden\\' name=\\'y_id\\' value=\\'"+fromUser.getId()+"\\' />" +
+				"<input type=\\'submit\\' value=\\'Add as friend\\' /></form>";
 		
 		TextMessage message = new TextMessage(fromUser,toUser,messageType,content);
 		Inbox.sendTextMessage(message);

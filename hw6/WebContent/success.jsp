@@ -22,6 +22,9 @@
 		response.addCookie(cookie);
 	}
 	else {
+		if(request == null || response == null) {
+			return;
+		}
 		RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
 		dispatch.forward(request, response);
 	}
@@ -64,8 +67,18 @@
 		Quiz quiz = recentQuizzes.get(i);
 		if(quiz == null)
 			out.println("<tr><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td></tr>");
-		else
-			out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td><td><a href='profile.jsp?id="+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getId()+"'>"+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+"</a></td></tr>");
+		else {
+			try {
+				out.println("<tr><td>"+quiz.getCreated_timestamp()+
+							"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+
+							"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+
+							"</td><td><a href='profile.jsp?id="+
+							accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getId()+
+							"'>"+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+
+							"</a></td></tr>");
+			}
+			catch(Exception e) { System.out.println(e); }
+		}
 	}
 %>
 

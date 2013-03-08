@@ -58,6 +58,7 @@ public class LoginServlet extends HttpServlet {
 			if(user != null) {
 				session.setAttribute("user", user);
 				
+				if(request == null || response == null) return;
 				RequestDispatcher dispatch = request.getRequestDispatcher("success.jsp");
 				dispatch.forward(request, response);
 				return;
