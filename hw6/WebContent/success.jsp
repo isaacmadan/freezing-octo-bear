@@ -93,6 +93,18 @@
 %>
 </div>
 
+<h3>Quizzard Statistics</h3>
+<div>
+<table>
+<%
+	ArrayList<Statistic> statistics = AdminControl.getStatistics();
+	for(Statistic statistic : statistics) {
+		
+	}
+%>
+</table>
+</div>
+
 <h3>Popular Quizzes</h3>
 <div>
 <table border="1">

@@ -39,10 +39,6 @@
 		//RequestDispatcher dispatch = request.getRequestDispatcher("success.jsp");
 		//dispatch.forward(request, response);
 	}
-	
-	//send DIRECTLY to login page
-	RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
-	dispatch.forward(request, response);
 %>
 
 <a href="index.jsp">Login again</a>
