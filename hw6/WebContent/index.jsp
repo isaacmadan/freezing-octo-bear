@@ -38,7 +38,7 @@
 
 <div class="login">
 <h1>Quizzard</h1>
-<h4>Quizzard gives you the real quiz taking, creation, and sharing experience.</h4>
+<h3>Quizzard gives you the real quiz taking, creation, and sharing experience.</h3>
 <p>Login to enjoy:</p>
 
 <div id ="login">
