@@ -140,7 +140,14 @@
 					.getUsername()%></a>
 	<p></p>
 
-	<form action="quiz_taker.jsp" method="POST">
+<%
+if(quiz.isOne_page()) {
+	out.println("<form action=\"quiz_one_page.jsp\" method=\"POST\">");
+}
+else {
+	out.println("<form action=\"quiz_taker.jsp\" method=\"POST\">");
+}
+%>
 		<input type="hidden" name="quiz_id" value="<%=quiz.getQuiz_id()%>" />
 		<input type='submit' value='Take this Quiz!' />
 	</form>
