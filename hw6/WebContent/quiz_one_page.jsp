@@ -84,10 +84,10 @@
 	}
 	%>
 	<input type='hidden' name='start_time' value='<%=request.getParameter("start_time")%>'>
-	<input type='hidden' name='max_score' value='<%=request.getParameter("start_time")%>'>
 	<input type='submit' value='Submit Answer' />
 	</form>
 	<form action=finished_quiz_one_page.jsp method="POST">
+	<input type='hidden' name='max_score' value='<%=thisQuiz.getMax_score()%>'>
 	<input type='hidden' name='start_time' value='<%=request.getParameter("start_time")%>'>
 	<input type='hidden' name='quiz_id' value='<%=thisQuiz.getQuiz_id()%>'>
 	<input type='hidden' name='score' value='<%=score%>'>
