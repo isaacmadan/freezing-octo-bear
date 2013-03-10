@@ -65,7 +65,7 @@
 
 <h3>Admin News</h3>
 <div>
-<table>
+<table border='1'>
 <tr><th>Date</th><th>Posted By</th><th>Announcement</th></tr>
 <%
 	AccountManager accountManager = new AccountManager();
@@ -95,12 +95,15 @@
 
 <h3>Quizzard Statistics</h3>
 <div>
-<table>
+<table border='1'>
+<tr><th>Statistic</th><th>Value</th></tr>
 <%
+	try {
 	ArrayList<Statistic> statistics = AdminControl.getStatistics();
 	for(Statistic statistic : statistics) {
-		
+		out.println("<tr><td>"+statistic.description+"</td><td>"+statistic.stat+"</td></tr>");
 	}
+	} catch(Exception e) {}
 %>
 </table>
 </div>
