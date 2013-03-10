@@ -34,7 +34,7 @@
 	}
 %>
 
-<div class="header"><a href='index.jsp'>Quizzard</a></div>
+<div class="header"><div class="pad"><a href='index.jsp'>Quizzard</a></div></div>
 
 <div class="nav">
 	<div id="links">
@@ -49,12 +49,14 @@
 </div>
 
 <div class='subheader'>
+<div class="pad">
 <%= user.getUsername() %>
 <div id='search'>
 	<form action="search.jsp" method="GET">
 		<input type="text" name="query" />
 		<input type="submit" value="Search" />
 	</form>
+</div>
 </div>
 </div>
 
@@ -228,6 +230,6 @@ if(achievementsStrings.size() == 0)
 </div><!-- end of accordion div -->
 </div><!-- end of content div -->
 
-<div class='footer'>Quizzard 2013.</div>
+<div class='footer'><div class="pad">Quizzard 2013.</div></div>
 </body>
 </html>
