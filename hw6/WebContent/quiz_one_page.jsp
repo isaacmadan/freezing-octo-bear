@@ -71,12 +71,49 @@
 		if(i + 1 != questions.size())
 			out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(i + 1) + "\" />");
 
+		Quiz quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request.getParameter("quiz_id")));
+		try {
+			if (quiz == null) {
+				out.println("There is something wrong with the quiz");
+				return;
+			}
+		} catch (IOException ignored) {
+		}
+		quiz.populateQuiz(); // fills quiz with questions
+		questions = quiz.getQuestions();
+		answers = new ArrayList<Answer>();
+		for(int j = 0; j < questions.size(); j++){
+			Question q = questions.get(j);
+			Answer a = Answer.getAnswerForQuestion(q.getQuestionId());
+			answers.add(a);
+		}
+		
 		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null && answers.get(i - 1).contains(request.getParameter("answer_" + Integer.toString(i - 1)))) {
-			out.println("here");
 			score++;
 		}
-		out.println(Integer.toString(score));
 		out.println("<input type = \"hidden\" name =\"score\" value = \"" + Integer.toString(score) +"\" >");
+	}
+	else {
+		Quiz quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request.getParameter("quiz_id")));
+		try {
+			if (quiz == null) {
+				out.println("There is something wrong with the quiz");
+				return;
+			}
+		} catch (IOException ignored) {
+		}
+		quiz.populateQuiz(); // fills quiz with questions
+		questions = quiz.getQuestions();
+		answers = new ArrayList<Answer>();
+		for(int j = 0; j < questions.size(); j++){
+			Question q = questions.get(j);
+			Answer a = Answer.getAnswerForQuestion(q.getQuestionId());
+			answers.add(a);
+		}
+		
+		if(request.getParameter("answer_" + Integer.toString(questions.size() - 1)) != null && answers.get(questions.size() - 1).contains(request.getParameter("answer_" + Integer.toString(questions.size() - 1)))) {
+			score++;
+		}
 	}
 	%>
 	<input type='hidden' name='start_time' value='<%=request.getParameter("start_time")%>'>
