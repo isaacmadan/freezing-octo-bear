@@ -3,9 +3,6 @@ package site;
 import java.sql.Connection;
 import java.sql.Statement;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 /**QuizQuestionMaker is responsible for all database updating relating to making a quiz
  * QuizQuestionMaker also keeps a stored within in all the various fields and questions related to a quiz.
  * 
@@ -30,11 +27,25 @@ public class QuizQuestionMaker {
 	private boolean random_question;
 	private boolean one_page;
 	private boolean immediate_correction;
-
+	//private String tags;
+	//private String category;
+	
 	//Things I should know after adding all the questions;
 
 
 	/**Order of operations:
+	 * make_quiz - pass all variables down to
+	 * 		parameters: all of INIT_VARS, 
+	 * 		
+	 * making_quiz - take those variables and create a QQM and store as a session variable "qqm"
+	 * making_quiz - get "qqm" and add questions to it one by one
+	 * 		parameters: starting, not starting
+	 * 		information to know:
+	 * 			current maxScore possible
+	 * 			current number of questions
+	 * 			current number of each type of question			
+	 * 		functionality - be able to go to quiz_maker_review and edit questions
+	 * 
 	 * Make Quiz servlet should behave as follows
 	 * 
 	 * Landing page - quiz name, quiz description, 
@@ -51,7 +62,8 @@ public class QuizQuestionMaker {
  	Relevant methods and their locations
  		addQuiz to database - quizmanager
  		generatequizservlet - displays quiz at end of making session
-
+	 */
+	
 	public QuizQuestionMaker(){
 
 	}
