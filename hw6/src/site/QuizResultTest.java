@@ -55,7 +55,12 @@ public class QuizResultTest {
 	public void test3(){
 		new AdminControl();
 		System.out.println(AdminControl.getAnnouncements(10));
+		
 		AdminControl.getStatistics();
+		AdminControl.promoteToAdmin(7,5);
+		if(!AdminControl.demoteFromAdmin(5,7)) System.out.println("failure");
+		System.out.println(AdminControl.isAdmin(3));
+		MyDB.close();
 	}
 	
 	@After
