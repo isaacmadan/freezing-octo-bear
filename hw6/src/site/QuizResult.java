@@ -162,6 +162,15 @@ public class QuizResult {
 		return results;
 	}
 	
+	public static ArrayList<Result> getRecentUserPerformances(int userId, int interval){
+		ArrayList<Result> results = new ArrayList<Result>();
+		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE user_id = " + userId+
+								" AND created_timestamp >= ( CURDATE() - INTERVAL "+interval+" DAY ) ORDER BY created_timestamp DESC";
+		results = generateList(execution);
+		Collections.sort(results, new SortByBestScore());
+		return results;
+	}
+	
 	/** Returns an ordered set of Results/Strings containing past results that the 
 	 *  user has gotten on a quiz. If an order is provided, the list will be sorted
 	 *  by one of the fields. Returns newest first, highest first, longest first

@@ -13,7 +13,7 @@
 <script src="site.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome to freezing-octo-bear!</title>
+<title>Quizzard - Dashboard</title>
 </head>
 <body>
 
@@ -135,7 +135,7 @@
 <tr><th>Date</th><th>Quiz name</th><th>Description</th><th>Created by</th></tr>
 <%
 	QuizManager manager = new QuizManager();
-	ArrayList<Quiz> recentQuizzes  = manager.getWholeQuizTableByDate();
+	ArrayList<Quiz> recentQuizzes  = manager.getRecentWholeQuizTableByDate(7); //7 days
 	
 	length = 10;
 	if(recentQuizzes.size() < length) length = recentQuizzes.size();
@@ -165,7 +165,7 @@
 <table border="1">
 <tr><th>Date</th><th>Quiz name</th><th>Score</th><th>Duration</th></tr>
 <%
-	ArrayList<Result> results = QuizResult.getUserPerformances(user.getId(), "BY_DATE");	
+	ArrayList<Result> results = QuizResult.getRecentUserPerformances(user.getId(), 7); //7 days
 	for(Result result : results) {
 		Quiz quiz = manager.getQuizByQuizId(result.quizId);
 		String titleString = String.valueOf(result.quizId);
@@ -189,7 +189,8 @@
 <table border="1">
 <tr><th>Date</th><th>Quiz name</th><th>Quiz Description</th></tr>
 <%
-	ArrayList<Quiz> quizzes = manager.getQuizzesByUserId(user.getId());	
+	//ArrayList<Quiz> quizzes = manager.getQuizzesByUserId(user.getId());	
+	ArrayList<Quiz> quizzes = manager.getRecentQuizzesByUserId(user.getId(), 7); //7 days	
 	for(Quiz quiz : quizzes) {
 		out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td></tr>");
 	}
@@ -218,8 +219,8 @@ if(achievementsStrings.size() == 0)
 <div>
 	<%
 		//AccountManager manager = new AccountManager();
-		ArrayList<TextMessage> messages = Inbox.getRecentMessagesById(user.getId(), 3);
-		out.println("You've received "+messages.size()+" new messages in the past 3 days.<br />");
+		ArrayList<TextMessage> messages = Inbox.getRecentMessagesById(user.getId(), 7);
+		out.println("You've received "+messages.size()+" new messages in the past 7 days.<br />");
 		int numNotes = 0;
 		int numChallenges = 0;
 		int numFriendRequests = 0;
@@ -240,13 +241,20 @@ if(achievementsStrings.size() == 0)
 	HashSet<Integer> friendsIds = accountManager.getFriends(user.getId());
 	for(Integer friendId : friendsIds) {
 		User friend = accountManager.getAccountById(String.valueOf(friendId));
-		out.println("<h4>"+friend.getUsername()+"</h4>");
-		Achievements friendAchievements = accountManager.getAchievements(friend.getId());
+		out.println("<h3><a href='profile.jsp?id="+friend.getId()+"'>"+friend.getUsername()+"</a></h3>");
+		
+		Achievements friendAchievements = accountManager.getRecentAchievements(friend.getId(), 7); //7 days
 		ArrayList<String> friendAchievementsStrings = friendAchievements.getStrings();
-		out.println("Earned: ");
-		for(String str : friendAchievementsStrings) {
-			out.println(str);
+		out.println("Earned ");
+		for(int i = 0; i < friendAchievementsStrings.size(); i++) {
+			String str = friendAchievementsStrings.get(i);
+			if(i == friendAchievementsStrings.size()-1)
+				out.println(str);
+			else
+				out.println(str+", ");
 		}
+		if(friendAchievementsStrings.size() == 0)
+			out.println("no recent achievements");
 	}
 %>
 </div>

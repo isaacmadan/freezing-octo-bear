@@ -39,7 +39,7 @@
 </head>
 <body>
 
-<div class="header"><a href='index.jsp'>Quizzard</a></div>
+<div class="header"><div class="pad"><a href='index.jsp'>Quizzard</a></div></div>
 
 <div class="nav">
 	<div id="links">
@@ -53,11 +53,22 @@
 	</div>
 </div>
 
-<div class='subheader'><%= user.getUsername() %></div>
+<div class='subheader'>
+<div class="pad">
+<%= user.getUsername() %>
+<div id='search'>
+	<form action="search.jsp" method="GET">
+		<input type="text" name="query" />
+		<input type="submit" value="Search" />
+	</form>
+</div>
+</div>
+</div>
 
 <div class='content'>
 
 <div class="admin">
+<div class='pad pad-vertical'>
 <%
 	new AdminControl();
 	out.println("<h2>Admin Controls</h2>");
@@ -70,6 +81,7 @@
 		
 	}
 %>
+</div>
 </div>
 
 <div class='col-1-3'>
@@ -121,6 +133,6 @@
 
 
 </div>
-<div class='footer'>Quizzard 2013.</div>
+<div class='footer'><div class="pad">Quizzard 2013.</div></div>
 </body>
 </html>

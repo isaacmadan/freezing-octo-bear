@@ -166,6 +166,7 @@
 	</h1>
 
 	<div class="admin"><!-- ADMIN CODE -->
+	<div class='pad pad-vertical'>
 	<%
 	new AdminControl();
 	out.println("<h2>Admin Controls</h2>");
@@ -174,6 +175,7 @@
 		out.println("<button id='deleteQuiz' onclick='deleteQuiz("+quiz.getQuiz_id()+")'>Delete quiz</button>");	
 	}
 	%>
+	</div>
 	</div>
 
 	<br />

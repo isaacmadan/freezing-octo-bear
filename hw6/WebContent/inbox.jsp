@@ -85,5 +85,7 @@
 </table>
 
 </div>
+
+<div class='footer'><div class="pad">Quizzard 2013.</div></div>
 </body>
 </html>

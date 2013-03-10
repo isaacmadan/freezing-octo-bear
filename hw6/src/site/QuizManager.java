@@ -205,6 +205,47 @@ public class QuizManager {
 		return quizzes;
 	}
 	
+public ArrayList<Quiz> getRecentQuizzesByUserId(int user_id, int interval) {
+		
+		int quiz_id = 0;
+		//int user_id = 0;
+		int max_score = 0;
+		boolean practice_mode = false;
+		String description = "";
+		String title = "";
+		boolean random_question = false;
+		boolean one_page = false;
+		boolean immediate_correction = false;
+		Timestamp created_timestamp = null;
+		
+		ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
+		
+		try {
+			Statement stmt = con.createStatement(); //construct search query based on inputs
+			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes WHERE user_id="+user_id+" AND created_timestamp >= ( CURDATE() - INTERVAL "+interval+" DAY ) ORDER BY created_timestamp DESC");
+			while(rs.next()) {
+				quiz_id = rs.getInt("quiz_id");
+				//user_id = rs.getInt("user_id");
+				max_score = rs.getInt("max_score");
+				practice_mode = rs.getBoolean("practice_mode");
+				description = rs.getString("description");
+				title = rs.getString("title");
+				random_question = rs.getBoolean("random_question");
+				one_page = rs.getBoolean("one_page");
+				immediate_correction = rs.getBoolean("immediate_correction");
+				created_timestamp = rs.getTimestamp("created_timestamp");
+				
+				Quiz quiz = new Quiz(quiz_id, user_id, max_score, practice_mode, description, title, random_question, one_page, immediate_correction, created_timestamp);
+				quizzes.add(quiz);
+			}
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		} 
+		
+		return quizzes;
+	}
+	
 	public Quiz getQuizByQuizId(int quiz_id) {
 		try{
 		Statement stmt = con.createStatement();
@@ -226,6 +267,22 @@ public class QuizManager {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes ORDER BY created_timestamp DESC");
+			while(rs.next()) {
+				Quiz quiz = new Quiz(rs.getInt("quiz_id"), rs.getInt("user_id"), rs.getInt("max_score"),
+						rs.getBoolean("practice_mode"), rs.getString("description"), rs.getString("title"), 
+						rs.getBoolean("random_question"), rs.getBoolean("one_page"), rs.getBoolean("immediate_correction"), 
+						rs.getTimestamp("created_timestamp"));
+				table.add(quiz);
+			}
+		} catch (Exception e) { }
+		return table;
+	}
+	
+	public ArrayList<Quiz> getRecentWholeQuizTableByDate(int interval) {
+		ArrayList<Quiz> table = new ArrayList<Quiz>();
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes "+" WHERE created_timestamp >= ( CURDATE() - INTERVAL "+interval+" DAY ) ORDER BY created_timestamp DESC");
 			while(rs.next()) {
 				Quiz quiz = new Quiz(rs.getInt("quiz_id"), rs.getInt("user_id"), rs.getInt("max_score"),
 						rs.getBoolean("practice_mode"), rs.getString("description"), rs.getString("title"), 

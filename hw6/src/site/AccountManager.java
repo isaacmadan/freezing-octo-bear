@@ -135,6 +135,26 @@ public class AccountManager {
 		return achievements;
 	}
 	
+	public Achievements getRecentAchievements(int user_id,int interval) {
+		Achievements achievements = new Achievements();
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM achievements WHERE user_id="+user_id+" AND created_timestamp >= ( CURDATE() - INTERVAL "+interval+" DAY ) ORDER BY created_timestamp DESC");
+			while(rs.next()) {
+				achievements.setAmateurAuthor(rs.getBoolean("amateur_author"));
+				achievements.setProlificAuthor(rs.getBoolean("prolific_author"));
+				achievements.setProdigiousAuthor(rs.getBoolean("prodigious_author"));
+				achievements.setQuizMachine(rs.getBoolean("quiz_machine"));
+				achievements.setiAmTheGreatest(rs.getBoolean("i_am_greatest"));
+				achievements.setPracticeMakesPerfect(rs.getBoolean("practice_perfect"));
+				
+			}
+		}
+		catch(Exception e) {System.out.println(e);}
+		
+		return achievements;
+	}
+	
 	public HashSet<Integer> getFriends(int user_id) {
 		
 		HashSet<Integer> xFriends = new HashSet<Integer>();
