@@ -10,8 +10,9 @@ CREATE TABLE users (
     is_admin BOOLEAN,
     login_count INT,
     created_timestamp timestamp default '0000-00-00 00:00:00', 
-  	last_login_timestamp timestamp default now() on update now() 
-);
+  	last_login_timestamp timestamp default now() on update now(), 
+	FULLTEXT(username)
+  	);
 
 
 DROP TABLE IF EXISTS quizzes;
@@ -27,7 +28,8 @@ CREATE TABLE quizzes (
 	random_question BOOLEAN,
 	one_page BOOLEAN,
 	immediate_correction BOOLEAN,
-    created_timestamp TIMESTAMP
+    created_timestamp TIMESTAMP,
+    FULLTEXT(description,title)
 );
 
 
@@ -55,11 +57,15 @@ CREATE TABLE answers (
     created_timestamp TIMESTAMP
 );
 
+DROP TABLE IF EXISTS user_answers;
+
 CREATE TABLE user_answers (
 	result_id INT,
 	question_id INT,
 	string TEXT,
 );
+
+
 
 DROP TABLE IF EXISTS messages;
  -- remove table if it already exists and start from scratch

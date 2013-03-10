@@ -50,7 +50,7 @@ public class QuizResultTest {
 		System.out.println(df2.format(score2));
 		*/
 	}
-	
+	/*
 	@Test
 	public void test3(){
 		new AdminControl();
@@ -61,6 +61,15 @@ public class QuizResultTest {
 		if(!AdminControl.demoteFromAdmin(5,7)) System.out.println("failure");
 		System.out.println(AdminControl.isAdmin(3));
 		MyDB.close();
+	}*/
+	
+	@Test
+	public void testAnswerLog(){
+		new AnswerLog();
+		System.out.println(	AnswerLog.storeUserAnswer(27, 17, "THIS IS MY ANSWER"));
+		System.out.println("");
+		System.out.println(AnswerLog.getUserAnswers(17));
+		
 	}
 	
 	@After
