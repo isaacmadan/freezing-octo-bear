@@ -17,7 +17,8 @@ import java.util.ArrayList;
 public class AdminControl {
 
 	private static Connection con;
-	private static Statement stmt; 
+	private static Statement stmt;
+	private static Object AdminControl; 
 
 	public AdminControl(){
 		con = MyDB.getConnection();
@@ -190,8 +191,12 @@ public class AdminControl {
 		return false;
 	}
 
+	
+	
+	
 	/**Returns a bunch of stats in an arraylist of objects.
-	 * Most of them will be -1 on failure
+	 * A Statistic has a stat.stat int field and stat.description String field
+	 * Most of them will be -1 on failure. 
 	 * 0 - Integer - number of users
 	 * 1 - Integer - number of quizzes
 	 * 2 - Integer - number of quizzes taken
@@ -200,42 +205,42 @@ public class AdminControl {
 	 * 
 	 * */
 
-	public static ArrayList<Integer> getStatistics(){
-		ArrayList<Integer> stats = new ArrayList<Integer>();
+	public static ArrayList<Statistic> getStatistics(){
+		ArrayList<Statistic> stats = new ArrayList<Statistic>();
 		stats.add(getUserCount());
 		stats.add(getQuizCount());
 		stats.add(getResultCount());
 		return null;
 	}
-
-	private static int getUserCount(){
+	
+	private static Statistic getUserCount(){
 		String execution = "SELECT COUNT(*) FROM users";
 		try {
 			ResultSet set = stmt.executeQuery(execution);
 			set.first();
-			return set.getInt(1);
+			return new Statistic("Number of Accounts",set.getInt(1));
 		} catch (SQLException ignored) {}
-		return -1;
+		return new Statistic("Failed Query", -1);
 	}
 
-	private static int getQuizCount(){
+	private static Statistic getQuizCount(){
 		String execution = "SELECT COUNT(*) FROM quizzes";
 		try {
 			ResultSet set = stmt.executeQuery(execution);
 			set.first();
-			return set.getInt(1);
+			return new Statistic("Number of Quizzes",set.getInt(1));
 		} catch (SQLException ignored) {}
-		return -1;	
+		return new Statistic("Failed Query", -1);
 	}
 
-	private static int getResultCount(){
+	private static Statistic getResultCount(){
 		String execution = "SELECT COUNT(*) FROM results";
 		try {
 			ResultSet set = stmt.executeQuery(execution);
 			set.first();
-			return set.getInt(1);
+			return new Statistic("Number of Quizzes Taken",set.getInt(1));
 		} catch (SQLException ignored) {}
-		return -1;	
+		return new Statistic("Failed Query", -1);
 	}
 
 	/***/

@@ -12,7 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class MakeQuizServlet
+ * Make Quiz servlet should behave as follows
+ * 
+ * Landing page - quiz name, quiz description, 
+ * 					quiz choices 
+ * 
+ * Start quiz making - "empty quiz - add a question!"
+ * 
+ * 		display types of questions - then add question button, add point value button, add possible scores
+ * 		finish quiz button - takes you to 
+ * 
+ * quiz summarypage
  */
 @WebServlet("/MakeQuizServlet")
 public class MakeQuizServlet extends HttpServlet {

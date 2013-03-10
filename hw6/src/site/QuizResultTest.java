@@ -62,7 +62,7 @@ public class QuizResultTest {
 	//	System.out.println(AdminControl.isAdmin(3));
 		//MyDB.close();
 
-		System.out.println(AdminControl.clearQuizResults(11));
+		System.out.println(AdminControl.clearQuizResults(13));
 	}
 	
 	@Test

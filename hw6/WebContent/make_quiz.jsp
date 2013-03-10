@@ -1,17 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=US-ASCII"
-    pageEncoding="US-ASCII"%>
-<%@ page import="site.*" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@ page import="site.*, java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="styles.css">
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
 
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Making a Quiz</title>
-</head>
-<body>
+<% /**
+ * Make Quiz servlet should behave as follows
+ * 
+ * Landing page - quiz name, quiz description, 
+ * 					quiz choices 
+ * 
+ * Start quiz making - "empty quiz - add a question!"
+ * 
+ * 		display types of questions - then add question button, add point value button, add possible scores
+ * 		finish quiz button - takes you to 
+ * 
+ * quiz summarypage
+ *	 allows user to review and change questions, especially picture questions, which might be awful
+ */
+ %>
 
 <!-- NO TOUCH - USER AUTH CODE -->
 <%
@@ -30,7 +38,13 @@
 %>
 <!-- END -->
 
-<form action="MakeQuizServlet" method="POST">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Quizzard Quiz Generator</title>
+</head>
+<body>
+
+
+<form action="making_quiz" method="POST">
 	<fieldset>
 		<label>Name of Quiz</label>
 		<input type="text" id="quiz_name" name="quiz_name"></input><br />
@@ -44,17 +58,12 @@
 		<input type = "checkbox" name = "one_page" id = "one_page">Yes (leave blank for multiple pages)<br />
 		<label>Allow Immediate Correction?</label>
 		<input type = "checkbox" name = "immediate_correction" id = "immediate_correction">Yes (leave blank for no)<br />
-		<label>Choose All Types of Questions and Numbers</label><br />
-		&nbsp&nbsp&nbsp&nbsp<input type="checkbox" name ="question_response" id ="question_response">Question-Response<br />
-		&nbsp&nbsp&nbsp&nbsp<input type="text" size = "3" id="question_response_num" name = "question_response_num">Number of Questions<br />
-		&nbsp&nbsp&nbsp&nbsp<input type="checkbox" name ="fill_in_the_blank" id ="fill_in_the_blank">Fill in the Blank<br />
-		&nbsp&nbsp&nbsp&nbsp<input type="text" size = "3" id="fill_in_the_blank_num" name = "fill_in_the_blank_num">Number of Questions<br />
-		&nbsp&nbsp&nbsp&nbsp<input type="checkbox" name ="multiple_choice" id ="multiple_choice">Multiple Choice<br />
-		&nbsp&nbsp&nbsp&nbsp<input type="text" size = "3" id="multiple_choice_num" name = "multiple_choice_num">Number of Questions<br />
-		&nbsp&nbsp&nbsp&nbsp<input type="checkbox" name ="picture_response" id ="picture_response">Picture-Response<br />
-		&nbsp&nbsp&nbsp&nbsp<input type="text" size = "3" id="picture_response_num" name = "picture_response_num">Number of Questions<br />
 	</fieldset>
-	<input type="submit" />
+	<input type="submit" value = "Make Quiz" />
 </form>
+
+
+
+
 </body>
 </html>
