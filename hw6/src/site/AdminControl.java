@@ -210,7 +210,7 @@ public class AdminControl {
 		stats.add(getUserCount());
 		stats.add(getQuizCount());
 		stats.add(getResultCount());
-		return null;
+		return stats;
 	}
 	
 	private static Statistic getUserCount(){
