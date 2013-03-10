@@ -55,6 +55,12 @@ for(int i = 0; i < questions.size(); i++){
 }
 QuizResult result = new QuizResult();
 int score = 0;
+if(request.getParameter("random") != null) {
+	int seed = Integer.parseInt(request.getParameter("random"));
+	randomize(seed);
+}
+
+
 for(int i = 0; i < questions.size(); i++) {
 	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i)))) {
 		score++;
@@ -77,6 +83,21 @@ Duration: <%= dur %><br>
 Score: <%=score%>/<%=maxScore %>
 </p>
 <br>
+<%
+QuizResult.addResult(user.getId(), Integer.parseInt(request.getParameter("quiz_id")), 
+		score, maxScore, millis);
+%>
 <a href = "index.jsp">Back to Home</a>
 </body>
+<%! 
+private void randomize(int seed) {
+	Random random = new Random(seed);
+	for(int i = 0; i < questions.size(); i++) {
+		int newIndex = i + random.nextInt(questions.size() - i);
+		Question temp = questions.get(i);
+		questions.set(i, questions.get(newIndex));
+		questions.set(newIndex, temp);
+	}
+}
+%>
 </html>

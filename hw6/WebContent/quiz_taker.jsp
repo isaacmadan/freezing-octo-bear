@@ -5,6 +5,7 @@
 	private User taker;
 	private ArrayList<Question> questions;
 	private ArrayList<Answer> answers;
+	private int seed;
 	%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -44,6 +45,10 @@
 		<%
 		out.println("<input type = \"hidden\" name = \"count\" id = \"count\" value = \"" + Integer.toString(questions.size())
 				+ "\">");
+		if(thisQuiz.isRandom_question()) {
+			randomize();
+			out.println("<input type = \"hidden\" name = \"random\" value = \"" + Integer.toString(seed) + "\" />");
+		}
 		for(int i = 0; i < questions.size(); i++) {
 			int type = questions.get(i).getQuestionType();
 			if(type == 1) {
@@ -71,6 +76,7 @@
 			}	
 		}
 		%>
+		
 		<input type ="hidden" name = "start_time" value = "<%=System.currentTimeMillis() %>" />
 		<input type="hidden" name="quiz_id" value="<%=thisQuiz.getQuiz_id()%>" />
 		<input type='submit' value='Submit Answers' />
@@ -109,5 +115,17 @@ private void setup(HttpServletRequest request, HttpServletResponse response, Htt
 	}
 %>
 
-
-
+<%!
+private void randomize() {
+	Random seedRandom = new Random();
+	seed = seedRandom.nextInt();
+	Random random = new Random(seed);
+	
+	for(int i = 0; i < questions.size(); i++) {
+		int newIndex = i + random.nextInt(questions.size() - i);
+		Question temp = questions.get(i);
+		questions.set(i, questions.get(newIndex));
+		questions.set(newIndex, temp);
+	}
+}
+%>
