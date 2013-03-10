@@ -35,11 +35,7 @@ public class AdminControl {
 			ResultSet set =	stmt.executeQuery(execution);
 			if (!set.first()) return false;
 			return set.getBoolean("is_admin");
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (SQLException ignored) {}
 		return false;
 	}
 	
@@ -97,21 +93,48 @@ public class AdminControl {
 	 * */
 	
 	public static boolean removeAccount(int userId){	
+		/** for each quiz created by the user - call removequiz
+		 * 
+		 */
+		
 		return false;
 	}
 
-	/**Remove quiz removes a quiz and all results and questions associated with it*/
-	public static boolean removeQuiz(int quizId){
-		return false;
-	}
-
-	/**Clears all the results associated with a quizId. This will not affect user achievements
-	 * returns true on working, returns false
+	/**Remove quiz removes a quiz and all results and questions associated with it
+	 * Does nothing right now
 	 * */
-	public static boolean clearQuizHistory(int quizId){
-		String execution = "DELETE FROM results WHERE quiz_id = " + quizId;
+	public static boolean removeQuiz(int quizId){
+		/*For each result related to that quiz, 
+		 * 	remove all the user_answers related to that question
+		 *	remove the quiz result
+		 *Then for each question in the quiz, remove that question
+		 *
+		 *then finally remove that quiz
+		 * 
+		 * */
+		
+		
+		return false;
+	}
+
+	/**Clears all the results for a quiz and also removes all user_answers associated with that quiz*/
+	public static boolean clearQuizResults(int quizId){
+		String deleteResults = "DELETE FROM results WHERE quiz_id = " + quizId;
+		String selectResults = "SELECT * FROM results WHERE quiz_id = " + quizId;
+		String deleteAnswers = "DELETE FROM user_answers where result_id = ";
+		
 		try {
-			stmt.executeUpdate(execution);
+			//Getting all the results
+			ResultSet allResults = stmt.executeQuery(selectResults);
+			System.out.println(selectResults);
+			while(allResults.next()){
+				//For each result, delete user_answers with that quiz
+				String toRemove = Integer.toString(allResults.getInt("result_id"));
+				System.out.println(deleteAnswers + toRemove);
+				stmt.executeUpdate(deleteAnswers + toRemove);
+			}
+			System.out.println(deleteResults);
+			stmt.executeUpdate(deleteResults);
 			return true;
 		} catch (SQLException e) {
 			return false;

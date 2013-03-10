@@ -50,26 +50,27 @@ public class QuizResultTest {
 		System.out.println(df2.format(score2));
 		*/
 	}
-	/*
+	
 	@Test
 	public void test3(){
 		new AdminControl();
-		System.out.println(AdminControl.getAnnouncements(10));
+	/*	System.out.println(AdminControl.getAnnouncements(10));
 		
 		AdminControl.getStatistics();
-		AdminControl.promoteToAdmin(7,5);
+		AdminControl.promoteToAdmin(5,1);
 		if(!AdminControl.demoteFromAdmin(5,7)) System.out.println("failure");
 		System.out.println(AdminControl.isAdmin(3));
 		MyDB.close();
-	}*/
+*/
+		System.out.println(AdminControl.clearQuizResults(2));
+	}
 	
 	@Test
 	public void testAnswerLog(){
 		new AnswerLog();
-		System.out.println(	AnswerLog.storeUserAnswer(27, 17, "THIS IS MY ANSWER"));
-		System.out.println("");
-		System.out.println(AnswerLog.getUserAnswers(17));
-		
+//		System.out.println(	AnswerLog.storeUserAnswer(29, 17,27, "THIS IS MY ANSWER"));
+//		System.out.println("");
+//		System.out.println(AnswerLog.getUserAnswers(17));
 	}
 	
 	@After

@@ -61,8 +61,9 @@ DROP TABLE IF EXISTS user_answers;
 
 CREATE TABLE user_answers (
 	result_id INT,
+	quiz_id INT,
 	question_id INT,
-	string TEXT,
+	string TEXT
 );
 
 

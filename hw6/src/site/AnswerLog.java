@@ -47,8 +47,8 @@ public class AnswerLog{
 	 * returns false on some kind of failure, of which kinds there could be many.
 	 * 
 	 * */
-	public static boolean storeUserAnswer(int questionId, int resultId, String answer) {
-		String execution = "INSERT INTO user_answers VALUES(" + resultId + "," + questionId + ",'" + answer + "')"; 
+	public static boolean storeUserAnswer(int questionId, int quizId, int resultId, String answer) {
+		String execution = "INSERT INTO user_answers VALUES(" + resultId + "," + quizId + "," + questionId + ",'" + answer + "')"; 
 		System.out.println(execution);
 		try {
 			stmt.executeUpdate(execution);
