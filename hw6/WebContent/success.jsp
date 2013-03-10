@@ -60,7 +60,7 @@ Cufon.replace('.header,.subheader,.nav', { fontFamily: 'TitilliumText22L-Regular
 <%= user.getUsername() %>
 <div id='search'>
 	<form action="search.jsp" method="GET">
-		<input type="text" name="query" value="Search for a user or quiz..." />
+		<input type="text" name="query" />
 		<input type="submit" value="Search" />
 	</form>
 </div>
@@ -68,7 +68,14 @@ Cufon.replace('.header,.subheader,.nav', { fontFamily: 'TitilliumText22L-Regular
 
 <div class='content'>
 
-<div><h3>Admin News</h3></div><hr>
+<div><h3>Admin News</h3>
+<table>
+<tr><th>Date</th><th>Quiz name</th><th>Description</th><th>Created by</th></tr>
+<%
+	ArrayList<Announcement> announcements = AdminControl.getAnnouncements();
+%>
+</table>
+</div><hr>
 <div><h3>Popular Quizzes</h3>
 <table border="1">
 <tr><th>Date</th><th>Quiz name</th><th>Description</th><th>Created by</th></tr>
