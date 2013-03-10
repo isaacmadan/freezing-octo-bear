@@ -35,7 +35,17 @@
 <title><%=thisQuiz.getTitle()%></title>
 </head>
 <body>
-
+	<h1><%=thisQuiz.getTitle()%></h1>
+	<p><%=thisQuiz.getDescription()%></p>
+	
+	<form action="quiz_one_page.jsp" method="POST">
+	
+	
+	
+	</form>
+	<form action=finished_quiz.jsp method="POST">
+	<input type='submit' value='Submit Answers' />
+	</form>	
 </body>
 </html>
 <%!

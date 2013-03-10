@@ -143,6 +143,7 @@
 <%
 if(quiz.isOne_page()) {
 	out.println("<form action=\"quiz_one_page.jsp\" method=\"POST\">");
+	out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(0) +"\">");
 }
 else {
 	out.println("<form action=\"quiz_taker.jsp\" method=\"POST\">");
