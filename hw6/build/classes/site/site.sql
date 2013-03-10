@@ -179,3 +179,10 @@ CREATE TABLE achievements (
     i_am_greatest BOOLEAN,
     practice_perfect BOOLEAN
 );
+
+CREATE TABLE announcements (
+	announce_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT,
+	string TEXT,
+	created_timestamp TIMESTAMP
+);

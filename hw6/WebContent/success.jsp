@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Welcome to freezing-octo-bear!</title>
@@ -31,18 +32,6 @@
 %>
 
 <div class="header">Quizzard</div>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/cufon/1.09i/cufon-yui.js" type="text/javascript"></script>
-<script src="titillium-text.cufonfonts.js" type="text/javascript"></script>
-<script type="text/javascript">
-Cufon.replace('.titilliumtext22l_thin', { fontFamily: 'TitilliumText22L-Thin', hover: true }); 
-Cufon.replace('.titilliumtext22l_light', { fontFamily: 'TitilliumText22L-Light', hover: true }); 
-Cufon.replace('.titilliumtext22l_regular', { fontFamily: 'TitilliumText22L-Regular', hover: true }); 
-Cufon.replace('.titilliumtext22l_medium', { fontFamily: 'TitilliumText22L-Medium', hover: true }); 
-Cufon.replace('.titilliumtext22l_bold', { fontFamily: 'TitilliumText22L-Bold', hover: true }); 
-Cufon.replace('.titilliumtext22l_xbold', { fontFamily: 'TitilliumText22L-XBold', hover: true }); 
-
-Cufon.replace('.header,.subheader,.nav', { fontFamily: 'TitilliumText22L-Regular', hover: true }); 
-</script>
 
 <div class="nav">
 	<div id="links">
@@ -70,19 +59,30 @@ Cufon.replace('.header,.subheader,.nav', { fontFamily: 'TitilliumText22L-Regular
 
 <div><h3>Admin News</h3>
 <table>
-<tr><th>Date</th><th>Quiz name</th><th>Description</th><th>Created by</th></tr>
+<tr><th>Date</th><th>Posted By</th><th>Announcement</th></tr>
 <%
-	ArrayList<Announcement> announcements = AdminControl.getAnnouncements();
+	AccountManager accountManager = new AccountManager();
+	new AdminControl();
+	ArrayList<Announcement> announcements = new ArrayList<Announcement>();
+	try { 
+		announcements = AdminControl.getAnnouncements(10);
+		for(Announcement announcement : announcements) {
+			out.println("<tr><td>"+announcement.dateString()+"</td>"+
+					"<td>"+accountManager.getAccountById(String.valueOf(announcement.user_id)).getUsername()+"</td>"+
+					"<td>"+announcement.text+"</td></tr>");
+		}
+	}
+	catch(Exception e) { System.out.println(e); }
 %>
 </table>
 </div><hr>
+
 <div><h3>Popular Quizzes</h3>
 <table border="1">
 <tr><th>Date</th><th>Quiz name</th><th>Description</th><th>Created by</th></tr>
 <%
 	QuizResult quizResult = new QuizResult();
 	ArrayList<Quiz> popularQuizzes  = QuizResult.getPopularQuizzes(0);
-	AccountManager accountManager = new AccountManager();
 	
 	int length = 10;
 	if(popularQuizzes.size() < length) length = popularQuizzes.size();

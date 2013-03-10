@@ -7,16 +7,12 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Welcome</title>
 </head>
-<body>
-
-<h3>Welcome to freezing-octo-bear</h3>
-<h4>Quiz site</h4>
-<p>Please login</p>
-
+<body id="login-background">
 <%
 	Cookie[] cookies = request.getCookies();
 	if(cookies != null) {
@@ -35,21 +31,31 @@
 	}
 	}
 }
-
 %>
+
+<div class="login">
+<h1>Quizzard</h1>
+<h4>Quizzard gives you the real quiz taking, creation, and sharing experience.</h4>
+<p>Login to enjoy:</p>
 
 <div id ="login">
 <form action="LoginServlet" method="POST">
-	<fieldset>
-		<label>Username</label>
-		<input type="text" id="username" name="username"></input><br />
-		<label>Password</label>
-		<input type="password" id="password" name="password"></input>
-	</fieldset>
+		<table align="center">
+		<tr>
+		<td><label>Username</label></td>
+		<td><input type="text" id="username" name="username"></input><br /></td>
+		</tr>
+		<tr>
+		<td><label>Password</label></td>
+		<td><input type="password" id="password" name="password"></input></td>
+		</tr>
+		</table>
 	<input type="submit" />
 </form>
+
 <a href="create.jsp">Create account</a>
 </div>
+</div><!-- end container -->
 
 </body>
 </html>
