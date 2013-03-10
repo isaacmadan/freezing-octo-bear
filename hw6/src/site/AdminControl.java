@@ -104,24 +104,77 @@ public class AdminControl {
 		}
 	}
 
-	/**Makes a user an admin and sends them a message telling them so*/
-	public static boolean promoteToAdmin(int userId){
+	/**Makes a user an admin and sends them a message telling them so
+	 * Returns true if successful, returns false if userId is not a valid Id
+	 * or something else goes wrong
+	 * 
+	 * */
+	public static boolean promoteToAdmin(int adminId, int userId){
+		String execution = "UPDATE users SET is_admin = TRUE WHERE user_id = " + userId;
+		try {
+			AccountManager manager = new AccountManager();
+			if (!manager.isExistingAccountById(Integer.toString(userId))) return false; 
+			stmt.executeUpdate(execution);
+			String name = manager.getAccountById(Integer.toString(adminId)).getUsername();
+			String message = "Congratulations, you have been promoted to an admin by " + name + "\n You can now modify quizzes, other user accounts and more!";
+			User admin = manager.getAccountById(Integer.toString(adminId));
+			User user = manager.getAccountById(Integer.toString(userId));
+			Inbox.sendTextMessage(new TextMessage(admin, user, 3, message));
+			return true;
+		} catch (SQLException ignored) {	}		
 		return false;
 	}
 
 	/**Returns a bunch of stats in an arraylist of objects.
-	 * 1 - Integer - number of users
-	 * 2 - Integer - number of quizzes
-	 * 3 - Integer - number of quizzes taken
-	 * 4 - User - User object of most something user
+	 * Most of them will be -1 on failure
+	 * 0 - Integer - number of users
+	 * 1 - Integer - number of quizzes
+	 * 2 - Integer - number of quizzes taken
+	 * 3 - User - User object of most something user
 	 * 
 	 * 
 	 * */
 
-	public ArrayList<Object> getStatistics(){
+	public static ArrayList<Integer> getStatistics(){
+		ArrayList<Integer> stats = new ArrayList<Integer>();
+		stats.add(getUserCount());
+		stats.add(getQuizCount());
+		stats.add(getResultCount());
 		return null;
 	}
 
+	private static int getUserCount(){
+		String execution = "SELECT COUNT(*) FROM users";
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			set.first();
+			return set.getInt(1);
+		} catch (SQLException ignored) {}
+		return -1;
+	}
+	
+	private static int getQuizCount(){
+		String execution = "SELECT COUNT(*) FROM quizzes";
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			set.first();
+			return set.getInt(1);
+		} catch (SQLException ignored) {}
+		return -1;	
+	}
+	
+	private static int getResultCount(){
+		String execution = "SELECT COUNT(*) FROM results";
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			set.first();
+			return set.getInt(1);
+		} catch (SQLException ignored) {}
+		return -1;	
+	}
+	
+	
+	
 }
 
 

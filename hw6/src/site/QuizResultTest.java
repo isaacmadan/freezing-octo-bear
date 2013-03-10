@@ -54,7 +54,8 @@ public class QuizResultTest {
 	@Test
 	public void test3(){
 		new AdminControl();
-		System.out.println(AdminControl.getAnnouncements(2));
+		System.out.println(AdminControl.getAnnouncements(10));
+		AdminControl.getStatistics();
 	}
 	
 	@After
