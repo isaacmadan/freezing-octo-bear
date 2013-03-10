@@ -57,12 +57,12 @@ public class QuizResultTest {
 	/*	System.out.println(AdminControl.getAnnouncements(10));
 		
 		AdminControl.getStatistics();
-		AdminControl.promoteToAdmin(5,1);
-		if(!AdminControl.demoteFromAdmin(5,7)) System.out.println("failure");
-		System.out.println(AdminControl.isAdmin(3));
-		MyDB.close();
-*/
-		System.out.println(AdminControl.clearQuizResults(2));
+	*/	//AdminControl.demoteFromAdmin(1,9);
+//		if(!AdminControl.demoteFromAdmin(5,7)) System.out.println("failure");
+	//	System.out.println(AdminControl.isAdmin(3));
+		//MyDB.close();
+
+		System.out.println(AdminControl.clearQuizResults(11));
 	}
 	
 	@Test
