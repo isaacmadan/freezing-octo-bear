@@ -4,6 +4,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%!
+ArrayList<Question> questions;
+ArrayList<Answer> answers;
+%>
 <link rel="stylesheet" type="text/css" href="styles.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
@@ -43,8 +47,6 @@ try {
 	}
 } catch (IOException ignored) {
 }
-ArrayList<Question> questions;
-ArrayList<Answer> answers;
 quiz.populateQuiz(); // fills quiz with questions
 questions = quiz.getQuestions();
 answers = new ArrayList<Answer>();
@@ -62,6 +64,7 @@ if(request.getParameter("random") != null) {
 
 
 for(int i = 0; i < questions.size(); i++) {
+	out.println(answers.get(i).getAnswers());
 	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i)))) {
 		score++;
 	}
@@ -97,6 +100,9 @@ private void randomize(int seed) {
 		Question temp = questions.get(i);
 		questions.set(i, questions.get(newIndex));
 		questions.set(newIndex, temp);
+		Answer tempAns = answers.get(i);
+		answers.set(i, answers.get(newIndex));
+		answers.set(newIndex, tempAns);
 	}
 }
 %>

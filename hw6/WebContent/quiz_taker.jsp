@@ -49,6 +49,7 @@
 			randomize();
 			out.println("<input type = \"hidden\" name = \"random\" value = \"" + Integer.toString(seed) + "\" />");
 		}
+		if(thisQuiz.is)
 		for(int i = 0; i < questions.size(); i++) {
 			int type = questions.get(i).getQuestionType();
 			if(type == 1) {
