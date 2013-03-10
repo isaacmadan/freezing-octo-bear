@@ -7,7 +7,10 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 <link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+<script src="site.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Welcome to freezing-octo-bear!</title>
@@ -31,7 +34,7 @@
 	}
 %>
 
-<div class="header">Quizzard</div>
+<div class="header"><a href='index.jsp'>Quizzard</a></div>
 
 <div class="nav">
 	<div id="links">
@@ -56,8 +59,10 @@
 </div>
 
 <div class='content'>
+<div id="accordion">
 
-<div><h3>Admin News</h3>
+<h3>Admin News</h3>
+<div>
 <table>
 <tr><th>Date</th><th>Posted By</th><th>Announcement</th></tr>
 <%
@@ -75,13 +80,14 @@
 	catch(Exception e) { System.out.println(e); }
 %>
 </table>
-</div><hr>
+</div>
 
-<div><h3>Popular Quizzes</h3>
+<h3>Popular Quizzes</h3>
+<div>
 <table border="1">
 <tr><th>Date</th><th>Quiz name</th><th>Description</th><th>Created by</th></tr>
 <%
-	QuizResult quizResult = new QuizResult();
+	new QuizResult();
 	ArrayList<Quiz> popularQuizzes  = QuizResult.getPopularQuizzes(0);
 	
 	int length = 10;
@@ -95,11 +101,10 @@
 	}
 %>
 </table>
-
 </div>
 
-<hr>
-<div><h3>Recently Created Quizzes</h3>
+<h3>Recently Created Quizzes</h3>
+<div>
 <table border="1">
 <tr><th>Date</th><th>Quiz name</th><th>Description</th><th>Created by</th></tr>
 <%
@@ -126,13 +131,11 @@
 		}
 	}
 %>
-
 </table>
 </div>
-<hr>
 
-<div><h3>My Recent Quiz Taking Activities</h3></div>
-
+<h3>My Recent Quiz Taking Activities</h3>
+<div>
 <table border="1">
 <tr><th>Date</th><th>Quiz name</th><th>Score</th><th>Duration</th></tr>
 <%
@@ -152,9 +155,11 @@
 		out.println("No quiz results");
 	}
 %>
-</table><hr>
+</table>
+</div>
 
-<div><h3>My Recent Quiz Creating Activities</h3></div>
+<h3>My Recent Quiz Creating Activities</h3>
+<div>
 <table border="1">
 <tr><th>Date</th><th>Quiz name</th><th>Quiz Description</th></tr>
 <%
@@ -166,9 +171,11 @@
 		out.println("No quiz results");
 	}
 %>
-</table><hr>
+</table>
+</div>
 
-<div><h3>Achievements</h3>
+<h3>Achievements</h3>
+<div>
 <%
 accountManager.updateAchievements(user.getId());
 Achievements achievements = accountManager.getAchievements(user.getId());
@@ -180,10 +187,9 @@ if(achievementsStrings.size() == 0)
 	out.println("No achievements");
 %>
 </div>
-<hr>
 
-<div><h3>Messages</h3>
-
+<h3>Messages</h3>
+<div>
 	<%
 		//AccountManager manager = new AccountManager();
 		ArrayList<TextMessage> messages = Inbox.getRecentMessagesById(user.getId(), 3);
@@ -200,10 +206,10 @@ if(achievementsStrings.size() == 0)
 			out.println("("+numFriendRequests+" Friend Requests, "+numChallenges+" Challenges, and "+numNotes+" Notes)");
 		}
 	%>
+</div>
 
-</div><hr>
-<div><h3>Recent Friends' Activities</h3>
-
+<h3>Recent Friends' Activities</h3>
+<div>
 <%
 	HashSet<Integer> friendsIds = accountManager.getFriends(user.getId());
 	for(Integer friendId : friendsIds) {
@@ -217,8 +223,9 @@ if(achievementsStrings.size() == 0)
 		}
 	}
 %>
+</div>
 
-</div><hr>
+</div><!-- end of accordion div -->
 </div><!-- end of content div -->
 
 <div class='footer'>Quizzard 2013.</div>

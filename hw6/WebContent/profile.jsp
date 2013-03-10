@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
@@ -33,8 +34,23 @@
 </head>
 <body>
 
-<h1><%= user.getUsername() %></h1>
+<div class="header"><a href='index.jsp'>Quizzard</a></div>
 
+<div class="nav">
+	<div id="links">
+	<ul>
+		<li><a href = "make_quiz.jsp">Make a Quiz</a></li>
+		<li><% out.println("<a href='profile.jsp?id="+user.getId()+"'>My public profile</a>"); %></li>
+		<li><% out.println("<a href='inbox.jsp'>My inbox</a>"); %></li>
+		<li><% out.println("<a href='history.jsp'>My performance history</a>"); %></li>
+		<li><a href="logout.jsp">Logout</a></li>
+	</ul>
+	</div>
+</div>
+
+<div class='subheader'><%= user.getUsername() %></div>
+
+<div class='content'>
 <h2>Friends</h2>
 <%
 	HashSet<Integer> friends = manager.getFriends(Integer.parseInt(user_id));
@@ -76,6 +92,7 @@
 		out.println("<p>No achievements</p>");
 	}
 %>
+</div>
 
 </body>
 </html>
