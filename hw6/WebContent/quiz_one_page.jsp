@@ -42,13 +42,7 @@
 	<form action="quiz_one_page.jsp" method="POST">
 	<% 
 	if(request.getParameter("question_num") != null) {
-		score = 0;
-		if(request.getParameter("score") == null) {
-			out.println("<input type = \"hidden\" name = \"score\" value =\"0\" />");
-		}
-		else {
-			score = Integer.parseInt(request.getParameter("score"));
-		}
+		score = Integer.parseInt(request.getParameter("score"));
 		int i = Integer.parseInt(request.getParameter("question_num"));
 		int type = questions.get(i).getQuestionType();
 		if(type == 1) {
@@ -76,17 +70,24 @@
 		}	
 		if(i + 1 != questions.size())
 			out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(i + 1) + "\" />");
-		
-		if(i != 0 && answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i)))) {
+
+		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null && answers.get(i - 1).contains(request.getParameter("answer_" + Integer.toString(i - 1)))) {
+			out.println("here");
 			score++;
-			out.println("<input type = \"hidden\" name =\"score\" value = \"" + Integer.toString(score) +"\" >");
 		}
+		out.println(Integer.toString(score));
+		out.println("<input type = \"hidden\" name =\"score\" value = \"" + Integer.toString(score) +"\" >");
 	}
 	%>
 	<input type='hidden' name='start_time' value='<%=request.getParameter("start_time")%>'>
-	<input type='submit' value='Submit Answer' />
+	<input type='hidden' name='quiz_id' value='<%=request.getParameter("quiz_id") %>'>
+	<%
+	if(request.getParameter("question_num") != null)
+		out.println("<input type='submit' value='Submit Answer' />");
+	%>
 	</form>
 	<form action=finished_quiz_one_page.jsp method="POST">
+	<input type='hidden' name='quiz_id' value='<%=request.getParameter("quiz_id") %>'>
 	<input type='hidden' name='max_score' value='<%=thisQuiz.getMax_score()%>'>
 	<input type='hidden' name='start_time' value='<%=request.getParameter("start_time")%>'>
 	<input type='hidden' name='quiz_id' value='<%=thisQuiz.getQuiz_id()%>'>
