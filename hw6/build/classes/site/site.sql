@@ -10,13 +10,10 @@ CREATE TABLE users (
     is_admin BOOLEAN,
     login_count INT,
     created_timestamp timestamp default '0000-00-00 00:00:00', 
-  	last_login_timestamp timestamp default now() on update now() 
-);
+  	last_login_timestamp timestamp default now() on update now(), 
+	FULLTEXT(username)
+  	);
 
-INSERT INTO users(user_id, username, password, is_admin, login_count) VALUES
-	(NULL, "isaac", "fb464ec99929d760e016f677dd8537570621835b", FALSE, 0),
-	(NULL, "aojia", "3da541559918a808c2402bba5012f6c60b27661c", FALSE, 1),
-	(NULL, "charlie", "167b6c4a4e415fdfc65024a01a1d46b38344ab1b", FALSE, 300);
 
 DROP TABLE IF EXISTS quizzes;
  -- remove table if it already exists and start from scratch
@@ -31,12 +28,11 @@ CREATE TABLE quizzes (
 	random_question BOOLEAN,
 	one_page BOOLEAN,
 	immediate_correction BOOLEAN,
-    created_timestamp TIMESTAMP
+    created_timestamp TIMESTAMP,
+    FULLTEXT(description,title)
 );
 
-INSERT INTO quizzes VALUES(
 
-);
 
 DROP TABLE IF EXISTS questions;
  -- remove table if it already exists and start from scratch
@@ -61,11 +57,16 @@ CREATE TABLE answers (
     created_timestamp TIMESTAMP
 );
 
+DROP TABLE IF EXISTS user_answers;
+
 CREATE TABLE user_answers (
 	result_id INT,
+	quiz_id INT,
 	question_id INT,
-	string TEXT,
+	string TEXT
 );
+
+
 
 DROP TABLE IF EXISTS messages;
  -- remove table if it already exists and start from scratch
@@ -79,12 +80,6 @@ CREATE TABLE messages (
 	created_timestamp TIMESTAMP
 );
 
-INSERT INTO messages VALUES
-	(NULL, 1, 3, "Stop crying", 3, NOW()),
-	(NULL, 3, 1, "Now I love crying", 3, NOW()),
-	(NULL, 5, 1, "Love me baby I am lonely", 3, NOW()),
-	(NULL, 1, 3, " isaac wants to be friends. <form action='add_friend.jsp' method='POST'><input type='hidden'
- name='x_id' value='1' /><input type='hidden' name='y_id' value='1' /><input type='submit' value='Add as friend' /></form> ", 1, NOW());
 
 DROP TABLE IF EXISTS friends;
  -- remove table if it already exists and start from scratch
@@ -95,8 +90,6 @@ CREATE TABLE friends (
     created_timestamp TIMESTAMP
 );
 
-INSERT INTO friends VALUES
-	(2, 1, NOW());
 
 DROP TABLE IF EXISTS results;
  -- remove table if it already exists and start from scratch
@@ -111,9 +104,6 @@ CREATE TABLE results (
     created_timestamp TIMESTAMP
 );
 
-INSERT INTO results VALUES
-	(1, NULL, 1, 3, 3, 20000, NOW()),
-	(1, NULL, 1, 1, 3, 20000, NOW()),
 
 
 DROP TABLE IF EXISTS question_responses;
@@ -186,3 +176,30 @@ CREATE TABLE announcements (
 	string TEXT,
 	created_timestamp TIMESTAMP
 );
+
+-- Initialize database with these fields
+
+INSERT INTO friends VALUES
+	(2, 1, NOW());
+
+
+INSERT INTO quizzes VALUES(
+
+);
+
+INSERT INTO messages VALUES
+	(NULL, 1, 3, "Stop crying", 3, NOW()),
+	(NULL, 3, 1, "Now I love crying", 3, NOW()),
+	(NULL, 5, 1, "Love me baby I am lonely", 3, NOW()),
+	(NULL, 1, 3, " isaac wants to be friends. <form action='add_friend.jsp' method='POST'><input type='hidden'
+ name='x_id' value='1' /><input type='hidden' name='y_id' value='1' /><input type='submit' value='Add as friend' /></form> ", 1, NOW());
+
+ INSERT INTO results VALUES
+	(1, NULL, 1, 3, 3, 20000, NOW()),
+	(1, NULL, 1, 1, 3, 20000, NOW()),
+
+
+INSERT INTO users(user_id, username, password, is_admin, login_count) VALUES
+	(NULL, "isaac", "fb464ec99929d760e016f677dd8537570621835b", FALSE, 0),
+	(NULL, "aojia", "3da541559918a808c2402bba5012f6c60b27661c", FALSE, 1),
+	(NULL, "charlie", "167b6c4a4e415fdfc65024a01a1d46b38344ab1b", FALSE, 300);

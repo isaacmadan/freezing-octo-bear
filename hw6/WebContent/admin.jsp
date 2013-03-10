@@ -13,21 +13,28 @@
 	new AdminControl();
 	
 	String delete_user = request.getParameter("delete_user");
-	String admin_user = request.getParameter("admin_user");
+	String admin_id = request.getParameter("admin_id");
 	String demote_user = request.getParameter("demote_user");
 	String promote_user = request.getParameter("promote_user");
 	String user_id = request.getParameter("user_id");
+	String text = request.getParameter("text");
 	
-	if(delete_user == "true" && user_id != null) {
+	if(delete_user != null && user_id != null) {
 		AdminControl.removeAccount(Integer.parseInt(user_id));
 	}
 	
-	if(demote_user == "true" && user_id != null && admin_user != null) {
-		AdminControl.demoteFromAdmin(Integer.parseInt(admin_user), Integer.parseInt(demote_user));
+	if(demote_user != null && user_id != null && admin_id != null) {
+		AdminControl.demoteFromAdmin(Integer.parseInt(admin_id), Integer.parseInt(user_id));
 	}
 	
-	if(promote_user == "true" && user_id != null && admin_user != null) {
-		AdminControl.promoteToAdmin(Integer.parseInt(admin_user), Integer.parseInt(demote_user));
+	if(promote_user != null && user_id != null && admin_id != null) {
+		AdminControl.promoteToAdmin(Integer.parseInt(admin_id), Integer.parseInt(user_id));
+	}
+	
+	if(text != null && user_id != null) {
+		AdminControl.AddAnouncement(Integer.parseInt(user_id), text);
+		RequestDispatcher dispatch = request.getRequestDispatcher("success.jsp");
+		dispatch.forward(request, response);
 	}
 
 %>

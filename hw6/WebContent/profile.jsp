@@ -58,7 +58,6 @@
 <div class='content'>
 
 <div class="admin">
-
 <%
 	new AdminControl();
 	out.println("<h2>Admin Controls</h2>");

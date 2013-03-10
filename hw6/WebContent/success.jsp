@@ -82,6 +82,15 @@
 	catch(Exception e) { System.out.println(e); }
 %>
 </table>
+
+<br />
+<%
+	if(AdminControl.isAdmin(user.getId())) {
+		out.println("<button onclick='announcerInit()'>Make an announcement</button>");
+	
+		out.println("<div id='announcer'>Announcement:<br /><form action='admin.jsp' method='POST'><textarea rows='10' cols='10' name='text'></textarea><input type='hidden' name='user_id' value='"+user.getId()+"' /><input type='submit' /></form></div>");
+	}
+%>
 </div>
 
 <h3>Popular Quizzes</h3>
