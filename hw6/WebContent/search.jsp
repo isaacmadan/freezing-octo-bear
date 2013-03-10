@@ -7,9 +7,13 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+<link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+<script src="site.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Quizzard - Search</title>
 </head>
 <body>
 
@@ -30,15 +34,33 @@
 %>
 <!-- END -->
 
-<h1>Search</h1>
+<div class="header"><div class="pad"><a href='index.jsp'>Quizzard</a></div></div>
 
-<div id="search">
+<div class="nav">
+	<div id="links">
+	<ul>
+		<li><a href = "make_quiz.jsp">Make a quiz</a></li>
+		<li><% out.println("<a href='profile.jsp?id="+user.getId()+"'>My public profile</a>"); %></li>
+		<li><% out.println("<a href='inbox.jsp'>My inbox</a>"); %></li>
+		<li><% out.println("<a href='history.jsp'>My performance history</a>"); %></li>
+		<li><a href="logout.jsp">Logout</a></li>
+	</ul>
+	</div>
+</div>
+
+<div class='subheader'>
+<div class="pad">
+<%= user.getUsername() %>
+<div id='search'>
 	<form action="search.jsp" method="GET">
 		<input type="text" name="query" />
 		<input type="submit" value="Search" />
 	</form>
 </div>
+</div>
+</div>
 
+<div class='content'>
 <div id="userResults">
 <h2>Users</h2>
 <table border="1">
@@ -70,6 +92,8 @@
 %>
 </table>
 </div>
+</div><!-- end content -->
 
+<div class='footer'><div class="pad">Quizzard 2013.</div></div>
 </body>
 </html>

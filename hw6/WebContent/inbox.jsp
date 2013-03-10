@@ -7,7 +7,10 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 <link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+<script src="site.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Inbox</title>
@@ -29,7 +32,7 @@
 	}
 %>
 
-<div class="header"><a href='index.jsp'>Quizzard</a></div>
+<div class="header"><div class="pad"><a href='index.jsp'>Quizzard</a></div></div>
 
 <div class="nav">
 	<div id="links">
@@ -43,7 +46,17 @@
 	</div>
 </div>
 
-<div class='subheader'><%= user.getUsername() %>'s Inbox</div>
+<div class='subheader'>
+<div class="pad">
+<%= user.getUsername() %>'s Inbox
+<div id='search'>
+	<form action="search.jsp" method="GET">
+		<input type="text" name="query" />
+		<input type="submit" value="Search" />
+	</form>
+</div>
+</div>
+</div>
 
 <div class='content'>
 <a href="compose.jsp">Send a message</a>

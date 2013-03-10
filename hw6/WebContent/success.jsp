@@ -39,7 +39,7 @@
 <div class="nav">
 	<div id="links">
 	<ul>
-		<li><a href = "make_quiz.jsp">Make a Quiz</a></li>
+		<li><a href = "make_quiz.jsp">Make a quiz</a></li>
 		<li><% out.println("<a href='profile.jsp?id="+user.getId()+"'>My public profile</a>"); %></li>
 		<li><% out.println("<a href='inbox.jsp'>My inbox</a>"); %></li>
 		<li><% out.println("<a href='history.jsp'>My performance history</a>"); %></li>
