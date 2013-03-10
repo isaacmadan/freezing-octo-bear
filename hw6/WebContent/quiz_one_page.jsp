@@ -42,6 +42,10 @@
 	<form action="quiz_one_page.jsp" method="POST">
 	<% 
 	if(request.getParameter("question_num") != null) {
+		if(thisQuiz.isRandom_question() && request.getParameter("seed") == null) {
+			randomize();
+			out.println("<input type = \"hidden\" name = \"random\" value = \"" + Integer.toString(seed) + "\" />");
+		}
 		score = Integer.parseInt(request.getParameter("score"));
 		int i = Integer.parseInt(request.getParameter("question_num"));
 		int type = questions.get(i).getQuestionType();
@@ -87,7 +91,10 @@
 			Answer a = Answer.getAnswerForQuestion(q.getQuestionId());
 			answers.add(a);
 		}
-		
+		randomize(seed);
+		if(thisQuiz.isRandom_question() && request.getParameter("seed") != null) {
+			out.println("<input type = \"hidden\" name = \"random\" value = \"" + Integer.toString(seed) + "\" />");
+		}
 		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null && answers.get(i - 1).contains(request.getParameter("answer_" + Integer.toString(i - 1)))) {
 			score++;
 		}
@@ -175,6 +182,20 @@ private void randomize() {
 		Question temp = questions.get(i);
 		questions.set(i, questions.get(newIndex));
 		questions.set(newIndex, temp);
+	}
+}
+%>
+<%! 
+private void randomize(int seed) {
+	Random random = new Random(seed);
+	for(int i = 0; i < questions.size(); i++) {
+		int newIndex = i + random.nextInt(questions.size() - i);
+		Question temp = questions.get(i);
+		questions.set(i, questions.get(newIndex));
+		questions.set(newIndex, temp);
+		Answer tempAns = answers.get(i);
+		answers.set(i, answers.get(newIndex));
+		answers.set(newIndex, tempAns);
 	}
 }
 %>

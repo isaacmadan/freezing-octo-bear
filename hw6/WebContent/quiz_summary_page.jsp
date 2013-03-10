@@ -205,7 +205,7 @@
 	<p></p>
 
 <%
-if(quiz.isOne_page()) {
+if(!quiz.isOne_page()) {
 	out.println("<form action=\"quiz_one_page.jsp\" method=\"POST\">");
 	out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(0) +"\">");
 	out.println("<input type=\"hidden\" name=\"start_time\" value=\"" + Long.toString(System.currentTimeMillis()) +"\">");
