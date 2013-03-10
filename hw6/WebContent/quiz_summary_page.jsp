@@ -8,8 +8,30 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+<link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+<script src="site.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<%
+	User user = (User)session.getAttribute("user");
+	if(user != null) {
+		//out.println(user.getUsername()+"'s Dashboard");
+		Cookie cookie = new Cookie("freezing-octo-bear",user.getUsername());
+		cookie.setMaxAge(60*60*72); //72 hours
+		response.addCookie(cookie);
+	}
+	else {
+		if(request == null || response == null) {
+			return;
+		}
+		RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
+		dispatch.forward(request, response);
+	}
+%>
+
 <%!/*NOTE TO OTHERS
 
 	 When quiz_summary_page posts to a quiz page with the parameter "quiz_id"
@@ -107,12 +129,52 @@
 %>
 
 <title><%=quiz.getTitle()%></title>
+
 </head>
 <body>
+
+<div class="header"><div class="pad"><a href='index.jsp'>Quizzard</a></div></div>
+
+<div class="nav">
+	<div id="links">
+	<ul>
+		<li><a href = "make_quiz.jsp">Make a Quiz</a></li>
+		<li><% out.println("<a href='profile.jsp?id="+user.getId()+"'>My public profile</a>"); %></li>
+		<li><% out.println("<a href='inbox.jsp'>My inbox</a>"); %></li>
+		<li><% out.println("<a href='history.jsp'>My performance history</a>"); %></li>
+		<li><a href="logout.jsp">Logout</a></li>
+	</ul>
+	</div>
+</div>
+
+<div class='subheader'>
+<div class="pad">
+<%= user.getUsername() %>
+<div id='search'>
+	<form action="search.jsp" method="GET">
+		<input type="text" name="query" />
+		<input type="submit" value="Search" />
+	</form>
+</div>
+</div>
+</div>
+
+<div class='content'>
 	<h1>
 		<%=quiz.getTitle()%>
 		Summary
 	</h1>
+
+	<div class="admin"><!-- ADMIN CODE -->
+	<%
+	new AdminControl();
+	out.println("<h2>Admin Controls</h2>");
+	if(AdminControl.isAdmin(user.getId())) {
+		out.println("<button id='deleteQuizResults' onclick='deleteQuizResults(" + quiz.getQuiz_id() + ")'>Clear quiz results</button>");
+		out.println("<button id='deleteQuiz' onclick='deleteQuiz("+quiz.getQuiz_id()+")'>Delete quiz</button>");	
+	}
+	%>
+	</div>
 
 	<br />
 	<div>
@@ -144,6 +206,7 @@
 if(quiz.isOne_page()) {
 	out.println("<form action=\"quiz_one_page.jsp\" method=\"POST\">");
 	out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(0) +"\">");
+	out.println("<input type=\"hidden\" name=\"start_time\" value=\"" + Long.toString(System.currentTimeMillis()) +"\">");
 }
 else {
 	out.println("<form action=\"quiz_taker.jsp\" method=\"POST\">");
@@ -175,80 +238,50 @@ else {
 		}
 	%>
 	<br />
+	
+<div id='accordion'>	
+	<h3>Your past scores with this quiz</h3>
 	<div>
-		<h3>
-			<%
-				if (taken) {
-					out.println("Your past scores with this quiz:");
-				}
-			%>
-		</h3>
-	</div>
 	<%
 		// List of user's past performance on specific quiz
 		ArrayList<Result> results = QuizResult.getUserPerformanceOnQuiz(
 				taker.getId(), quiz.getQuiz_id());
 		listPerformers(out, results, resultsToUsers(results));
 	%>
-
-	<br />
-	<div>
-		<h3>
-			<%
-				if (taken) {
-					out.println("Best Scores of all time:");
-				}
-			%>
-		</h3>
 	</div>
+	
+	<h3>Best scores of all time</h3>
+	<div>
 	<%
 		// List of highest performers of all time
 		results = QuizResult.getBestQuizTakers(quiz.getQuiz_id(), 0);
 		ArrayList<User> bestAllTime = resultsToUsers(results);
 		listPerformers(out, results, bestAllTime);
 	%>
-	<br />
-	<div>
-		<h3>
-			<%
-				if (taken) {
-					out.println("Best Scores in the last day:");
-				}
-			%>
-		</h3>
 	</div>
+	
+	<h3>Best scores in the last day</h3>
+	<div>
 	<%
 		// List of recent best scores in the last day
 		results = QuizResult.getRecentHighScores(quiz.getQuiz_id(), 0);
 		ArrayList<User> bestLastDay = resultsToUsers(results);
 		listPerformers(out, results, bestLastDay);
 	%>
-	<br />
-	<div>
-		<h3>
-			<%
-				if (taken) {
-					out.println("Recent Quiz Scores");
-				}
-			%>
-		</h3>
 	</div>
+	
+	<h3>Recent quiz scores</h3>
+	<div>
 	<%
 		// List of recent 
 		results = QuizResult.getRecentTakers(quiz.getQuiz_id(), 0);
 		ArrayList<User> lastDay = resultsToUsers(results);
 		listPerformers(out, results, lastDay);
 	%>
-	<br />
-	<div>
-		<h3>
-			<%
-				if (taken) {
-					out.println("Statistics for this Quiz");
-				}
-			%>
-		</h3>
 	</div>
+	
+	<h3>Statistics for this quiz</h3>
+	<div>
 	<%
 		ArrayList<Double> numStats = QuizResult.getNumericStatistics(quiz
 				.getQuiz_id());
@@ -293,21 +326,10 @@ else {
 			out.println("</p>");
 		}
 	%>
+	</div>
+</div><!-- end accordion -->
+</div><!-- end content -->
 
-	<%
-		out.println("<a href='index.jsp?id=" + taker.getId()
-				+ "'>My Homepage</a><br />");
-	%>
-	<a href="make_quiz.jsp">Make a Quiz</a>
-	<br />
-	<%
-		out.println("<a href='profile.jsp?id=" + taker.getId()
-				+ "'>My profile</a><br />");
-	%>
-	<%
-		out.println("<a href='inbox.jsp'>My inbox</a><br />");
-	%>
-	<a href="logout.jsp">Logout</a>
-
+<div class='footer'><div class="pad">Quizzard 2013.</div></div>
 </body>
 </html>

@@ -18,6 +18,9 @@
 	String promote_user = request.getParameter("promote_user");
 	String user_id = request.getParameter("user_id");
 	String text = request.getParameter("text");
+	String delete_quiz = request.getParameter("delete_quiz");
+	String delete_quiz_results = request.getParameter("delete_quiz_results");
+	String quiz_id = request.getParameter("quiz_id");
 	
 	if(delete_user != null && user_id != null) {
 		AdminControl.removeAccount(Integer.parseInt(user_id));
@@ -35,6 +38,15 @@
 		AdminControl.AddAnouncement(Integer.parseInt(user_id), text);
 		RequestDispatcher dispatch = request.getRequestDispatcher("success.jsp");
 		dispatch.forward(request, response);
+	}
+	
+	if(delete_quiz != null && quiz_id != null) {
+		AdminControl.removeQuiz(Integer.parseInt(quiz_id));
+	}
+	
+	if(delete_quiz_results != null && quiz_id != null) {
+		System.out.println("clear");
+		AdminControl.clearQuizResults(Integer.parseInt(quiz_id));
 	}
 
 %>
