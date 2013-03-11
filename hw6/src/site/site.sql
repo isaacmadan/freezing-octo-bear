@@ -170,11 +170,29 @@ CREATE TABLE achievements (
     practice_perfect BOOLEAN
 );
 
+DROP TABLE IF EXISTS announcements;
+
 CREATE TABLE announcements (
 	announce_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	user_id INT,
 	string TEXT,
 	created_timestamp TIMESTAMP
+);
+
+DROP TABLE IF EXISTS categories;
+
+CREATE TABLE categories (
+	category_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	quiz_id INT,	
+	string TEXT
+);
+
+DROP TABLE IF EXISTS tags;
+
+CREATE TABLE tags (
+	tag_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	quiz_id INT,
+	string TEXT
 );
 
 -- Initialize database with these fields

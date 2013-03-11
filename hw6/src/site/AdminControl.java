@@ -18,7 +18,6 @@ public class AdminControl {
 
 	private static Connection con;
 	private static Statement stmt;
-	private static Object AdminControl; 
 
 	public AdminControl(){
 		con = MyDB.getConnection();

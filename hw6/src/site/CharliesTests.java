@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class QuizResultTest {
+public class CharliesTests {
 	QuizResult qr;
 
 	@Before
@@ -51,17 +51,17 @@ public class QuizResultTest {
 		*/
 	}
 	
-	@Test
+	/*@Test
 	public void test3(){
 		new AdminControl();
-	/*	System.out.println(AdminControl.getAnnouncements(10));
+	System.out.println(AdminControl.getAnnouncements(10));
 		
 		
-		*/System.out.println(AdminControl.getStatistics());
-		//AdminControl.promoteToAdmin(1,5);
+		System.out.println(AdminControl.getStatistics());
+		AdminControl.promoteToAdmin(1,5);
 		if(!AdminControl.demoteFromAdmin(5,7)) System.out.println("failure");
-	//	System.out.println(AdminControl.isAdmin(3));
-		//MyDB.close();
+		System.out.println(AdminControl.isAdmin(3));
+		MyDB.close();
 
 		System.out.println(AdminControl.clearQuizResults(19));
 	}
@@ -69,9 +69,36 @@ public class QuizResultTest {
 	@Test
 	public void testAnswerLog(){
 		new AnswerLog();
-//		System.out.println(	AnswerLog.storeUserAnswer(29, 17,27, "THIS IS MY ANSWER"));
-//		System.out.println("");
-//		System.out.println(AnswerLog.getUserAnswers(17));
+		System.out.println(	AnswerLog.storeUserAnswer(29, 17,27, "THIS IS MY ANSWER"));
+		System.out.println("");
+		System.out.println(AnswerLog.getUserAnswers(17));
+	}*/
+	
+	@Test 
+	public void testCatTag(){
+		new CatTagManager();
+//		System.out.println(CatTagManager.correctTagFormat("love,have,suplex"));
+//		System.out.println(CatTagManager.correctTagFormat("qw asdfasd ,asdfafeq d,asdfasdf2,,,,"));
+//		System.out.println(CatTagManager.correctTagFormat("qw asdfasdasa;sduf98234qvnds8f"));
+//		System.out.println(CatTagManager.correctTagFormat(""));
+
+
+	//	System.out.println(CatTagManager.addStringOfTagsToQuiz(2, "love,have,suplex"));
+		
+//		System.out.println(CatTagManager.parseTags(""));
+//		System.out.println(CatTagManager.parseTags("love,have,suplex"));
+//		System.out.println(CatTagManager.parseTags("qw asdfasd ,asdfafeq d,asdfasdf2,,,,"));
+//		System.out.println(CatTagManager.parseTags("qw asdfasdasa;sduf98234qvnds8f"));
+
+//		System.out.println(CatTagManager.getTagsFromQuiz(13));
+		
+//		System.out.println(CatTagManager.getQuizzesFromTag("love"));
+	
+		//System.out.println(CatTagManager.createCategory("MOMOMO"));
+		System.out.println(CatTagManager.getQuizzesFromCategory("MOMOMO"));
+		System.out.println(CatTagManager.getQuizzesFromCategory("FirstTagEver"));
+		System.out.println(CatTagManager.getCategoryFromQuiz(2));
+		
 	}
 	
 	@After
