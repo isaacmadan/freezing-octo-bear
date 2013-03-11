@@ -67,6 +67,7 @@ miscellania todo list:
 		<input type = "checkbox" name = "one_page" id = "one_page">Yes (leave blank for multiple pages)<br />
 		<label>Allow Immediate Correction?</label>
 		<input type = "checkbox" name = "immediate_correction" id = "immediate_correction">Yes (leave blank for no)<br />
+		<input name = "start_creation" type = "hidden" value = "starting" >
 	</fieldset>
 	<input type="submit" value = "Make Quiz" />
 </form>

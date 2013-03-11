@@ -44,7 +44,20 @@ public class QuizQuestionMaker {
 	 * 			current maxScore possible
 	 * 			current number of questions
 	 * 			current number of each type of question			
-	 * 		functionality - be able to go to quiz_maker_review and edit questions
+	 * 		functionality - 
+	 * 			be able to go to make_quiz_review and edit questions
+	 * 					
+	 * make_quiz_review
+	 * 		parameters:
+	 * 		functionality:	
+	 * 			show all the questions;
+	 * 			edit every part of a question
+	 * 			submit button
+	 * 
+	 * make_quiz_finish		
+	 * 		shows finished quiz
+	 * 		take quiz right away
+	 * 		challenge quiz
 	 * 
 	 * Make Quiz servlet should behave as follows
 	 * 
