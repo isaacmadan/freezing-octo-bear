@@ -72,23 +72,6 @@ miscellania todo list:
 	</div>
 </div>
 
-<form action="making_quiz" method="POST">
-	<fieldset>
-		<label>Name of Quiz</label>
-		<input type="text" id="quiz_name" name="quiz_name"></input><br />
-		<label>Quiz Description</label>
-		<input type="text" size="100" id="quiz_description" name="quiz_description"><br />
-		<label>Allow Practice Mode?</label>
-		<input type = "checkbox" name = "practice_mode" id = "practice_mode">Yes (leave blank for no)<br />
-		<label>List Questions in Random Order?</label>
-		<input type = "checkbox" name = "random_question" id = "random_question">Yes (leave blank for no)<br />
-		<label>List Questions on One Page?</label>
-		<input type = "checkbox" name = "one_page" id = "one_page">Yes (leave blank for multiple pages)<br />
-		<label>Allow Immediate Correction?</label>
-		<input type = "checkbox" name = "immediate_correction" id = "immediate_correction">Yes (leave blank for no)<br />
-		<input name = "start_creation" type = "hidden" value = "starting" >
-	</fieldset>
-
 <div class='subheader'>
 <div class="pad">
 <%= user.getUsername() %>
