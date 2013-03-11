@@ -41,85 +41,56 @@
 	
 	<form action="quiz_one_page.jsp" method="POST">
 	<% 
+	ArrayList<Integer> randomIndex = (ArrayList<Integer>)session.getAttribute("randomIndex");
 	if(request.getParameter("question_num") != null) {
-		if(thisQuiz.isRandom_question() && request.getParameter("seed") == null) {
-			randomize();
-			out.println("<input type = \"hidden\" name = \"random\" value = \"" + Integer.toString(seed) + "\" />");
-		}
 		score = Integer.parseInt(request.getParameter("score"));
 		int i = Integer.parseInt(request.getParameter("question_num"));
+		
+		//out.println("Random index is: " + randomIndex + "<br>");
 		int type = questions.get(i).getQuestionType();
 		if(type == 1) {
-			out.println("Question " + Integer.toString(i+1) + " : " + ((QuestionResponseQuestion)questions.get(i)).getQuestionString() + "</br>");
+			out.println("Question " + Integer.toString(i+1) + " : " + ((QuestionResponseQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
 			out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i) + "\">");
 			out.println("</br>");
 		}
 		else if(type == 2) {
-			out.println("Question " + Integer.toString(i+1) + " : " + ((FillInTheBlankQuestion)questions.get(i)).getFrontString() + 
-					"______" + ((FillInTheBlankQuestion)questions.get(i)).getBackString() + "</br>");
+			out.println("Question " + Integer.toString(i+1) + " : " + ((FillInTheBlankQuestion)questions.get(randomIndex.get(i))).getFrontString() + 
+					"______" + ((FillInTheBlankQuestion)questions.get(randomIndex.get(i))).getBackString() + "</br>");
 			out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i) + "\">");
 			out.println("</br>");
 		}
 		else if(type == 3) {
-			out.println("Question " + Integer.toString(i+1) + " : " + ((MultipleChoiceQuestion)questions.get(i)).getQuestionString() + "</br>");
+			out.println("Question " + Integer.toString(i+1) + " : " + ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
 			for(int j = 0; j < ((MultipleChoiceQuestion)questions.get(i)).getChoices().size(); j++)
 				out.println("<input type = \"radio\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i)
-				+ "\" value = \"" + ((MultipleChoiceQuestion)questions.get(i)).getChoices().get(j).getChoiceString() + "\">" +
-						((MultipleChoiceQuestion)questions.get(i)).getChoices().get(j).getChoiceString() + "<br />");
+				+ "\" value = \"" + ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "\">" +
+						((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "<br />");
 		}
 		else {
-			out.println("Question " + Integer.toString(i+1) + " : " + ((PictureResponseQuestion)questions.get(i)).getFileName() + "</br>");
+			out.println("Question " + Integer.toString(i+1) + " : " + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getFileName() + "</br>");
 			out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i) + "\">");
 			out.println("</br>");
 		}	
+		
 		if(i + 1 != questions.size())
 			out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(i + 1) + "\" />");
 
-		Quiz quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request.getParameter("quiz_id")));
-		try {
-			if (quiz == null) {
-				out.println("There is something wrong with the quiz");
-				return;
-			}
-		} catch (IOException ignored) {
+		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null) {
+			out.println("Inputted answer to last question is: " + request.getParameter("answer_" + Integer.toString(i - 1)) + "<br>");
+			out.println("Correct answer to last question is: " + answers.get(randomIndex.get(i - 1)).getAnswers() + "<br>");
 		}
-		quiz.populateQuiz(); // fills quiz with questions
-		questions = quiz.getQuestions();
-		answers = new ArrayList<Answer>();
-		for(int j = 0; j < questions.size(); j++){
-			Question q = questions.get(j);
-			Answer a = Answer.getAnswerForQuestion(q.getQuestionId());
-			answers.add(a);
-		}
-		randomize(seed);
-		if(thisQuiz.isRandom_question() && request.getParameter("seed") != null) {
-			out.println("<input type = \"hidden\" name = \"random\" value = \"" + Integer.toString(seed) + "\" />");
-		}
-		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null && answers.get(i - 1).contains(request.getParameter("answer_" + Integer.toString(i - 1)))) {
-			score++;
+		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null && 
+				Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(i - 1)))) {
+			//score++;
+			out.println(score);
 		}
 		out.println("<input type = \"hidden\" name =\"score\" value = \"" + Integer.toString(score) +"\" >");
 	}
 	else {
-		Quiz quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request.getParameter("quiz_id")));
-		try {
-			if (quiz == null) {
-				out.println("There is something wrong with the quiz");
-				return;
-			}
-		} catch (IOException ignored) {
-		}
-		quiz.populateQuiz(); // fills quiz with questions
-		questions = quiz.getQuestions();
-		answers = new ArrayList<Answer>();
-		for(int j = 0; j < questions.size(); j++){
-			Question q = questions.get(j);
-			Answer a = Answer.getAnswerForQuestion(q.getQuestionId());
-			answers.add(a);
-		}
-		
-		if(request.getParameter("answer_" + Integer.toString(questions.size() - 1)) != null && answers.get(questions.size() - 1).contains(request.getParameter("answer_" + Integer.toString(questions.size() - 1)))) {
+		if(request.getParameter("answer_" + Integer.toString(questions.size() - 1)) != null && 
+				Answer.getAnswerForQuestion(questions.get(randomIndex.get(questions.size() - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(questions.size() - 1)))) {
 			score++;
+			//out.println(score);
 		}
 	}
 	%>
@@ -169,33 +140,4 @@ private void setup(HttpServletRequest request, HttpServletResponse response, Htt
 		}
 		
 	}
-%>
-
-<%!
-private void randomize() {
-	Random seedRandom = new Random();
-	seed = seedRandom.nextInt();
-	Random random = new Random(seed);
-	
-	for(int i = 0; i < questions.size(); i++) {
-		int newIndex = i + random.nextInt(questions.size() - i);
-		Question temp = questions.get(i);
-		questions.set(i, questions.get(newIndex));
-		questions.set(newIndex, temp);
-	}
-}
-%>
-<%! 
-private void randomize(int seed) {
-	Random random = new Random(seed);
-	for(int i = 0; i < questions.size(); i++) {
-		int newIndex = i + random.nextInt(questions.size() - i);
-		Question temp = questions.get(i);
-		questions.set(i, questions.get(newIndex));
-		questions.set(newIndex, temp);
-		Answer tempAns = answers.get(i);
-		answers.set(i, answers.get(newIndex));
-		answers.set(newIndex, tempAns);
-	}
-}
 %>

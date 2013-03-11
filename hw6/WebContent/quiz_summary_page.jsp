@@ -210,9 +210,41 @@ if(!quiz.isOne_page()) {
 	out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(0) +"\">");
 	out.println("<input type=\"hidden\" name=\"start_time\" value=\"" + Long.toString(System.currentTimeMillis()) +"\">");
 	out.println("<input type='hidden' name='score' value = '0'>");
+	ArrayList<Integer> arr = randomize();
+	//out.println("Random array is: " + arr + "<br>");
+	session.setAttribute("randomIndex", arr);
+	session.setAttribute("arrAnswers", setup(request, response, session, out));
 }
 else {
 	out.println("<form action=\"quiz_taker.jsp\" method=\"POST\">");
+}
+%>
+
+<%!
+
+
+private ArrayList<Answer> setup(HttpServletRequest request, HttpServletResponse response, HttpSession session, JspWriter out) {
+
+		ArrayList<Question> questions = quiz.getQuestions();
+		ArrayList<Answer> answers = new ArrayList<Answer>();
+		for(int i = 0; i < questions.size(); i++){
+			Question q = questions.get(i);
+			Answer a = q.getAnswer();
+			answers.add(a);
+		}
+		return answers;
+	}
+%>
+
+<%!
+private ArrayList<Integer> randomize() {
+	quiz.populateQuiz();
+	ArrayList<Integer> arr = new ArrayList<Integer>();
+	for(int i = 0; i < quiz.getQuestions().size(); i++) {
+		arr.add(i);
+	}
+	Collections.shuffle(arr);
+	return arr;
 }
 %>
 		<input type="hidden" name="quiz_id" value="<%=quiz.getQuiz_id()%>" />
