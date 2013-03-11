@@ -72,7 +72,6 @@ miscellania todo list:
 	</div>
 </div>
 
-<<<<<<< HEAD
 <form action="making_quiz" method="POST">
 	<fieldset>
 		<label>Name of Quiz</label>
@@ -89,7 +88,7 @@ miscellania todo list:
 		<input type = "checkbox" name = "immediate_correction" id = "immediate_correction">Yes (leave blank for no)<br />
 		<input name = "start_creation" type = "hidden" value = "starting" >
 	</fieldset>
-=======
+
 <div class='subheader'>
 <div class="pad">
 <%= user.getUsername() %>
@@ -119,7 +118,6 @@ miscellania todo list:
 		<td><input type = "checkbox" name = "immediate_correction" id = "immediate_correction">Yes (leave blank for no)</td></tr>
 	</table>
 	<input type='hidden' name='user_id' value='<%= user.getId() %>' />
->>>>>>> new make quiz workflow is working
 	<input type="submit" value = "Make Quiz" />
 </form>
 </div>

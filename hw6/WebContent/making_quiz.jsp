@@ -13,10 +13,7 @@
 <script src="site.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<<<<<<< HEAD
-=======
 <title>Quizzard - Quiz Generator</title>
->>>>>>> new make quiz workflow is working
 
 <!-- NO TOUCH - USER AUTH CODE -->
 <%
@@ -33,7 +30,6 @@
 		return;
 	}
 %>
-<<<<<<< HEAD
 
 <!-- END -->
 
@@ -53,10 +49,8 @@ int numQuestions;
 %>
 
 <title>Quizzard Quiz Generator</title>
-=======
 <!-- END -->
 
->>>>>>> new make quiz workflow is working
 </head>
 <body>
 <div class="header"><div class="pad"><a href='index.jsp'>Quizzard</a></div></div>
@@ -215,15 +209,12 @@ int numQuestions;
 
 </div><!-- end content -->
 
-<<<<<<< HEAD
 <%
 /**/
 
 
 %>
 
-=======
 <div class='footer'><div class="pad">Quizzard 2013.</div></div>
->>>>>>> new make quiz workflow is working
 </body>
 </html>
