@@ -5,6 +5,40 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<!-- NO TOUCH - USER AUTH CODE -->
+<%
+	if(session == null) {
+		RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
+		dispatch.forward(request, response);
+		return;
+	}
+	
+	User user = (User)session.getAttribute("user");
+	if(user == null) {
+		RequestDispatcher dispatch = request.getRequestDispatcher("unauthorized.jsp");
+		dispatch.forward(request, response);
+		return;
+	}
+%>
+
+<!-- END -->
+
+<!-- Declare variables and methods-->
+
+<%!
+boolean starting;
+int numQuestions;
+%>
+
+<!--  -->
+
+<!-- Initialize variables etc -->
+
+<% 
+
+%>
+
 <title>Quizzard Quiz Generator</title>
 </head>
 <body>
