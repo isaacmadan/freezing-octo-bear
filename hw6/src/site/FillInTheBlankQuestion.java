@@ -22,6 +22,14 @@ public class FillInTheBlankQuestion implements Question {
         this.setFrontString(frontString);
         this.setBackString(backString);
     }
+    
+    public FillInTheBlankQuestion(int pointValue, int questionType, Answer answer, String frontString, String backString) {
+        this.setPointValue(pointValue);
+        this.setQuestionType(questionType);
+        this.setAnswer(answer);
+        this.setFrontString(frontString);
+        this.setBackString(backString);
+    }
 
 	public int getQuestionId() {
 		return questionId;

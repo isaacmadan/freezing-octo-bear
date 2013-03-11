@@ -75,7 +75,9 @@
 		announcements = AdminControl.getAnnouncements(10);
 		for(Announcement announcement : announcements) {
 			out.println("<tr><td>"+announcement.dateString()+"</td>"+
-					"<td>"+accountManager.getAccountById(String.valueOf(announcement.user_id)).getUsername()+"</td>"+
+					"<td><a href='profile.jsp?id="+
+					announcement.user_id+"'>"+
+					accountManager.getAccountById(String.valueOf(announcement.user_id)).getUsername()+"</a></td>"+
 					"<td>"+announcement.text+"</td></tr>");
 		}
 	}
@@ -242,10 +244,41 @@ if(achievementsStrings.size() == 0)
 	for(Integer friendId : friendsIds) {
 		User friend = accountManager.getAccountById(String.valueOf(friendId));
 		out.println("<h3><a href='profile.jsp?id="+friend.getId()+"'>"+friend.getUsername()+"</a></h3>");
-		
+		out.println("<ul>");
+		ArrayList<Result> friendResults = QuizResult.getRecentUserPerformances(friend.getId(), 7); //7 days
+		out.println("<li>Recently took ");
+		for(int i = 0; i < friendResults.size(); i++) {
+			Result result = friendResults.get(i);
+			Quiz quiz = manager.getQuizByQuizId(result.quizId);
+			String titleString = String.valueOf(result.quizId);
+			if(quiz != null) {
+				titleString = quiz.getTitle();
+			}
+			if(i == friendResults.size()-1)
+				out.println("<a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"+titleString+"</a>");
+			else
+				out.println("<a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"+titleString+"</a>"+", ");
+		}
+		if(friendResults.size() == 0) {
+			out.println(" no quizzes");
+		}
+		out.println("<br />");
+		ArrayList<Quiz> friendQuizzes = manager.getRecentQuizzesByUserId(friend.getId(), 7); //7 days	
+		out.println("</li><li>Recently created ");
+		for(int i = 0; i < friendQuizzes.size(); i++) {
+			Quiz quiz = friendQuizzes.get(i);
+			if(i == friendQuizzes.size()-1)
+				out.println("<a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a>");
+			else
+				out.println("<a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a>"+", ");
+		}
+		if(friendQuizzes.size() == 0) {
+			out.println("no quizzes");
+		}
+		out.println("<br />");
 		Achievements friendAchievements = accountManager.getRecentAchievements(friend.getId(), 7); //7 days
 		ArrayList<String> friendAchievementsStrings = friendAchievements.getStrings();
-		out.println("Earned ");
+		out.println("</li><li>Earned ");
 		for(int i = 0; i < friendAchievementsStrings.size(); i++) {
 			String str = friendAchievementsStrings.get(i);
 			if(i == friendAchievementsStrings.size()-1)
@@ -255,6 +288,7 @@ if(achievementsStrings.size() == 0)
 		}
 		if(friendAchievementsStrings.size() == 0)
 			out.println("no recent achievements");
+		out.println("</li></ul>");
 	}
 %>
 </div>

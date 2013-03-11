@@ -24,6 +24,14 @@ public class MultipleChoiceQuestion implements Question {
         this.setQuestionString(questionString);
         this.setChoices(choices);
     }
+    
+    public MultipleChoiceQuestion(int pointValue, int questionType, Answer answer, String questionString, ArrayList<MultipleChoiceChoices> choices) {
+        this.setPointValue(pointValue);
+        this.setQuestionType(questionType);
+        this.setAnswer(answer);
+        this.setQuestionString(questionString);
+        this.setChoices(choices);
+    }
 
 	public int getQuestionId() {
 		return questionId;

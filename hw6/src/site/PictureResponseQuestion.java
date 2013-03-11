@@ -21,6 +21,13 @@ public class PictureResponseQuestion implements Question {
         this.setFileName(fileName);
     }
     
+    public PictureResponseQuestion(int pointValue, int questionType, Answer answer, String fileName) {
+        this.setPointValue(pointValue);
+        this.setQuestionType(questionType);
+        this.setAnswer(answer);
+        this.setFileName(fileName);
+    }
+    
     public int getQuestionId() {
 		return questionId;
 	}

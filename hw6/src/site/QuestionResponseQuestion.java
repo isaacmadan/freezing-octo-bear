@@ -20,6 +20,14 @@ public class QuestionResponseQuestion implements Question {
         this.setQuestionResponseId(questionResponseId);
         this.setQuestionString(questionString);
     }
+    
+    public QuestionResponseQuestion(int quizId, int pointValue, int questionType, Answer answer, String questionString) {
+        this.setQuizId(quizId);
+        this.setPointValue(pointValue);
+        this.setQuestionType(questionType);
+        this.setAnswer(answer);
+        this.setQuestionString(questionString);
+    }
 
 	public int getQuestionId() {
 		return questionId;

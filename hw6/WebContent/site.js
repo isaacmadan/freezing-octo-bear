@@ -58,3 +58,19 @@ function deleteQuizResults(quizId) {
 function announcerInit() {
 	$( "#announcer" ).dialog( "open" );
 }
+
+function addAnswers(num) {
+	$('#answers').html("<input type='hidden' value='"+num+"' name='num_answers' />");
+	for(var i = 0; i < num; i++) {
+		index = i + 1;
+		$('#answers').append("<input type='text' name='answer"+index+"' />");
+	}
+}
+
+function addChoices(num) {
+	$('#choices').html("<input type='hidden' value='"+num+"' name='num_choices' />");
+	for(var i = 0; i < num; i++) {
+		index = i + 1;
+		$('#choices').append("<input type='text' name='choice"+index+"' />");
+	}
+}

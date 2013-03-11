@@ -4,6 +4,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+<link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+<script src="site.js"></script>
 
 <% /**
 
@@ -51,8 +58,21 @@ miscellania todo list:
 <title>Quizzard Quiz Generator</title>
 </head>
 <body>
+<div class="header"><div class="pad"><a href='index.jsp'>Quizzard</a></div></div>
 
+<div class="nav">
+	<div id="links">
+	<ul>
+		<li><a href = "make_quiz.jsp">Make a quiz</a></li>
+		<li><% out.println("<a href='profile.jsp?id="+user.getId()+"'>My public profile</a>"); %></li>
+		<li><% out.println("<a href='inbox.jsp'>My inbox</a>"); %></li>
+		<li><% out.println("<a href='history.jsp'>My performance history</a>"); %></li>
+		<li><a href="logout.jsp">Logout</a></li>
+	</ul>
+	</div>
+</div>
 
+<<<<<<< HEAD
 <form action="making_quiz" method="POST">
 	<fieldset>
 		<label>Name of Quiz</label>
@@ -69,11 +89,41 @@ miscellania todo list:
 		<input type = "checkbox" name = "immediate_correction" id = "immediate_correction">Yes (leave blank for no)<br />
 		<input name = "start_creation" type = "hidden" value = "starting" >
 	</fieldset>
+=======
+<div class='subheader'>
+<div class="pad">
+<%= user.getUsername() %>
+<div id='search'>
+	<form action="search.jsp" method="GET">
+		<input type="text" name="query" />
+		<input type="submit" value="Search" />
+	</form>
+</div>
+</div>
+</div>
+
+<div class='content'>
+<form action="making_quiz.jsp" method="POST">
+	<table>
+		<tr><td><label>Name of Quiz</label></td>
+		<td><input type="text" id="quiz_name" name="quiz_name"></input></td></tr>
+		<tr><td><label>Quiz Description</label></td>
+		<td><input type="text" size="100" id="quiz_description" name="quiz_description"></td></tr>
+		<tr><td><label>Allow Practice Mode?</label></td>
+		<td><input type = "checkbox" name = "practice_mode" id = "practice_mode">Yes (leave blank for no)</td></tr>
+		<tr><td><label>List Questions in Random Order?</label></td>
+		<td><input type = "checkbox" name = "random_question" id = "random_question">Yes (leave blank for no)</td></tr>
+		<tr><td><label>List Questions on One Page?</label></td>
+		<td><input type = "checkbox" name = "one_page" id = "one_page">Yes (leave blank for multiple pages)</td></tr>
+		<tr><td><label>Allow Immediate Correction?</label></td>
+		<td><input type = "checkbox" name = "immediate_correction" id = "immediate_correction">Yes (leave blank for no)</td></tr>
+	</table>
+	<input type='hidden' name='user_id' value='<%= user.getId() %>' />
+>>>>>>> new make quiz workflow is working
 	<input type="submit" value = "Make Quiz" />
 </form>
+</div>
 
-
-
-
+<div class='footer'><div class="pad">Quizzard 2013.</div></div>
 </body>
 </html>

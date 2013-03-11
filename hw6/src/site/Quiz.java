@@ -233,6 +233,19 @@ public class Quiz {
 		this.setCreated_timestamp(created_timestamp);
 	}
 	
+	public Quiz(int user_id,
+			boolean practice_mode, String description, String title, 
+			boolean random_question, boolean one_page, boolean immediate_correction) {
+		this.setUser_id(user_id);
+		this.setPractice_mode(practice_mode);
+		this.setDescription(description);
+		this.setTitle(title);
+		this.setRandom_question(random_question);
+		this.setOne_page(one_page);
+		this.setImmediate_correction(immediate_correction);
+		this.questions = new ArrayList<Question>();
+	}
+	
 	public void addQuestion(Question question) {
 		this.questions.add(question);
 	}
