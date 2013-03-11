@@ -94,13 +94,39 @@ public class CharliesTests {
 		
 //		System.out.println(CatTagManager.getQuizzesFromTag("love"));
 	
-		//System.out.println(CatTagManager.createCategory("MOMOMO"));
-		System.out.println(CatTagManager.getQuizzesFromCategory("MOMOMO"));
-		System.out.println(CatTagManager.getQuizzesFromCategory("FirstTagEver"));
-		System.out.println(CatTagManager.getCategoryFromQuiz(2));
+//		System.out.println(CatTagManager.createCategory("FirstCatEver"));
+//		System.out.println(CatTagManager.createCategory("SecondCat"));
+//		
+//		System.out.println(CatTagManager.categorizeQuiz(2, "FirstCatEver"));
+//		System.out.println(CatTagManager.categorizeQuiz(1, "FirstCatEver"));
+//		System.out.println(CatTagManager.categorizeQuiz(3, "FirstCatEver"));
+//		
+//		System.out.println(CatTagManager.deleteCategory("FirstTagEver"));
+//		
+//		System.out.println(CatTagManager.removeQuizCatsTags(2));
+//		
+//		
+//		
+//		System.out.println("Get SecondCat: " + CatTagManager.getQuizzesFromCategory("SecondCat"));
+//		System.out.println(CatTagManager.getQuizzesFromCategory("FirstCatEver"));
+//		System.out.println(CatTagManager.getCategoryFromQuiz(2));
+//		System.out.println(CatTagManager.getCategories());
 		
 	}
 	
+	@Test 
+	public void testReview(){
+		new ReviewManager();
+//		System.out.println(ReviewManager.tookQuiz(5, 27));
+//		System.out.println(ReviewManager.tookQuiz(213423, 2723432));
+//		System.out.println(ReviewManager.tookQuiz(5, -12312));
+		System.out.println(ReviewManager.addReview(5, 27, "This quiz was the most mindblowingly amazing quiz ever!",1));
+		System.out.println(ReviewManager.addReview(5, 27, "Worst quiz ever",4));
+		System.out.println(ReviewManager.getReviews(27));
+		
+		
+		
+	}
 	@After
 	public void after(){
 		

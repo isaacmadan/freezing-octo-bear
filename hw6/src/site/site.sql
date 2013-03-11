@@ -195,27 +195,25 @@ CREATE TABLE tags (
 	string TEXT
 );
 
--- Initialize database with these fields
+DROP TABLE IF EXISTS reviews;
 
-INSERT INTO friends VALUES
-	(2, 1, NOW());
-
-
-INSERT INTO quizzes VALUES(
-
+CREATE TABLE reviews (
+	review_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT,
+	quiz_id INT,
+	string TEXT,
+	review_score INT,
+	created_timestamp TIMESTAMP default now()
 );
+
+
+
+-- Initialize database with these fields
 
 INSERT INTO messages VALUES
 	(NULL, 1, 3, "Stop crying", 3, NOW()),
 	(NULL, 3, 1, "Now I love crying", 3, NOW()),
 	(NULL, 5, 1, "Love me baby I am lonely", 3, NOW()),
-	(NULL, 1, 3, " isaac wants to be friends. <form action='add_friend.jsp' method='POST'><input type='hidden'
- name='x_id' value='1' /><input type='hidden' name='y_id' value='1' /><input type='submit' value='Add as friend' /></form> ", 1, NOW());
-
- INSERT INTO results VALUES
-	(1, NULL, 1, 3, 3, 20000, NOW()),
-	(1, NULL, 1, 1, 3, 20000, NOW()),
-
 
 INSERT INTO users(user_id, username, password, is_admin, login_count) VALUES
 	(NULL, "isaac", "fb464ec99929d760e016f677dd8537570621835b", FALSE, 0),

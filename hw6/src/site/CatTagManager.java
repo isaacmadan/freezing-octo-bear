@@ -24,6 +24,7 @@ CREATE TABLE tags (
 	string TEXT
 );*/
 
+//TODO implement removequiz function
 
 /**CatTag Control manages database structures that relate to categories and tags relating to quizzes
  * Remember to call new CatTagManager() at the beginning of any .jsp using code
@@ -46,6 +47,19 @@ public class CatTagManager {
 		}		
 	}
 
+	/**Removes all the categories and tags associated with a quiz*/
+	public static boolean removeQuizCatsTags(int quizId){
+		String deleteTags = "DELETE FROM tags where quiz_id = " + quizId;
+		String deleteCats = "DELETE FROM categories where quiz_id = " + quizId;
+		try {
+			stmt.executeUpdate(deleteTags);
+			stmt.executeUpdate(deleteCats);
+			return true;
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+	
 	/**Associates a bunch of tags with a quiz in the database
 	 * You can repeat tags and only one of them will be added
 	 * 
@@ -143,7 +157,7 @@ public class CatTagManager {
 	/**Gets all the valid categories to tag a quiz with*/
 	public static ArrayList<String> getCategories(){
 		ArrayList<String> cats = new ArrayList<String>();
-		String execution = "SELECT DISTINCT string from categories";
+		String execution = "SELECT DISTINCT string from categories WHERE quiz_id = -1";
 		try {
 			ResultSet set = stmt.executeQuery(execution);
 			while(set.next()){
@@ -158,10 +172,10 @@ public class CatTagManager {
 	/**Adds a category to the category database, making it a valid category
 	 * for users to add to the database. Only admin's should be able to call this
 	 * No adding the empty string to categories. 
-	 * 
 	 */
 	public static boolean createCategory(String cat){
 		if (cat.equals("")) return false;
+		//Adds a quiz with value -1 into database. Retrieval functions don't process quiz_ids of -1
 		String execution = "INSERT INTO categories VALUES(NULL, -1 , '" + cat + "')";
 		try {
 			stmt.executeUpdate(execution);
@@ -170,6 +184,20 @@ public class CatTagManager {
 		return false;
 	}
 
+	/**Deletes a category from the database
+	 */
+	public static boolean deleteCategory(String cat){
+		if (cat.equals("")) return false;
+		//Adds a quiz with value -1 into database. Retrieval functions don't process quiz_ids of -1
+		String execution = "DELETE FROM categories WHERE string = '" + cat + "'";
+		try {
+			stmt.executeUpdate(execution);
+			return true;
+		} catch (SQLException e) {}
+		return false;
+	}
+	
+	
 	/**Gets the category associated with specific quiz*/
 	public static String getCategoryFromQuiz(int quiz_id){
 		String execution = "SELECT * from categories where quiz_id = " + quiz_id + " LIMIT 1";
@@ -182,12 +210,10 @@ public class CatTagManager {
 		return "FailedExtractionOfCategory";
 	}
 	
-
-
 	/**Get a list of Quiz objects from the database given a string category*/
 	public static ArrayList<Quiz> getQuizzesFromCategory(String cat){
 		ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
-		String execution = "SELECT DISTINCT quiz_id FROM categories WHERE string = '" + cat + "'";
+		String execution = "SELECT DISTINCT quiz_id FROM categories WHERE string = '" + cat + "' where quiz_id > 0 ";
 		try {
 			ResultSet set = stmt.executeQuery(execution);
 			while(set.next()){
