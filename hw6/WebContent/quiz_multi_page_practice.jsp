@@ -75,7 +75,7 @@
 	<h1><%=thisQuiz.getTitle()%></h1>
 	<h2><%=thisQuiz.getDescription()%></h2>
 	
-	<form action="quiz_multi_page.jsp" method="POST">
+	<form action="quiz_multi_page_practice.jsp" method="POST">
 	<% 
 	ArrayList<Integer> randomIndex = (ArrayList<Integer>)session.getAttribute("randomIndex");
 	ArrayList<Integer> indices = (ArrayList<Integer>)session.getAttribute("indices");
@@ -86,12 +86,19 @@
 		int i = Integer.parseInt(request.getParameter("question_num"));
 		if(request.getParameter("immediate") != null) {
 			// output result for this question
+			
+			//out.println(indices + "<br>");
+					
 			if(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null && 
 					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + randomIndex.get(i - 1)))) {
 				out.println("Correct!<br>");
 				indices.set(i - 1, indices.get(i - 1) + 1);
 				if(indices.get(i - 1) == 3) {
+					//out.println("hit");
+					//out.println(randomIndex + "<br>");
 					randomIndex.remove(i - 1);
+					indices.remove(i - 1);
+					//out.println(randomIndex + "<br>");
 					i--;
 				}
 			}
@@ -99,10 +106,14 @@
 					out.println("Incorrect, sorry!<br>");
 			}
 		
+			//out.println(indices + "<br>");
+			
 			if(i != randomIndex.size())
 				out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + i + "\" />");
-			else
-				out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + 0 + "\" />");
+			else {
+				if(indices.size() != 0)
+					out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + 0 + "\" />");
+			}
 			session.setAttribute("randomIndex", randomIndex);
 			session.setAttribute("indices", indices);
 		}
@@ -131,11 +142,12 @@
 							((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "<br /><br />");
 			}
 			else {
-				out.println("<h3>Question " + Integer.toString(randomIndex.get(i)) + ": </h3><img src = \"" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getFileName() + " width = 200px \"></br>");
+				out.println("<h3>Question " + Integer.toString(randomIndex.get(i)+1) + ": </h3><img src = \"" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getFileName() + "\" width = 200px \"></br>");
 				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i)) + "\">");
 				out.println("<br /><br />");
 			}	
 			out.println("<input type = \"hidden\" name =\"immediate\" value = \"ON\" >");
+			out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(i + 1) + "\" />");
 		}
 	}
 
@@ -153,20 +165,11 @@
 	%>
 	</form>
 	
-	
-	<form action=quiz_multi_page.jsp method="POST">
-	<input type='hidden' name='quiz_id' value='<%=request.getParameter("quiz_id") %>'>
-	<input type='hidden' name='max_score' value='<%=thisQuiz.getMax_score()%>'>
-	<input type='hidden' name='start_time' value='<%=request.getParameter("start_time")%>'>
-	<input type='hidden' name='quiz_id' value='<%=thisQuiz.getQuiz_id()%>'>
-	<input type='hidden' name='score' value='<%=score%>'>
 	<%
-	if(size == 0) {
+	if(size == 0)
 		out.println("The Quiz is Complete!<br>");
-		out.println("<input type='submit' value='Submit Quiz' />");
-	}
 	%>
-	</form>
+
 	
 </div><!-- end content -->
 		
