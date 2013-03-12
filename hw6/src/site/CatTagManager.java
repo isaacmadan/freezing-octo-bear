@@ -213,14 +213,17 @@ public class CatTagManager {
 	/**Get a list of Quiz objects from the database given a string category*/
 	public static ArrayList<Quiz> getQuizzesFromCategory(String cat){
 		ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
-		String execution = "SELECT DISTINCT quiz_id FROM categories WHERE string = '" + cat + "' where quiz_id > 0 ";
+		String execution = "SELECT DISTINCT quiz_id FROM categories WHERE string = '" + cat + "' AND quiz_id > 0 ";
 		try {
+			System.out.println(execution);
 			ResultSet set = stmt.executeQuery(execution);
+			
 			while(set.next()){
 				int quizNum = set.getInt("quiz_id");
 				if (quizNum != -1){
 					Quiz newQuiz = (new QuizManager()).getQuizByQuizId(quizNum); 
 					quizzes.add(newQuiz);
+					System.out.println(newQuiz.getTitle());
 				}
 			}
 			return quizzes;

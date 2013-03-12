@@ -91,10 +91,11 @@ public class CharliesTests {
 
 	//	System.out.println(CatTagManager.addStringOfTagsToQuiz(2, "love,have,suplex"));
 		
-		System.out.println(CatTagManager.parseTags(""));
-		System.out.println(CatTagManager.parseTags(" love , have, suplex "));
-		System.out.println(CatTagManager.parseTags("qw asdfasd ,asdfafeq d,asdfasdf2,,,,"));
-		System.out.println(CatTagManager.parseTags("qw asdfasdasa;sduf98234qvnds8f"));
+//		System.out.println(CatTagManager.parseTags(""));
+//		System.out.println(CatTagManager.parseTags(" love , have, suplex "));
+//		System.out.println(CatTagManager.parseTags("qw asdfasd ,asdfafeq d,asdfasdf2,,,,"));
+//		System.out.println(CatTagManager.parseTags("qw asdfasdasa;sduf98234qvnds8f"));
+		System.out.println(CatTagManager.getQuizzesFromCategory("Politics"));
 	}
 //		System.out.println(CatTagManager.getTagsFromQuiz(13));
 		
@@ -114,7 +115,7 @@ public class CharliesTests {
 //		
 //		
 //		System.out.println("Get SecondCat: " + CatTagManager.getQuizzesFromCategory("SecondCat"));
-//		System.out.println(CatTagManager.getQuizzesFromCategory("FirstCatEver"));
+		
 //		System.out.println(CatTagManager.getCategoryFromQuiz(2));
 //		System.out.println(CatTagManager.getCategories());
 		
