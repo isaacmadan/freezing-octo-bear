@@ -78,85 +78,70 @@
 	<form action="quiz_multi_page.jsp" method="POST">
 	<% 
 	ArrayList<Integer> randomIndex = (ArrayList<Integer>)session.getAttribute("randomIndex");
-	if(request.getParameter("question_num") != null) {
-		
-		score = Integer.parseInt(request.getParameter("score"));
+	ArrayList<Integer> indices = (ArrayList<Integer>)session.getAttribute("indices");
+	if(!isComplete(indices)) {
+
 		int i = Integer.parseInt(request.getParameter("question_num"));
-		questionNum = i;
-		
 		if(request.getParameter("immediate") != null) {
-			if(i != questions.size())
-				out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(i) + "\" />");
-			//out.println(i + "<br>");
-			if(request.getParameter("answer_" + Integer.toString(i - 1)) != null) {
-				//out.println("Inputted answer to last question is: " + request.getParameter("answer_" + Integer.toString(i - 1)) + "<br>");
-				//out.println("Correct answer to last question is: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br>");
-			}
-			if(request.getParameter("answer_" + Integer.toString(i - 1)) != null && 
-					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(i - 1)))) {
-				score++;
+			// output result for this question
+			if(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null && 
+					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + randomIndex.get(i - 1)))) {
 				out.println("Correct!<br>");
-				//out.println(score + "<br>");
+				indices.set(i - 1, indices.get(i - 1) + 1);
+				if(indices.get(i - 1) == 3) {
+					randomIndex.remove(i - 1);
+					i--;
+				}
 			}
 			else {
-				out.println("Incorrect, sorry!<br>");
+					out.println("Incorrect, sorry!<br>");
 			}
-			out.println("<input type = \"hidden\" name =\"score\" value = \"" + Integer.toString(score) +"\" >");
+		
+			if(i != randomIndex.size())
+				out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + i + "\" />");
+			session.setAttribute("randomIndex", randomIndex);
+			session.setAttribute("indices", indices);
 		}
 		
-		else {
-		//out.println("Random index is: " + randomIndex + "<br>");
-		int type = questions.get(i).getQuestionType();
-		if(type == 1) {
-			out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((QuestionResponseQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
-			out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i) + "\">");
-			out.println("<br /><br />");
-		}
-		else if(type == 2) {
-			out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((FillInTheBlankQuestion)questions.get(randomIndex.get(i))).getFrontString() + 
-					"______" + ((FillInTheBlankQuestion)questions.get(randomIndex.get(i))).getBackString() + "</br>");
-			out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i) + "\">");
-			out.println("<br /><br />");
-		}
-		else if(type == 3) {
-			out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
-			for(int j = 0; j < ((MultipleChoiceQuestion)questions.get(i)).getChoices().size(); j++)
-				out.println("<input type = \"radio\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i)
-				+ "\" value = \"" + ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "\">" +
-						((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "<br /><br />");
-		}
-		else {
-			out.println("<h3>Question " + Integer.toString(i+1) + ": </h3><img src = \"" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getFileName() + " width = 200px \"></br>");
-			out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i) + "\">");
-			out.println("<br /><br />");
-		}	
 		
-		if(i + 1 != questions.size() || thisQuiz.isImmediate_correction()) {
-			//out.println("Hit here<br>");
-			out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(i + 1) + "\" />");
+		else {
+			int type = questions.get(randomIndex.get(i)).getQuestionType();
+			
+			
+			if(type == 1) {
+				out.println("<h3>Question " + Integer.toString(randomIndex.get(i)+1) + ": </h3>" + ((QuestionResponseQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
+				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(i) + "\">");
+				out.println("<br /><br />");
+			}
+			else if(type == 2) {
+				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((FillInTheBlankQuestion)questions.get(randomIndex.get(i))).getFrontString() + 
+						"______" + ((FillInTheBlankQuestion)questions.get(randomIndex.get(i))).getBackString() + "</br>");
+				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i) + "\">");
+				out.println("<br /><br />");
+			}
+			else if(type == 3) {
+				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
+				for(int j = 0; j < ((MultipleChoiceQuestion)questions.get(i)).getChoices().size(); j++)
+					out.println("<input type = \"radio\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i)
+					+ "\" value = \"" + ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "\">" +
+							((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "<br /><br />");
+			}
+			else {
+				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3><img src = \"" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getFileName() + " width = 200px \"></br>");
+				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i) + "\">");
+				out.println("<br /><br />");
+			}	
 		}
-
-		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null) {
-			//out.println("Inputted answer to last question is: " + request.getParameter("answer_" + Integer.toString(i - 1)) + "<br>");
-			//out.println("Correct answer to last question is: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br>");
-		}
-		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null && 
-				Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(i - 1)))) {
-			score++;
-			//out.println(score);
-		}
-		out.println("<input type = \"hidden\" name =\"score\" value = \"" + Integer.toString(score) +"\" >");
-		if(thisQuiz.isImmediate_correction()) 
+		
+		
+		
+		
+		
+		if(request.getParameter("immediate") == null) {
 			out.println("<input type = \"hidden\" name =\"immediate\" value = \"ON\" >");
 		}
 	}
-	else {
-		if(request.getParameter("answer_" + Integer.toString(questions.size() - 1)) != null && 
-				Answer.getAnswerForQuestion(questions.get(randomIndex.get(questions.size() - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(questions.size() - 1)))) {
-			score++;
-			//out.println(score);
-		}
-	}
+
 	%>
 	<input type='hidden' name='start_time' value='<%=request.getParameter("start_time")%>'>
 	<input type='hidden' name='quiz_id' value='<%=request.getParameter("quiz_id") %>'>
@@ -220,4 +205,15 @@ private void setup(HttpServletRequest request, HttpServletResponse response, Htt
 		}
 		
 	}
+%>
+
+<%!
+private boolean isComplete(ArrayList<Integer> indices) {
+	boolean result = true;
+	for(int i = 0; i < indices.size(); i++) {
+		if(indices.get(i) != 3)
+			result = false;
+	}
+	return result;
+}
 %>

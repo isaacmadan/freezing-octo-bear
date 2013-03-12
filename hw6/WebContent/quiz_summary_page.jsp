@@ -234,8 +234,12 @@ else {
 	if(!quiz.isPractice_mode())
 		out.println("<form action=\"quiz_taker.jsp\" method=\"POST\">");
 	else {
-		
-		out.println("<form action=\"quiz_taker_practice.jsp\" method=\"POST\">");
+		ArrayList<Integer> indices = new ArrayList<Integer>();
+		for(int k = 0; k < quiz.getQuestions().size(); k++) {
+			indices.add(0);
+		}
+		session.setAttribute("indices", indices);
+		out.println("<form action=\"quiz_multi_page_practice.jsp\" method=\"POST\">");
 	}
 }
 %>
