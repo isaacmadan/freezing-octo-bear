@@ -206,12 +206,17 @@
 
 <%
 if(!quiz.isOne_page()) {
-	out.println("<form action=\"quiz_one_page.jsp\" method=\"POST\">");
+	out.println("<form action=\"quiz_multi_page.jsp\" method=\"POST\">");
 	out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(0) +"\">");
 	out.println("<input type=\"hidden\" name=\"start_time\" value=\"" + Long.toString(System.currentTimeMillis()) +"\">");
 	out.println("<input type='hidden' name='score' value = '0'>");
 	ArrayList<Integer> arr = randomize();
-	//out.println("Random array is: " + arr + "<br>");
+	if(!quiz.isRandom_question()) {
+		arr = new ArrayList<Integer>();
+		for(int i = 0; i < quiz.getQuestions().size(); i++) {
+			arr.add(i);
+		}
+	}
 	session.setAttribute("randomIndex", arr);
 	session.setAttribute("arrAnswers", setup(request, response, session, out));
 }

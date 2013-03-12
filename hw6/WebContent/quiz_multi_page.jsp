@@ -39,7 +39,7 @@
 	<h1><%=thisQuiz.getTitle()%></h1>
 	<p><%=thisQuiz.getDescription()%></p>
 	
-	<form action="quiz_one_page.jsp" method="POST">
+	<form action="quiz_multi_page.jsp" method="POST">
 	<% 
 	ArrayList<Integer> randomIndex = (ArrayList<Integer>)session.getAttribute("randomIndex");
 	if(request.getParameter("question_num") != null) {
@@ -76,13 +76,13 @@
 			out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(i + 1) + "\" />");
 
 		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null) {
-			out.println("Inputted answer to last question is: " + request.getParameter("answer_" + Integer.toString(i - 1)) + "<br>");
-			out.println("Correct answer to last question is: " + answers.get(randomIndex.get(i - 1)).getAnswers() + "<br>");
+			//out.println("Inputted answer to last question is: " + request.getParameter("answer_" + Integer.toString(i - 1)) + "<br>");
+			//out.println("Correct answer to last question is: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br>");
 		}
 		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null && 
 				Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(i - 1)))) {
-			//score++;
-			out.println(score);
+			score++;
+			//out.println(score);
 		}
 		out.println("<input type = \"hidden\" name =\"score\" value = \"" + Integer.toString(score) +"\" >");
 	}
@@ -101,7 +101,7 @@
 		out.println("<input type='submit' value='Submit Answer' />");
 	%>
 	</form>
-	<form action=finished_quiz_one_page.jsp method="POST">
+	<form action=finished_quiz_multi_page.jsp method="POST">
 	<input type='hidden' name='quiz_id' value='<%=request.getParameter("quiz_id") %>'>
 	<input type='hidden' name='max_score' value='<%=thisQuiz.getMax_score()%>'>
 	<input type='hidden' name='start_time' value='<%=request.getParameter("start_time")%>'>
