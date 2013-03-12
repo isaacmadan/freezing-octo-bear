@@ -307,6 +307,41 @@ private ArrayList<Integer> randomize() {
 		<input type="submit" value="Challenge this friend" />
 	</form>
 
+	<!-- ratings/reviews -->
+	<%
+		new ReviewManager();
+		boolean tookQuiz = ReviewManager.tookQuiz(user.getId(), quiz.getQuiz_id());
+		if(tookQuiz) {
+			out.println("<input type='submit' onclick='showReview()' value='Review/rate this quiz' />");
+		}
+	%>
+	
+	<div id='review'>
+		<form onsubmit='return submitReview()' method='POST'>
+			<input type='hidden' name='quiz_id' value='<%= quiz.getQuiz_id() %>' />
+			<table>
+				<tr><td>Review</td><td><textarea name='review'></textarea></td></tr>
+				<tr><td>Rating</td>
+					<td>
+						<select name='rating'>
+							<option value='1'>1</option>
+							<option value='2'>2</option>
+							<option value='3'>3</option>
+							<option value='4'>4</option>
+							<option value='5'>5</option>
+							<option value='6'>6</option>
+							<option value='7'>7</option>
+							<option value='8'>8</option>
+							<option value='9'>9</option>
+							<option value='10'>10</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+			<button>Submit</button>
+		</form>
+	</div>
+
 	<%
 		boolean taken = true;
 		if (QuizResult.getBestQuizTakers(quiz.getQuiz_id(), 0).size() == 0) {
@@ -314,6 +349,7 @@ private ArrayList<Integer> randomize() {
 			out.println("<br /><br />Nobody has taken this quiz");
 		}
 	%>
+	<br />
 	<br />
 	
 <div id='accordion'>	

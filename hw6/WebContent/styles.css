@@ -2,7 +2,7 @@
 
 body { font-family:'Merriweather', serif!important; margin:0px; }
 
-input[type=submit], button  { font-size: 0.7em; font-family:'Merriweather', serif!important; }
+input[type=submit], button { font-size: 0.7em; font-family:'Merriweather', serif!important; }
 
 .header { color:white; width:100%; background-color:black; height:40px; font-size:36px; padding-bottom:30px; padding-top:30px; }
 .header a, .subheader a { color: white; text-decoration: none; }

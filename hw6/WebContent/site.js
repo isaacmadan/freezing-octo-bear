@@ -2,6 +2,8 @@ $(function() {
     $( "#accordion" ).accordion();
     $( "#announcer" ).dialog();
     $( "#announcer" ).dialog("close");
+    $( "#review" ).dialog();
+    $( "#review" ).dialog("close");
 });
 
 $(function() {
@@ -89,4 +91,13 @@ function areYouSure() {
 	if(!confirm("Are you sure?")) {
 		return false;
 	}
+}
+
+function showReview() {
+	$('#review').dialog("open");
+}
+
+function submitReview(review, rating) {
+	
+	//return false;
 }
