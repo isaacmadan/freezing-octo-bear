@@ -145,9 +145,9 @@
 		if(quiz != null) {
 			titleString = quiz.getTitle();
 		}
-		out.println("<tr><td>"+result.timeStamp+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"
+		out.println("<tr><td>"+result.dateString()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"
 					+titleString+"</a></td><td>"+result.pointsScored+"/"+result.maxPossiblePoints+"</td><td>"
-					+result.durationOfQuiz+"</td></tr>");
+					+result.durationString()+"</td></tr>");
 		
 	}
 	if(results.size() == 0) {

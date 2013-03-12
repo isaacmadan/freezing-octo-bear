@@ -79,9 +79,24 @@ String length = String.format("%d min, %d sec",
 	);
 %>
 Duration: <%= length %><br>
-Score: <%=score%>/<%=maxScore %>
+Score: <%=score%>/<%= maxScore %>
 </p>
 <br>
+
+<!-- update IAmTheGreatest Achievement -->
+<%
+	new QuizResult();
+	ArrayList<Result> results = QuizResult.getAllTimeBest(Integer.parseInt(request.getParameter("quiz_id")), 0);
+	boolean isGreatest = false;
+	if(results.size() == 0) isGreatest = true;
+	else if(maxScore > results.get(0).pointsScored) isGreatest = true;
+	if(isGreatest) {
+		AccountManager manager = new AccountManager();
+		Achievements achievements = manager.getAchievements(user.getId());
+		manager.updateAchievements(user.getId(), true); //add i am the greatest
+	}
+%>
+
 <%
 QuizResult.addResult(user.getId(), Integer.parseInt(request.getParameter("quiz_id")), 
 		score, maxScore, dur);
