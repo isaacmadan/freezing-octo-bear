@@ -88,17 +88,53 @@ public class AdminControl {
 	 * Removes all quizzes created by that user
 	 * Removes all results taken by those quizzes
 	 * Removes all questions and answers associated with that stuff
+	 * Removes all achievements associated
+	 * Removes all friends associated
 	 * Returns true if successful and false if anything goes wrong. Also has a high chance of
 	 * quitting with the database in terrible condition
+	 * TODO add review removal
 	 * */
 
 	public static boolean removeAccount(int userId){	
-		/** for each quiz created by the user - call removequiz
-		 * 
-		 */
 		String deleteUser = "DELETE FROM users WHERE user_id = " + userId;
-		String selectQuiz = "SELECT FROM quizzes where user_id = " + userId;
+		String selectQuiz = "SELECT * FROM quizzes where user_id = " + userId;
+		String deleteUserResults = "DELETE FROM results WHERE user_id = " + userId;
+		String deleteAchievements = "DELETE FROM achievements WHERE user_id = " + userId;
+		
+		System.out.println(deleteUser);
+		System.out.println(selectQuiz);
+		System.out.println(deleteUserResults);
+		System.out.println(deleteAchievements);
+		
+		try {
+			stmt.executeUpdate(deleteUserResults);
+			stmt.executeUpdate(deleteAchievements);
+			Statement newStmt = con.createStatement();
+			ResultSet set = newStmt.executeQuery(selectQuiz);
+			//Removing quizzes and quiz results of those quizzes
+			while(set.next()){
+				int quizId = set.getInt("quiz_id");
+				removeQuiz(quizId);
+			}
+			//Finally remove the user from users database
+			removeFriends(userId);
+			stmt.executeUpdate(deleteUser);
+			return true;
+		} catch (SQLException ignored) {
+			ignored.printStackTrace();
+		}
+		
 
+		return false;
+	}
+	
+	
+	private static boolean removeFriends(int userId){
+		String deleteFriends = "DELETE FROM friends where x_id = " + userId + " OR y_id = " + userId; 
+		try {
+			stmt.executeUpdate(deleteFriends);
+		} catch (SQLException e) {
+		}
 		return false;
 	}
 

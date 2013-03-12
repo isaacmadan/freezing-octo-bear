@@ -133,6 +133,7 @@ public class CatTagManager {
 				int quizNum = set.getInt("quiz_id");
 				Quiz newQuiz = (new QuizManager()).getQuizByQuizId(quizNum); 
 				quizzes.add(newQuiz);
+				//System.out.println("SHIT");
 			}
 			return quizzes;
 		} catch (SQLException e) {}
@@ -203,11 +204,11 @@ public class CatTagManager {
 		String execution = "SELECT * from categories where quiz_id = " + quiz_id + " LIMIT 1";
 		try {
 			ResultSet set = stmt.executeQuery(execution);
-			set.first();
+			if (!set.next()) return "No Categories";
 			return set.getString("string");
 		} catch (SQLException e) {
 		}
-		return "FailedExtractionOfCategory";
+		return "No Categories";
 	}
 	
 	/**Get a list of Quiz objects from the database given a string category*/
@@ -215,9 +216,8 @@ public class CatTagManager {
 		ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
 		String execution = "SELECT DISTINCT quiz_id FROM categories WHERE string = '" + cat + "' AND quiz_id > 0 ";
 		try {
-			System.out.println(execution);
+			//System.out.println(execution);
 			ResultSet set = stmt.executeQuery(execution);
-			
 			while(set.next()){
 				int quizNum = set.getInt("quiz_id");
 				if (quizNum != -1){

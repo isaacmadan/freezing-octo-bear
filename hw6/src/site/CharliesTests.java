@@ -1,7 +1,5 @@
 package site;
 
-import java.util.ArrayList;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,11 +39,11 @@ public class CharliesTests {
 		System.out.println(QuizResult.getBestQuizTakers(3, 0));
 		System.out.println(QuizResult.getBestQuizTakers(3, 3));
 		*/
-		ArrayList<Result> results = QuizResult.getWorstQuizTakers(63, 0);
-		System.out.println(results);
-		System.out.println(results.get(0).durationOfQuiz);
-		System.out.println(results.get(0).durationString());
-		
+//		ArrayList<Result> results = QuizResult.getWorstQuizTakers(63, 0);
+//		System.out.println(results);
+//		System.out.println(results.get(0).durationOfQuiz);
+//		System.out.println(results.get(0).durationString());
+//		
 		
 		/*double score = 3/(double)7;
 		DecimalFormat df = new DecimalFormat ("0%");
@@ -57,21 +55,22 @@ public class CharliesTests {
 		*/
 	}
 	
-	/*@Test
+	@Test
 	public void test3(){
 		new AdminControl();
-	System.out.println(AdminControl.getAnnouncements(10));
-		
-		
-		System.out.println(AdminControl.getStatistics());
-		AdminControl.promoteToAdmin(1,5);
-		if(!AdminControl.demoteFromAdmin(5,7)) System.out.println("failure");
-		System.out.println(AdminControl.isAdmin(3));
-		MyDB.close();
-
-		System.out.println(AdminControl.clearQuizResults(19));
+		AdminControl.removeAccount(15);
+		//	System.out.println(AdminControl.getAnnouncements(10));
+//		
+//		
+//		System.out.println(AdminControl.getStatistics());
+//		AdminControl.promoteToAdmin(1,5);
+//		if(!AdminControl.demoteFromAdmin(5,7)) System.out.println("failure");
+//		System.out.println(AdminControl.isAdmin(3));
+//		MyDB.close();
+//
+//		System.out.println(AdminControl.clearQuizResults(19));
 	}
-	
+	/*
 	@Test
 	public void testAnswerLog(){
 		new AnswerLog();
@@ -95,8 +94,10 @@ public class CharliesTests {
 //		System.out.println(CatTagManager.parseTags(" love , have, suplex "));
 //		System.out.println(CatTagManager.parseTags("qw asdfasd ,asdfafeq d,asdfasdf2,,,,"));
 //		System.out.println(CatTagManager.parseTags("qw asdfasdasa;sduf98234qvnds8f"));
-		System.out.println(CatTagManager.getQuizzesFromCategory("Politics"));
-	}
+//		System.out.println(CatTagManager.getQuizzesFromCategory("Politics"));
+//		System.out.println(CatTagManager.getQuizzesFromTag("love"));
+//			
+//	}
 //		System.out.println(CatTagManager.getTagsFromQuiz(13));
 		
 //		System.out.println(CatTagManager.getQuizzesFromTag("love"));
@@ -125,6 +126,8 @@ public class CharliesTests {
 //		}
 //	}
 	
+	}
+	
 	@Test 
 	public void testReview(){
 		new ReviewManager();
@@ -138,6 +141,8 @@ public class CharliesTests {
 		
 		
 	}
+	
+	
 	@After
 	public void after(){
 		
