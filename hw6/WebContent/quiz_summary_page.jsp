@@ -200,6 +200,23 @@
 		</h3>
 	</div>
 
+	<h3>
+	Categories:
+	<%
+		new CatTagManager();
+		out.println("<a href='cat_tag.jsp?category="+CatTagManager.getCategoryFromQuiz(quiz.getQuiz_id())+"'>"+CatTagManager.getCategoryFromQuiz(quiz.getQuiz_id())+"</a>");
+	%>
+	</h3>
+	
+	<h3>
+	Tags:
+	<%
+		for(String tag : CatTagManager.getTagsFromQuiz(quiz.getQuiz_id())) {
+			out.println("<a href='cat_tag.jsp?tag="+tag+"'>"+tag+"</a>");
+		}
+	%>
+	</h3>
+	
 	Quiz Author:
 	<a href="profile.jsp?id=<%=quiz.getUser_id()%>"> <%=manager.getAccountById(String.valueOf(quiz.getUser_id()))
 					.getUsername()%></a>

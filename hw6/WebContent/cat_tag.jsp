@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="site.*,java.util.*" %>
+<%@ page import="site.*, java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,11 +13,9 @@
 <script src="site.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Quizzard - Search</title>
-</head>
-<body>
+<title>Quizzards - Quizzes by Categories/Tags</title>
 
-<!-- USER AUTH CODE -->
+<!-- NO TOUCH - USER AUTH CODE -->
 <%
 	if(session == null) {
 		RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
@@ -33,7 +31,8 @@
 	}
 %>
 <!-- END -->
-
+</head>
+<body>
 <div class="header"><div class="pad"><a href='index.jsp'>Quizzard</a></div></div>
 
 <div class="nav">
@@ -61,55 +60,35 @@
 </div>
 
 <div class='content'>
-<div id="userResults">
-<h2>Users</h2>
-<table border="1">
-<tr><th>Username</th></tr>
 <%
-	String query = request.getParameter("query");
-	ArrayList<User> users = Search.searchUsers(query);
+	String category = request.getParameter("category");
+	String tag = request.getParameter("tag");
 	
-	for(User resUser : users) {
-		out.println("<tr><td><a href='profile.jsp?id="+resUser.getId()+"'>"+resUser.getUsername()+"</a></td></tr>");
+	if(category != null) {
+		out.println("Category: "+category);
 	}
-	if(users.size() == 0) out.println("<tr><td>No results</td></tr>");
+	else if(tag != null) {
+		out.println("Tag: "+tag);
+	}
 %>
+<table>
+	<th><td>Quiz name</td><td>Quiz description</td><td>Quiz creator</td></th>
+	<%
+		new CatTagManager();
+		if(category != null) {
+			for(Quiz quiz : CatTagManager.getQuizzesFromCategory(category)) {
+				out.println("<tr><td>"+quiz.getTitle()+"</td>"+"</tr>");
+			}
+		}
+		else if(tag != null) {
+			for(Quiz quiz : CatTagManager.getQuizzesFromTag(tag)) {
+				out.println("<tr><td>"+quiz.getTitle()+"</td>"+"</tr>");
+			}
+		}
+	%>
 </table>
-</div>
 
-<div id="userResults">
-<h2>Quizzes</h2>
-<table border="1">
-<tr><th>Quiz name</th><th>Description</th></tr>
-<%
-	query = request.getParameter("query");
-	ArrayList<Quiz> quizzes = Search.searchQuizzes(query);
-	
-	for(Quiz quiz : quizzes) {
-		out.println("<tr><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td></tr>");
-	}
-	if(quizzes.size() == 0) out.println("<tr><td></td><td>No results</td></tr>");
-%>
-</table>
 </div>
-
-<div id="userResults">
-<h2>Tags</h2>
-<table border="1">
-<tr><th>Quiz name</th><th>Description</th></tr>
-<%
-	query = request.getParameter("query");
-	new CatTagManager();
-	quizzes = CatTagManager.getQuizzesFromTag(query);
-	
-	for(Quiz quiz : quizzes) {
-		out.println("<tr><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td></tr>");
-	}
-	if(quizzes.size() == 0) out.println("<tr><td></td><td>No results</td></tr>");
-%>
-</table>
-</div>
-</div><!-- end content -->
 
 <div class='footer'><div class="pad">Quizzard 2013.</div></div>
 </body>
