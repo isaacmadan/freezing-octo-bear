@@ -165,18 +165,19 @@
 		Summary
 	</h1>
 
-	<div class="admin"><!-- ADMIN CODE -->
-	<div class='pad pad-vertical'>
+<!-- ADMIN CODE -->
 	<%
 	new AdminControl();
-	out.println("<h2>Admin Controls</h2>");
 	if(AdminControl.isAdmin(user.getId())) {
+		out.println("<div class='admin'>");
+		out.println("<div class='pad pad-vertical'>");
+		out.println("<h2>Admin Controls</h2>");
 		out.println("<button id='deleteQuizResults' onclick='deleteQuizResults(" + quiz.getQuiz_id() + ")'>Clear quiz results</button>");
 		out.println("<button id='deleteQuiz' onclick='deleteQuiz("+quiz.getQuiz_id()+")'>Delete quiz</button>");	
+		out.println("</div>");
+		out.println("</div>");
 	}
 	%>
-	</div>
-	</div>
 
 	<br />
 	<div>
@@ -232,8 +233,10 @@ if(!quiz.isOne_page()) {
 else {
 	if(!quiz.isPractice_mode())
 		out.println("<form action=\"quiz_taker.jsp\" method=\"POST\">");
-	else
+	else {
+		
 		out.println("<form action=\"quiz_taker_practice.jsp\" method=\"POST\">");
+	}
 }
 %>
 
