@@ -172,7 +172,7 @@
 	</form>
 	
 	
-	<form action=finished_quiz_multi_page.jsp method="POST" onsubmit="return areYouSure()">
+	<form action=quiz_multi_page.jsp method="POST">
 	<input type='hidden' name='quiz_id' value='<%=request.getParameter("quiz_id") %>'>
 	<input type='hidden' name='max_score' value='<%=thisQuiz.getMax_score()%>'>
 	<input type='hidden' name='start_time' value='<%=request.getParameter("start_time")%>'>

@@ -63,7 +63,7 @@
 		try {
 			out.println("<tr><td> <a href='profile.jsp?id=" + result.userId
 					+ "'>" + user.getUsername() + "</a>" + "</td><td>" + score2
-					+ "</td><td>" + result.durationOfQuiz + "</td><td>" + date);
+					+ "</td><td>" + result.durationString() + "</td><td>" + date);
 		} catch (IOException ignored) {
 		}
 	}
@@ -206,7 +206,16 @@
 
 <%
 if(!quiz.isOne_page()) {
-	out.println("<form action=\"quiz_multi_page.jsp\" method=\"POST\">");
+	if(!quiz.isPractice_mode())
+		out.println("<form action=\"quiz_multi_page.jsp\" method=\"POST\">");
+	else {
+		out.println("<form action=\"quiz_multi_page_practice.jsp\" method=\"POST\">");
+		ArrayList<Integer> indices = new ArrayList<Integer>();
+		for(int k = 0; k < quiz.getQuestions().size(); k++) {
+			indices.add(0);
+		}
+		session.setAttribute("indices", indices);
+	}
 	out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(0) +"\">");
 	out.println("<input type=\"hidden\" name=\"start_time\" value=\"" + Long.toString(System.currentTimeMillis()) +"\">");
 	out.println("<input type='hidden' name='score' value = '0'>");
@@ -221,7 +230,10 @@ if(!quiz.isOne_page()) {
 	session.setAttribute("arrAnswers", setup(request, response, session, out));
 }
 else {
-	out.println("<form action=\"quiz_taker.jsp\" method=\"POST\">");
+	if(!quiz.isPractice_mode())
+		out.println("<form action=\"quiz_taker.jsp\" method=\"POST\">");
+	else
+		out.println("<form action=\"quiz_taker_practice.jsp\" method=\"POST\">");
 }
 %>
 
