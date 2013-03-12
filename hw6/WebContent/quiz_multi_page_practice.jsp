@@ -79,6 +79,8 @@
 	<% 
 	ArrayList<Integer> randomIndex = (ArrayList<Integer>)session.getAttribute("randomIndex");
 	ArrayList<Integer> indices = (ArrayList<Integer>)session.getAttribute("indices");
+	int size = randomIndex.size();
+	
 	if(!isComplete(indices)) {
 
 		int i = Integer.parseInt(request.getParameter("question_num"));
@@ -99,6 +101,8 @@
 		
 			if(i != randomIndex.size())
 				out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + i + "\" />");
+			else
+				out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + 0 + "\" />");
 			session.setAttribute("randomIndex", randomIndex);
 			session.setAttribute("indices", indices);
 		}
@@ -110,34 +114,27 @@
 			
 			if(type == 1) {
 				out.println("<h3>Question " + Integer.toString(randomIndex.get(i)+1) + ": </h3>" + ((QuestionResponseQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
-				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(i) + "\">");
+				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i)) + "\">");
 				out.println("<br /><br />");
 			}
 			else if(type == 2) {
-				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((FillInTheBlankQuestion)questions.get(randomIndex.get(i))).getFrontString() + 
+				out.println("<h3>Question " + Integer.toString(randomIndex.get(i)+1) + ": </h3>" + ((FillInTheBlankQuestion)questions.get(randomIndex.get(i))).getFrontString() + 
 						"______" + ((FillInTheBlankQuestion)questions.get(randomIndex.get(i))).getBackString() + "</br>");
-				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i) + "\">");
+				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i)) + "\">");
 				out.println("<br /><br />");
 			}
 			else if(type == 3) {
-				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
-				for(int j = 0; j < ((MultipleChoiceQuestion)questions.get(i)).getChoices().size(); j++)
-					out.println("<input type = \"radio\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i)
+				out.println("<h3>Question " + Integer.toString(randomIndex.get(i)+1) + ": </h3>" + ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
+				for(int j = 0; j < ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().size(); j++)
+					out.println("<input type = \"radio\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i))
 					+ "\" value = \"" + ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "\">" +
 							((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "<br /><br />");
 			}
 			else {
-				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3><img src = \"" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getFileName() + " width = 200px \"></br>");
-				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i) + "\">");
+				out.println("<h3>Question " + Integer.toString(randomIndex.get(i)) + ": </h3><img src = \"" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getFileName() + " width = 200px \"></br>");
+				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i)) + "\">");
 				out.println("<br /><br />");
 			}	
-		}
-		
-		
-		
-		
-		
-		if(request.getParameter("immediate") == null) {
 			out.println("<input type = \"hidden\" name =\"immediate\" value = \"ON\" >");
 		}
 	}
@@ -164,7 +161,7 @@
 	<input type='hidden' name='quiz_id' value='<%=thisQuiz.getQuiz_id()%>'>
 	<input type='hidden' name='score' value='<%=score%>'>
 	<%
-	if(request.getParameter("question_num") == null) {
+	if(size == 0) {
 		out.println("The Quiz is Complete!<br>");
 		out.println("<input type='submit' value='Submit Quiz' />");
 	}
