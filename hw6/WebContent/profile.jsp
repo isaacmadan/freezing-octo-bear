@@ -14,13 +14,30 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<!-- NO TOUCH - USER AUTH CODE -->
 <%
-	AccountManager manager = new AccountManager();
-	User thisUser = (User)session.getAttribute("user");
-	if(thisUser == null) {
-		out.println("You have to be logged in to view profiles.");
+	if(session == null) {
+		RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
+		dispatch.forward(request, response);
 		return;
 	}
+	
+	User thisUser = (User)session.getAttribute("user");
+	if(thisUser == null) {
+		RequestDispatcher dispatch = request.getRequestDispatcher("unauthorized.jsp");
+		dispatch.forward(request, response);
+		return;
+	}
+%>
+<!-- END -->
+
+<%
+	AccountManager manager = new AccountManager();
+	//User thisUser = (User)session.getAttribute("user");
+	//if(thisUser == null) {
+	//	out.println("You have to be logged in to view profiles.");
+	//	return;
+	//}
 	
 	String user_id = request.getParameter("id");
 	if(user_id == null || user_id.equals(""))
@@ -44,7 +61,7 @@
 <div class="nav">
 	<div id="links">
 	<ul>
-		<li><a href = "make_quiz.jsp">Make a Quiz</a></li>
+		<li><a href = "make_quiz.jsp">Make a quiz</a></li>
 		<li><% out.println("<a href='profile.jsp?id="+user.getId()+"'>My public profile</a>"); %></li>
 		<li><% out.println("<a href='inbox.jsp'>My inbox</a>"); %></li>
 		<li><% out.println("<a href='history.jsp'>My performance history</a>"); %></li>
@@ -67,22 +84,22 @@
 
 <div class='content'>
 
-<div class="admin">
-<div class='pad pad-vertical'>
 <%
 	new AdminControl();
-	out.println("<h2>Admin Controls</h2>");
 	if(AdminControl.isAdmin(thisUser.getId())) {
+		out.println("<div class='admin'>");
+		out.println("<div class='pad pad-vertical'>");
+		out.println("<h2>Admin Controls</h2>");
 		out.println("<button id='deleteUser' onclick='deleteUser(" + user.getId() + ")'>Delete this user</button>");
 		if(AdminControl.isAdmin(user.getId()))
 			out.println("<button id='demoteUser' onclick='demoteUser("+thisUser.getId()+", "+user.getId()+")'>Demote this user</button>");
 		else
 			out.println("<button id='demoteUser' onclick='promoteUser("+thisUser.getId()+", "+user.getId()+")'>Promote this user</button>");
-		
+		out.println("</div>");
+		out.println("</div>");
 	}
 %>
-</div>
-</div>
+
 
 <div class='col-1-3'>
 <h2>Friends</h2>

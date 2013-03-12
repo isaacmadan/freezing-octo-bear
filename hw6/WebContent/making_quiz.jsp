@@ -136,7 +136,7 @@ int numQuestions;
 			for(int i = 1; i <= numAnswers; i++) {
 				answers.addAnswer(request.getParameter("answer"+i));
 			}
-			out.println("Question Response created");
+			out.println("<br /><div class='success'>Question Response created</div><br />");
 			QuestionResponseQuestion question = new QuestionResponseQuestion(0, 1, 1, answers, questionString);
 			quiz.addQuestion(question);
 		}
@@ -150,7 +150,7 @@ int numQuestions;
 				answers.addAnswer(request.getParameter("answer"+i));
 			}
 			
-			out.println("Fill in the Blank created");
+			out.println("<br /><div class='success'>Fill in the Blank created</div><br />");
 			FillInTheBlankQuestion question = new FillInTheBlankQuestion(1, 2, answers, frontString, backString);
 			quiz.addQuestion(question);
 		}
@@ -168,7 +168,7 @@ int numQuestions;
 				answers.addAnswer(request.getParameter("answer"+i));
 			}
 			
-			out.println("Multiple Choice created");
+			out.println("<br /><div class='success'>Multiple Choice created</div><br />");
 			MultipleChoiceQuestion question = new MultipleChoiceQuestion(1, 3, answers, questionString, choices);
 			quiz.addQuestion(question);
 		}
@@ -182,8 +182,9 @@ int numQuestions;
 				answers.addAnswer(request.getParameter("answer"+i));
 			}
 			
-			out.println("Picture Response");
-			PictureResponseQuestion question = new PictureResponseQuestion(1, 4, answers, questionString);
+			out.println("<br /><div class='success'>Picture Response created</div><br />");
+			//PictureResponseQuestion question = new PictureResponseQuestion(1, 4, answers, questionString);
+			PictureResponseQuestion question = new PictureResponseQuestion(1, 4, answers, urlString);
 			quiz.addQuestion(question);
 		}
 %>
@@ -193,15 +194,48 @@ int numQuestions;
 	ArrayList<Question> questions = quiz.getQuestions();
 	for(Question question : questions) {
 		int thisQuestionType = question.getQuestionType();
-		out.println("Question: "+QUESTION_TYPES[thisQuestionType]+"<br />");
-		if(thisQuestionType == 1)
-			question = (QuestionResponseQuestion)question;
-		if(thisQuestionType == 2)
-			question = (FillInTheBlankQuestion)question;
-		if(thisQuestionType == 3)
-			question = (MultipleChoiceQuestion)question;
-		if(thisQuestionType == 4)
-			question = (PictureResponseQuestion)question;
+		out.println("<strong>Question: "+QUESTION_TYPES[thisQuestionType]+"</strong><br />");
+		if(thisQuestionType == 1) {
+			QuestionResponseQuestion newQuestion = (QuestionResponseQuestion)question;
+			out.println(newQuestion.getQuestionString() + "<br />");
+			out.println("<br />Answers: <br />");
+			Answer newAnswers = newQuestion.getAnswer();
+			for(String newAnswer : newAnswers.getAnswers()) {
+				out.println(newAnswer + "<br />");
+			}
+		}
+		if(thisQuestionType == 2) {
+			FillInTheBlankQuestion newQuestion = (FillInTheBlankQuestion)question;
+			out.println(newQuestion.getFrontString() + " ____________ " + newQuestion.getBackString() + ".<br />");
+			out.println("<br />Answers: <br />");
+			Answer newAnswers = newQuestion.getAnswer();
+			for(String newAnswer : newAnswers.getAnswers()) {
+				out.println(newAnswer + "<br />");
+			}
+		}
+		if(thisQuestionType == 3) {
+			MultipleChoiceQuestion newQuestion = (MultipleChoiceQuestion)question;
+			out.println(newQuestion.getQuestionString() + "<br />");
+			out.println("<br />Choices: <br />");
+			ArrayList<MultipleChoiceChoices> newChoices = newQuestion.getChoices();
+			for(MultipleChoiceChoices choice : newChoices) {
+				out.println(choice.getChoiceString() + "<br />");
+			}
+			out.println("<br />Answers: <br />");
+			Answer newAnswers = newQuestion.getAnswer();
+			for(String newAnswer : newAnswers.getAnswers()) {
+				out.println(newAnswer + "<br />");
+			}
+		}	
+		if(thisQuestionType == 4) {
+			PictureResponseQuestion newQuestion = (PictureResponseQuestion)question;
+			out.println("<img src='"+newQuestion.getFileName()+"' width='200px' />");
+			out.println("<br />Answers: <br />");
+			Answer newAnswers = newQuestion.getAnswer();
+			for(String newAnswer : newAnswers.getAnswers()) {
+				out.println(newAnswer + "<br />");
+			}
+		}
 		out.println("<hr>");
 	}
 %>

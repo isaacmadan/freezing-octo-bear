@@ -28,13 +28,10 @@ public class Quiz {
 			Statement stmt = con.createStatement();
 			Statement stmt2 = con2.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM questions WHERE quiz_id="+quiz_id);
-			//System.out.println("SELECT * FROM questions WHERE quiz_id="+quiz_id);
 			ArrayList<Question> questions = new ArrayList<Question>();
 			while(rs.next()) {
 				int type = rs.getInt("question_type");
-				System.out.println("Question type is: " + type);
 				int question_id = rs.getInt("question_id");
-				System.out.println("Question ID is: " + question_id);
 				if(type == 1) {
 					String getFromQRDB = "SELECT * FROM question_responses WHERE question_id = "
 							+ question_id;
@@ -42,11 +39,10 @@ public class Quiz {
 					ResultSet rss = null;
 					try{
 						rss = stmt2.executeQuery(getFromQRDB);
-					} catch(Exception e) { System.out.println("1: " + e); }
+					} catch(Exception e) { System.out.println(e); }
 					Answer answer = new Answer();
 					Question question = null;
 					while(rss.next()) {
-						System.out.println("Question ID is: " + rss.getInt("question_id"));
 						question = new QuestionResponseQuestion(rss.getInt("question_id"), 
 							quiz_id, 1, type, answer, rss.getInt("question_responses_id"), rss.getString("string"));
 					}
@@ -56,7 +52,6 @@ public class Quiz {
 						answer.addAnswer(rss.getString("string"));
 					}
 					questions.add(question);
-					System.out.println("added a question of type 1");
 				}
 				else if(type == 2) {
 					String getFromFITBDB = "SELECT * FROM fill_in_the_blanks WHERE question_id = "
@@ -75,7 +70,6 @@ public class Quiz {
 						answer.addAnswer(rss.getString("string"));
 					}
 					questions.add(question);	
-					System.out.println("added a question of type 2");
 				}
 				else if(type == 3) {
 					String getFromMCDB = "SELECT * FROM multiple_choices WHERE question_id = "
@@ -104,7 +98,6 @@ public class Quiz {
 						answer.addAnswer(rss.getString("string"));
 					}
 					questions.add(question);
-					System.out.println("added a question of type 3");
 				}
 				else {
 					String getFromPRDB = "SELECT * FROM picture_responses WHERE question_id = "
@@ -123,9 +116,7 @@ public class Quiz {
 						answer.addAnswer(rss.getString("string"));
 					}
 					questions.add(question);
-					System.out.println("added a question of type 4");
 				}	
-				System.out.println("finishes one loop");
 			}
 			this.setQuestions(questions);
 		} catch(Exception e) {
