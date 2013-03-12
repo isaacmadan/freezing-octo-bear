@@ -1,6 +1,7 @@
 package site;
 
 import java.sql.Timestamp;
+import java.util.concurrent.TimeUnit;
 
 /**Result encapsulates all the fields relevant to a single quiz result. All fields
  * are final and can be accessed publicly. 
@@ -55,6 +56,16 @@ public class Result extends Object{
 	public String dateString(){
 		return  java.text.DateFormat.getDateTimeInstance().format(
 				this.timeStamp);
+	}
+	
+	public String durationString(){
+		long millis = this.durationOfQuiz;
+		String dur = String.format("%d min, %d sec", 
+			    TimeUnit.MILLISECONDS.toMinutes(millis),
+			    TimeUnit.MILLISECONDS.toSeconds(millis) - 
+			    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
+			);
+		return dur;
 	}
 
 }

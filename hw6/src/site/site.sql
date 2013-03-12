@@ -184,7 +184,8 @@ DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
 	category_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	quiz_id INT,	
-	string TEXT
+	string TEXT,
+	FULLTEXT(string)
 );
 
 DROP TABLE IF EXISTS tags;
@@ -192,7 +193,8 @@ DROP TABLE IF EXISTS tags;
 CREATE TABLE tags (
 	tag_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	quiz_id INT,
-	string TEXT
+	string TEXT,
+	FULLTEXT(string)
 );
 
 DROP TABLE IF EXISTS reviews;
@@ -203,7 +205,7 @@ CREATE TABLE reviews (
 	quiz_id INT,
 	string TEXT,
 	review_score INT,
-	created_timestamp TIMESTAMP default now()
+	created_timestamp TIMESTAMP default now(),
 );
 
 

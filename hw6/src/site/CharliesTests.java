@@ -1,5 +1,7 @@
 package site;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,9 +40,13 @@ public class CharliesTests {
 		System.out.println(QuizResult.getUserPerformanceOnQuiz(2, 3,"BY_SCORE"));
 		System.out.println(QuizResult.getBestQuizTakers(3, 0));
 		System.out.println(QuizResult.getBestQuizTakers(3, 3));
-		
-		System.out.println(QuizResult.getWorstQuizTakers(3, 0));
 		*/
+		ArrayList<Result> results = QuizResult.getWorstQuizTakers(63, 0);
+		System.out.println(results);
+		System.out.println(results.get(0).durationOfQuiz);
+		System.out.println(results.get(0).durationString());
+		
+		
 		/*double score = 3/(double)7;
 		DecimalFormat df = new DecimalFormat ("0%");
 		System.out.println(df.format(score));
@@ -120,9 +126,9 @@ public class CharliesTests {
 //		System.out.println(ReviewManager.tookQuiz(5, 27));
 //		System.out.println(ReviewManager.tookQuiz(213423, 2723432));
 //		System.out.println(ReviewManager.tookQuiz(5, -12312));
-		System.out.println(ReviewManager.addReview(5, 27, "This quiz was the most mindblowingly amazing quiz ever!",1));
-		System.out.println(ReviewManager.addReview(5, 27, "Worst quiz ever",4));
-		System.out.println(ReviewManager.getReviews(27));
+//		System.out.println(ReviewManager.addReview(5, 27, "This quiz was the most mindblowingly amazing quiz ever!",1));
+//		System.out.println(ReviewManager.addReview(5, 27, "Worst quiz ever",4));
+//		System.out.println(ReviewManager.getReviews(27));
 		
 		
 		
