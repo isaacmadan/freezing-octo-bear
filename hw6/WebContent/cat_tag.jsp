@@ -61,18 +61,20 @@
 
 <div class='content'>
 <%
+	AccountManager manager = new AccountManager();
+
 	String category = request.getParameter("category");
 	String tag = request.getParameter("tag");
 	
 	if(category != null) {
-		out.println("Category: "+category);
+		out.println("<h3>Category: "+category+"</h3>");
 	}
 	else if(tag != null) {
-		out.println("Tag: "+tag);
+		out.println("<h3>Tag: "+tag+"</h3>");
 	}
 %>
 <table>
-	<th><td>Quiz name</td><td>Quiz description</td><td>Quiz creator</td></th>
+	<tr><th>Quiz name</th><th>Quiz description</th><th>Quiz creator</td></th>
 	<%
 		new CatTagManager();
 		if(category != null) {
@@ -82,7 +84,11 @@
 		}
 		else if(tag != null) {
 			for(Quiz quiz : CatTagManager.getQuizzesFromTag(tag)) {
-				out.println("<tr><td>"+quiz.getTitle()+"</td>"+"</tr>");
+				//out.println(quiz.getQuiz_id());
+				//out.println(quiz.getTitle());
+				//out.println(quiz.getDescription());
+				//out.println(quiz.getUser_id());
+				out.println("<tr><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td><td><a href='profile.jsp?id="+quiz.getUser_id()+"'>"+manager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+"</a></td></tr>");
 			}
 		}
 	%>

@@ -227,6 +227,7 @@ if(!quiz.isOne_page()) {
 	if(!quiz.isPractice_mode())
 		out.println("<form action=\"quiz_multi_page.jsp\" method=\"POST\">");
 	else {
+		quiz.populateQuiz();
 		out.println("<form action=\"quiz_multi_page_practice.jsp\" method=\"POST\">");
 		ArrayList<Integer> indices = new ArrayList<Integer>();
 		for(int k = 0; k < quiz.getQuestions().size(); k++) {
