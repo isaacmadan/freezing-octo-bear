@@ -97,7 +97,7 @@ public class AdminControl {
 		 * 
 		 */
 		String deleteUser = "DELETE FROM users WHERE user_id = " + userId;
-		String selectQuiz = "SELECT FROM quizzes where user_id = ";
+		String selectQuiz = "SELECT FROM quizzes where user_id = " + userId;
 
 		return false;
 	}

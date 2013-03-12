@@ -102,7 +102,6 @@ public class CatTagManager {
 			String unStripped = matcher.group();
 			unStripped = unStripped.replaceAll("[ ]+$", "");
 			unStripped = unStripped.replaceAll("^[ ]+", "");
-			
 			if (!unStripped.equals("")) tagSet.add(unStripped);
 		}
 		return tagSet;
