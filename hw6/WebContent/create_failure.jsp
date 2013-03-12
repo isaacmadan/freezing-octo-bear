@@ -6,24 +6,29 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+<link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+<script src="site.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Quizzard - Create account failure</title>
 </head>
-<body>
+<body id="login-background">
 
-<h3>Sorry, that username is taken</h3>
-<h4>Quiz site</h4>
-<p>Please login</p>
+<div class="login">
+<h1>Quizzard</h1>
+<h3>Quizzard gives you the real quiz taking, creation, and sharing experience.</h3>
+<div class='error'><p>Sorry, that username is taken.<br /> Please try something else.</p></div><br />
 
-<div id ="login">
-<form action="CreateUserServlet" method="POST">
-	<fieldset>
-		<label>Username</label>
-		<input type="text" id="username" name="username"></input><br />
-		<label>Password</label>
-		<input type="password" id="password" name="password"></input>
-	</fieldset>
+<div id='login'>
+<form action="CreateUserServlet" method="POST" onsubmit="return validateForm(['username','password'])">
+	<table>
+		<tr><td><label>Username</label></td>
+		<td><input type="text" id="username" name="username"></input></td></tr>
+		<tr><td><label>Password</label></td>
+		<td><input type="password" id="password" name="password"></input></td></tr>
+	</table>
 	<input type="submit" />
 </form>
 </div>

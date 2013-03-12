@@ -59,6 +59,14 @@
 </div>
 
 <div class='content'>
+
+<%
+	String success = (String)request.getAttribute("send_success");
+	if(success != null) {
+		out.println("<div class='success'>Your message was sent successfully!</div>");
+	}
+%>
+
 <a href="compose.jsp">Send a message</a>
 
 <table border="1">

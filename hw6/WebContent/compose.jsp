@@ -13,7 +13,7 @@
 <script src="site.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Send a message</title>
+<title>Quizzard - Send a message</title>
 </head>
 <body>
 
@@ -59,15 +59,24 @@
 </div>
 
 <div class='content'>
-<form action="SendTextMessageServlet" method="POST">
+
+<%
+	String failure = (String)request.getAttribute("send_failure");
+	if(failure != null) {
+		out.println("<div class='error'>There was a problem sending your message. Please try again.</div>");
+	}
+%>
+
+
+<form action="SendTextMessageServlet" method="POST" onsubmit="return validateForm(['to_user','content'])">
 	<table>
 		<input type="hidden" name="from_user" value="<%= user.getUsername() %>" />
 		<tr>
-		<td><label>To (username): </label></td><td><input type="text" name="to_user" /></td>
+		<td><label>To (username): </label></td><td><input type="text" name="to_user" id="to_user" /></td>
 		<input type="hidden" name="message_type" value="3" />
 		</tr>
 		<tr>
-		<td><label>Message: </label></td><td><textarea name="content" rows="10" cols="30"></textarea></td>
+		<td><label>Message: </label></td><td><textarea name="content" rows="10" cols="30" id="content"></textarea></td>
 		</tr>
 	</table>
 	<input type="submit" />

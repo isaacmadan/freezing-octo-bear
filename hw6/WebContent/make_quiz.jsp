@@ -85,7 +85,7 @@ miscellania todo list:
 </div>
 
 <div class='content'>
-<form action="making_quiz.jsp" method="POST">
+<form action="making_quiz.jsp" method="POST" onsubmit="return validateForm(['quiz_name','quiz_description'])">
 	<table>
 		<tr><td><label>Name of Quiz</label></td>
 		<td><input type="text" id="quiz_name" name="quiz_name"></input></td></tr>

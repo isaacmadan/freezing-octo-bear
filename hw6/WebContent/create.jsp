@@ -22,7 +22,7 @@
 <p>Please choose a username and password:</p>
 
 <div id ="create">
-<form action="CreateUserServlet" method="POST">
+<form action="CreateUserServlet" method="POST" onsubmit="return validateForm(['username','password'])">
 	<table>
 		<tr>
 		<td><label>Username</label></td>

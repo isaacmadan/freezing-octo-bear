@@ -41,3 +41,6 @@ td { color:#000000; background-color:#E8E8E8; }
 .pad-vertical { padding-top:20px; padding-bottom:20px; }
 
 .admin { width:100%; background-color: #D0D0D0; }
+
+.error { padding: 5px; background-color: #FF6666; opacity: 0.75; }
+.success { padding: 5px; background-color: #70DB70; opacity: 0.75; }

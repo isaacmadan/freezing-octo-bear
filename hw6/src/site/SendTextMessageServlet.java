@@ -3,6 +3,7 @@ package site;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,12 +48,20 @@ public class SendTextMessageServlet extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();		
 		if(result) {
-			out.println("<p>Your message was sent successfully.<br />");
-			out.println("<a href='inbox.jsp'>Back to inbox</a>.</p>");
+			//out.println("<p>Your message was sent successfully.<br />");
+			//out.println("<a href='inbox.jsp'>Back to inbox</a>.</p>");
+			
+			request.setAttribute("send_success", "true");
+			RequestDispatcher dispatch = request.getRequestDispatcher("inbox.jsp");
+			dispatch.forward(request, response);
 		}
 		else {
-			out.println("<p>There was a problem sending your message.<br />");
-			out.println("<a href='compose.jsp'>Try again</a>.</p>");
+			//out.println("<p>There was a problem sending your message.<br />");
+			//out.println("<a href='compose.jsp'>Try again</a>.</p>");
+			
+			request.setAttribute("send_failure", "true");
+			RequestDispatcher dispatch = request.getRequestDispatcher("compose.jsp");
+			dispatch.forward(request, response);
 		}
 	}
 

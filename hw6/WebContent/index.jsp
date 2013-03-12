@@ -42,7 +42,7 @@
 <p>Login to enjoy:</p>
 
 <div id ="login">
-<form action="LoginServlet" method="POST">
+<form action="LoginServlet" method="POST" onsubmit="return validateForm(['username','password'])">
 		<table align="center">
 		<tr>
 		<td><label>Username</label></td>

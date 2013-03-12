@@ -74,3 +74,13 @@ function addChoices(num) {
 		$('#choices').append("<input type='text' name='choice"+index+"' />");
 	}
 }
+
+function validateForm(fields) {
+	for(var i = 0; i < fields.length; i++) {
+		var field = $('#' + fields[i]).val();
+		if(field == null || field == '') {
+			alert("You've left a field blank.");
+			return false;
+		}
+	}
+}
