@@ -200,6 +200,9 @@ public class Quiz {
 	private boolean immediate_correction;
 	private Timestamp created_timestamp;
 	
+	private String category;
+	private String tags;
+	
 	public Quiz(ArrayList<Question> questions) {
 		this.setQuestions(questions);
 	}
@@ -226,7 +229,8 @@ public class Quiz {
 	
 	public Quiz(int user_id,
 			boolean practice_mode, String description, String title, 
-			boolean random_question, boolean one_page, boolean immediate_correction) {
+			boolean random_question, boolean one_page, boolean immediate_correction,
+			String category, String tags) {
 		this.setUser_id(user_id);
 		this.setPractice_mode(practice_mode);
 		this.setDescription(description);
@@ -235,6 +239,8 @@ public class Quiz {
 		this.setOne_page(one_page);
 		this.setImmediate_correction(immediate_correction);
 		this.questions = new ArrayList<Question>();
+		this.setCategory(category);
+		this.setTags(tags);
 	}
 	
 	public void addQuestion(Question question) {
@@ -268,5 +274,21 @@ public class Quiz {
 	public static Quiz getQuiz(int quiz) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 }

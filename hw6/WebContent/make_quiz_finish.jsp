@@ -97,6 +97,11 @@
 	}
 	quiz.setQuiz_id(quizManager.getQuizId());
 	session.setAttribute("quiz", null);
+	
+	//category, tags
+	new CatTagManager();
+	CatTagManager.categorizeQuiz(quiz.getQuiz_id(), quiz.getCategory());
+	CatTagManager.addStringOfTagsToQuiz(quiz.getQuiz_id(), quiz.getTags());
 %>
 
 <h3>You've created your quiz successfully!</h3>

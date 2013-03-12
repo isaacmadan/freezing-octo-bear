@@ -91,6 +91,8 @@ int numQuestions;
 		String onePageMode = request.getParameter("one_page");
 		String immediateCorrectionMode = request.getParameter("immediate_correction");
 		String userId = request.getParameter("user_id");
+		String category = request.getParameter("category");
+		String tags = request.getParameter("tags");
 	
 		boolean practice = false;
 		if(practiceMode != null) practice = true;
@@ -101,7 +103,7 @@ int numQuestions;
 		boolean immediate = false;
 		if(immediateCorrectionMode != null) immediate = true;
 		
-		quiz = new Quiz(Integer.parseInt(userId), practice, quizDescription, quizName, random, onepage, immediate);
+		quiz = new Quiz(Integer.parseInt(userId), practice, quizDescription, quizName, random, onepage, immediate, category, tags);
 		session.setAttribute("quiz", quiz);
 	}
 %>

@@ -91,6 +91,20 @@ miscellania todo list:
 		<td><input type="text" id="quiz_name" name="quiz_name"></input></td></tr>
 		<tr><td><label>Quiz Description</label></td>
 		<td><input type="text" size="100" id="quiz_description" name="quiz_description"></td></tr>
+		<tr><td>Categories</td>
+		<td>
+			<select id='category' name='category'>
+				<%
+					new CatTagManager();
+					ArrayList<String> categories = CatTagManager.getCategories();
+					for(String category : categories) {
+						out.println("<option name='"+category+"' value='"+category+"'>"+category+"</option>");
+					}
+				%>
+			</select>
+		</td></tr>
+		<tr><td>Tags</td>
+		<td><input type='text' id='tags' name='tags' /></td></tr>
 		<tr><td><label>Allow Practice Mode?</label></td>
 		<td><input type = "checkbox" name = "practice_mode" id = "practice_mode">Yes (leave blank for no)</td></tr>
 		<tr><td><label>List Questions in Random Order?</label></td>
