@@ -78,7 +78,6 @@ public class CatTagManager {
 
 	/**Checks if the tag is properly formatted. Given that any character goes, and commas split, this hardly ever fails*/
 	public static boolean correctTagFormat(String tags){
-		System.out.println(tags);
 		Matcher matcher = tagPattern.matcher(tags);
 		if (matcher.matches()) return true;
 		return false;
@@ -89,20 +88,22 @@ public class CatTagManager {
 		if (tag.equals("")) return true;
 		String execution = "INSERT INTO tags VALUES(NULL, " + quiz_id + ", '" + tag + "' )";
 		try {
-			System.out.println(execution);
 			stmt.executeUpdate(execution);
 			return true;
 		} catch (SQLException e) {
 			return false;
 		}
 	}
-
 	/**Takes a string and splits it on commas. Everything else goes*/
-	private static LinkedHashSet<String> parseTags(String tags){
+	public static LinkedHashSet<String> parseTags(String tags){
 		Matcher matcher = tagPattern.matcher(tags);
 		LinkedHashSet<String> tagSet = new LinkedHashSet<String>();
 		while(matcher.find()){
-			tagSet.add(matcher.group());
+			String unStripped = matcher.group();
+			unStripped = unStripped.replaceAll("[ ]+$", "");
+			unStripped = unStripped.replaceAll("^[ ]+", "");
+			
+			if (!unStripped.equals("")) tagSet.add(unStripped);
 		}
 		return tagSet;
 	}

@@ -167,7 +167,7 @@ public class QuizResult {
 		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE user_id = " + userId+
 								" AND created_timestamp >= ( CURDATE() - INTERVAL "+interval+" DAY ) ORDER BY created_timestamp DESC";
 		results = generateList(execution);
-		Collections.sort(results, new SortByBestScore());
+		//Collections.sort(results, new SortByBestScore());
 		return results;
 	}
 	
@@ -260,12 +260,17 @@ public class QuizResult {
 	 * @param numUsers length of quiz, if zero, return all 
 	 * */
 	public static ArrayList<Result> getBestQuizTakers(int quizID, int numUsers){
-		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID;
+		String execution;
+		if (numUsers != 0){
+			execution =  "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID + " LIMIT "+ numUsers;
+		} else {
+			execution =  "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID;
+		}
 		ArrayList<Result> results = generateList(execution);
 		Collections.sort(results, new SortByBestScore());
-		if (numUsers > 0){
-			return sublist(0, numUsers, results);
-		}
+//		if (numUsers > 0){
+//			return sublist(0, numUsers, results);
+//		}
 		//System.out.println(results.toString());
 		return results;
 	}
@@ -275,12 +280,18 @@ public class QuizResult {
 	 * @param numUsers length of quiz, if zero, return all 
 	 * */
 	public static ArrayList<Result> getWorstQuizTakers(int quizID, int numUsers){
-		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID;
+		String execution;
+		if (numUsers != 0){
+			execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID + " LIMIT "+ numUsers;
+		} else {
+			execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID;
+		}
+		
 		ArrayList<Result> results = generateList(execution);
 		Collections.sort(results, new SortByWorstScore());
-		if (numUsers > 0){
-			return sublist(0, numUsers, results);
-		}
+//		if (numUsers > 0){
+//			return sublist(0, numUsers, results);
+//		}
 		//System.out.println(results.toString());
 		return results;
 	}
@@ -292,12 +303,18 @@ public class QuizResult {
 	 * @param numUsers length of quiz, if zero, return all  
 	 * */
 	public static ArrayList<Result> getRecentTakers(int quizID, int numUsers){
-		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID
-				+ " AND created_timestamp > DATE_SUB(NOW(), INTERVAL 24 HOUR) ORDER BY created_timestamp";
-		ArrayList<Result> results = generateList(execution);
-		if (numUsers > 0){
-			return sublist(0, numUsers, results);
+		String execution;
+		if (numUsers != 0){
+			execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID
+				+ " AND created_timestamp > DATE_SUB(NOW(), INTERVAL 24 HOUR) ORDER BY created_timestamp DESC LIMIT "+ numUsers;
+		} else {
+			execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID
+					+ " AND created_timestamp > DATE_SUB(NOW(), INTERVAL 24 HOUR) ORDER BY created_timestamp DESC"; 
 		}
+		ArrayList<Result> results = generateList(execution);
+//		if (numUsers > 0){
+//			return sublist(0, numUsers, results);
+//		}
 		return results;
 	}
 
@@ -308,13 +325,19 @@ public class QuizResult {
 	 * @param numUsers length of quiz, if zero, return all  
 	 * */
 	public static ArrayList<Result> getRecentHighScores(int quizID, int numUsers){
-		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID +
-				" AND created_timestamp > DATE_SUB(NOW(), INTERVAL 24 HOUR)";
+		String execution;
+		if (numUsers != 0){
+			execution ="SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID +
+				" AND created_timestamp > DATE_SUB(NOW(), INTERVAL 24 HOUR) ORDER BY created_timestamp DESC LIMIT "+ numUsers;
+		} else {
+			execution ="SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID +
+					" AND created_timestamp > DATE_SUB(NOW(), INTERVAL 24 HOUR) ORDER BY created_timestamp DESC";
+		}
 		ArrayList<Result> results = generateList(execution);
 		Collections.sort(results, new SortByBestScore());
-		if (numUsers > 0){
-			return sublist(0, numUsers, results);
-		}
+//		if (numUsers > 0){
+//			return sublist(0, numUsers, results);
+//		}
 		return results;
 	}
 
@@ -325,12 +348,17 @@ public class QuizResult {
 	 * @param numUsers length of quiz, if zero, return all  
 	 * */
 	public static ArrayList<Result> getAllTimeBest(int quizID, int numUsers){
-		String execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID;
+		String execution;
+		if (numUsers != 0){
+			execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID + " LIMIT "+ numUsers;
+		} else {
+			execution = "SELECT * FROM " + RESULT_DATABASE + " WHERE quiz_id = " + quizID;
+		}
 		ArrayList<Result> results = generateList(execution);
 		Collections.sort(results, new SortByBestScore());
-		if (numUsers > 0){
-			return sublist(0, numUsers, results);
-		}
+//		if (numUsers > 0){
+//			return sublist(0, numUsers, results);
+//		}
 		return results;
 	}
 

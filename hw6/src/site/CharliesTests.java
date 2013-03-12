@@ -91,11 +91,11 @@ public class CharliesTests {
 
 	//	System.out.println(CatTagManager.addStringOfTagsToQuiz(2, "love,have,suplex"));
 		
-//		System.out.println(CatTagManager.parseTags(""));
-//		System.out.println(CatTagManager.parseTags("love,have,suplex"));
-//		System.out.println(CatTagManager.parseTags("qw asdfasd ,asdfafeq d,asdfasdf2,,,,"));
-//		System.out.println(CatTagManager.parseTags("qw asdfasdasa;sduf98234qvnds8f"));
-
+		System.out.println(CatTagManager.parseTags(""));
+		System.out.println(CatTagManager.parseTags(" love , have, suplex "));
+		System.out.println(CatTagManager.parseTags("qw asdfasd ,asdfafeq d,asdfasdf2,,,,"));
+		System.out.println(CatTagManager.parseTags("qw asdfasdasa;sduf98234qvnds8f"));
+	}
 //		System.out.println(CatTagManager.getTagsFromQuiz(13));
 		
 //		System.out.println(CatTagManager.getQuizzesFromTag("love"));
@@ -118,7 +118,11 @@ public class CharliesTests {
 //		System.out.println(CatTagManager.getCategoryFromQuiz(2));
 //		System.out.println(CatTagManager.getCategories());
 		
-	}
+//		String cats[] = {"Food", "Politics", "Techonology", "Lifestyle" , "Art", "Science", "People", "World", "Film", "Cars", "Music", "Style", "Religion", "Health", "Opinion", "Fashion", "Design", "Culture"};
+//		for (String cat: cats){
+//			System.out.println(CatTagManager.createCategory(cat));
+//		}
+//	}
 	
 	@Test 
 	public void testReview(){

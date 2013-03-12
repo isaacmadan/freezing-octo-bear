@@ -96,24 +96,40 @@ public class AdminControl {
 		/** for each quiz created by the user - call removequiz
 		 * 
 		 */
+		String deleteUser = "DELETE FROM users WHERE user_id = " + userId;
+		String selectQuiz = "SELECT FROM quizzes where user_id = ";
 
 		return false;
 	}
 
 	/**Remove quiz removes a quiz and all results and questions associated with it
-	 * Does nothing right now
 	 * */
 	public static boolean removeQuiz(int quizId){
 		/*For each result related to that quiz, 
 		 * 	remove all the user_answers related to that question
 		 *	remove the quiz result
-		 *Then for each question in the quiz, remove that question
-		 *
+		 *Then for each question in the quiz, and the answer associated with it, 
+		 *then remove that question
+		 *then remove tags
+		 *then remove categories
+ 		 *then removes reports for that quiz
 		 *then finally remove that quiz
 		 * 
 		 * */
-
-
+		
+		String deleteQuiz = "DELETE FROM quizzes WHERE quiz_id = " + quizId;
+		
+		try {
+			
+			stmt.executeUpdate(deleteQuiz);
+			clearQuizResults(quizId);
+			new CatTagManager();
+			new ReviewManager();
+			CatTagManager.removeQuizCatsTags(quizId);
+			ReviewManager.clearReviewsByQuiz(quizId);
+			
+			return true;
+		} catch (SQLException e) {}
 		return false;
 	}
 
