@@ -38,6 +38,7 @@ td { color:#000000; background-color:#E8E8E8; }
 #accordion { font-family:'Merriweather', serif!important; }
 
 .pad { padding-left:30px; }
+.pad-right { padding-right:30px; }
 .pad-vertical { padding-top:20px; padding-bottom:20px; }
 
 .admin { width:100%; background-color: #D0D0D0; }

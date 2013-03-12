@@ -84,3 +84,9 @@ function validateForm(fields) {
 		}
 	}
 }
+
+function areYouSure() {
+	if(!confirm("Are you sure?")) {
+		return false;
+	}
+}

@@ -115,6 +115,30 @@
 </div>
 <div class="col-1-3">
 <h2>History</h2>
+<div class='pad-right'>
+<table border="1">
+<tr><th>Date</th><th>Quiz name</th><th>Score</th><th>Duration</th></tr>
+<%
+	QuizManager quizManager = new QuizManager();	
+
+	ArrayList<Result> results = QuizResult.getUserPerformances(user.getId(), "BY_DATE");	
+	for(Result result : results) {
+		Quiz quiz = quizManager.getQuizByQuizId(result.quizId);
+		String titleString = String.valueOf(result.quizId);
+		if(quiz != null) {
+			titleString = quiz.getTitle();
+		}
+		out.println("<tr><td>"+result.timeStamp+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"
+					+titleString+"</a></td><td>"+result.pointsScored+"/"+result.maxPossiblePoints+"</td><td>"
+					+result.durationOfQuiz+"</td></tr>");
+		
+	}
+	if(results.size() == 0) {
+		out.println("No quiz results");
+	}
+%>
+</table>
+</div>
 </div>
 
 <div class="col-1-3">
