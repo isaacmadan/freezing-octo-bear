@@ -91,8 +91,8 @@
 					
 			if(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null && 
 					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + randomIndex.get(i - 1)))) {
-				out.println("Question " + (i) + ": Correct!<br>");
-				out.println("Acceptable Answers: " + answers.get(i - 1).getAnswers() + "<br><br>");
+				out.println("Question " + (randomIndex.get(i - 1) + 1) + ": Correct!<br>");
+				out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br><br>");
 				indices.set(i - 1, indices.get(i - 1) + 1);
 				if(indices.get(i - 1) == 3) {
 					//out.println("hit");
@@ -104,8 +104,8 @@
 				}
 			}
 			else {
-				out.println("Question " + (i) + ": Incorrect, Sorry!<br>");
-				out.println("Acceptable Answers: " + answers.get(i - 1).getAnswers() + "<br><br>");
+				out.println("Question " + (randomIndex.get(i - 1) + 1) + ": Incorrect, Sorry!<br>");
+				out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br><br>");
 			}
 		
 			//out.println(indices + "<br>");
