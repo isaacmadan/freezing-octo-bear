@@ -68,16 +68,28 @@ long dur;
 <h2>Congrats, you have finished the quiz!</h2>
 <%
 ArrayList<String> ans = (ArrayList<String>)session.getAttribute("listOfAnswers");
+Quiz quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request
+		.getParameter("quiz_id")));
+quiz.populateQuiz(); // fills quiz with questions
+ArrayList<Question> questions = quiz.getQuestions();
+ArrayList<Answer> answers = new ArrayList<Answer>();
+for(int i = 0; i < questions.size(); i++){
+	Question q = questions.get(i);
+	Answer a = q.getAnswer();
+	answers.add(a);
+}
+ArrayList<Integer> randomIndex = (ArrayList<Integer>)session.getAttribute("randomIndex");
+
 for(int i = 0; i < questions.size(); i++) {
-	//out.println(answers.get(i).getAnswers());
-	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i)))) {
-		score++;
+	System.out.println(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers());
+	if(request.getParameter("answer_" + Integer.toString(randomIndex.get(i))) != null && 
+					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).contains(ans.get(i))) {
 		out.println("Question " + (i + 1) + ": Correct!<br>");
-		out.println("Acceptable Answers: " + answers.get(i).getAnswers() + "<br><br>");
+		out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers() + "<br><br>");
 	}
 	else {
 		out.println("Question " + (i + 1) + ": Incorrect, Sorry!<br>");
-		out.println("Acceptable Answers: " + answers.get(i).getAnswers() + "<br><br>");
+		out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers() + "<br><br>");
 	}
 }
 
@@ -117,8 +129,19 @@ Score: <%=score%>/<%= maxScore %>
 %>
 
 <%
-QuizResult.addResult(user.getId(), Integer.parseInt(request.getParameter("quiz_id")), 
+int result_id = QuizResult.addResult(user.getId(), Integer.parseInt(request.getParameter("quiz_id")), 
 		score, maxScore, dur);
+for(int i = 0; i < questions.size(); i++) {
+	//System.out.println("question id is: " + quiz.getQuestions().get(randomIndex.get(i)).getQuestionId());
+	//System.out.println("quiz id is: " + quiz.getQuiz_id());
+	//System.out.println("result id is: " + result_id);
+	//System.out.println("answer is: " + ans.get(i));
+	//System.out.println(ans);
+	//new AnswerLog();
+	//AnswerLog.storeUserAnswer(quiz.getQuestions().get(randomIndex.get(i)).getQuestionId(), quiz.getQuiz_id(), result_id, ans.get(i));
+}
+
+
 %>
 <a href = "index.jsp">Back to Home</a>
 </div><!-- end content -->

@@ -87,70 +87,57 @@
 		if(request.getParameter("immediate") != null) {
 			if(i != questions.size())
 				out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(i) + "\" />");
-			//out.println(i + "<br>");
-			if(request.getParameter("answer_" + Integer.toString(i - 1)) != null) {
-				//out.println("Inputted answer to last question is: " + request.getParameter("answer_" + Integer.toString(i - 1)) + "<br>");
-				//out.println("Correct answer to last question is: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br>");
-			}
-			if(request.getParameter("answer_" + Integer.toString(i - 1)) != null && 
-					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(i - 1)))) {
+			if(i > 0 && request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null && 
+					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + randomIndex.get(i - 1)))) {
 				score++;
-				out.println("Question " + (i) + ": Correct!<br>");
-				out.println("Acceptable Answers: " + answers.get(i - 1).getAnswers() + "<br><br>");
-				//out.println(score + "<br>");
+				out.println("Question " + (randomIndex.get(i - 1) + 1) + ": Correct!<br>");
+				out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br><br>");
 			}
 			else {
-				out.println("Question " + (i) + ": Incorrect, Sorry!<br>");
-				out.println("Acceptable Answers: " + answers.get(i - 1).getAnswers() + "<br><br>");
+				out.println("Question " + (randomIndex.get(i - 1) + 1) + ": Incorrect, Sorry!<br>");
+				out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br><br>");
 			}
 			out.println("<input type = \"hidden\" name =\"score\" value = \"" + Integer.toString(score) +"\" >");
 		}
 		
 		else {
-		//out.println("Random index is: " + randomIndex + "<br>");
-		int type = questions.get(i).getQuestionType();
+		int type = questions.get(randomIndex.get(i)).getQuestionType();
 		if(type == 1) {
 			out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((QuestionResponseQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
-			out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i) + "\">");
+			out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i)) + "\">");
 			out.println("<br /><br />");
 		}
 		else if(type == 2) {
 			out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((FillInTheBlankQuestion)questions.get(randomIndex.get(i))).getFrontString() + 
 					"______" + ((FillInTheBlankQuestion)questions.get(randomIndex.get(i))).getBackString() + "</br>");
-			out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i) + "\">");
+			out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i)) + "\">");
 			out.println("<br /><br />");
 		}
 		else if(type == 3) {
 			out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
-			for(int j = 0; j < ((MultipleChoiceQuestion)questions.get(i)).getChoices().size(); j++)
-				out.println("<input type = \"radio\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i)
+			for(int j = 0; j < ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().size(); j++)
+				out.println("<input type = \"radio\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i))
 				+ "\" value = \"" + ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "\">" +
 						((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "<br /><br />");
 		}
 		else {
 			out.println("<h3>Question " + Integer.toString(i+1) + ": </h3><img src = \"" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getFileName() + "\" width = 200px></br>");
-			out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i) + "\">");
+			out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i)) + "\">");
 			out.println("<br /><br />");
 		}	
 		
 		if(i + 1 != questions.size() || thisQuiz.isImmediate_correction()) {
-			//out.println("Hit here<br>");
 			out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(i + 1) + "\" />");
 		}
-
-		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null) {
-			//out.println("Inputted answer to last question is: " + request.getParameter("answer_" + Integer.toString(i - 1)) + "<br>");
-			//out.println("Correct answer to last question is: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br>");
-		}
-		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null) {
+		if(i > 0 && request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null) {
+			System.out.println("randomIndex is: " + Integer.toString(randomIndex.get(i) - 1));
 			ArrayList<String> ans = (ArrayList<String>)session.getAttribute("listOfAnswers");
-			ans.add(request.getParameter("answer_" + Integer.toString(i - 1)));
+			ans.add(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))));
 			session.setAttribute("listOfAnswers", ans);
 		}
-		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null && 
-				Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(i - 1)))) {
+		if(i > 0 && request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null && 
+				Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))))) {
 			score++;
-			//out.println(score);
 		}
 		out.println("<input type = \"hidden\" name =\"score\" value = \"" + Integer.toString(score) +"\" >");
 		if(thisQuiz.isImmediate_correction()) 
@@ -158,11 +145,13 @@
 		}
 	}
 	else {
-		if(request.getParameter("answer_" + Integer.toString(questions.size() - 1)) != null && 
-				Answer.getAnswerForQuestion(questions.get(randomIndex.get(questions.size() - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(questions.size() - 1)))) {
+		if(request.getParameter("answer_" + Integer.toString(randomIndex.get(questions.size() - 1))) != null && 
+				Answer.getAnswerForQuestion(questions.get(randomIndex.get(questions.size() - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(randomIndex.get(questions.size() - 1))))) {
 			score++;
-			//out.println(score);
 		}
+		ArrayList<String> ans = (ArrayList<String>)session.getAttribute("listOfAnswers");
+		ans.add(request.getParameter("answer_" + Integer.toString(randomIndex.get(questions.size() - 1))));
+		session.setAttribute("listOfAnswers", ans);
 	}
 	%>
 	<input type='hidden' name='start_time' value='<%=request.getParameter("start_time")%>'>
