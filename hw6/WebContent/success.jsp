@@ -121,7 +121,7 @@
 		out.println("<h3>Reported Quizzes</h3>");
 		out.println("<div>");
 		out.println("<table border='1'>");
-		out.println("<tr><th>Reported on</th><th>Reported by</th><th>Quiz name</th><th>Quiz description</th><th>Quiz creator</th><th>Delete report</th></tr>");
+		out.println("<tr><th>Reported on</th><th>Reported by</th><th>Report text</th><th>Quiz name</th><th>Quiz description</th><th>Quiz creator</th><th>Delete report</th></tr>");
 		new ReportManager();
 		QuizManager manager = new QuizManager();
 		ArrayList<Report> reports = ReportManager.getReportedQuizzes();
@@ -129,15 +129,25 @@
 			User reportingUser = accountManager.getAccountById(String.valueOf(report.userId));
 			Quiz offendingQuiz = manager.getQuizByQuizId(report.quizId);
 			User offendingUser = accountManager.getAccountById(String.valueOf(offendingQuiz.getUser_id()));
-			out.println("<tr><td>"+report.time+"</td>"+
+			out.println("<tr><td>"+report.dateString()+"</td>"+
 						"<td><a href='profile.jsp?id="+reportingUser.getId()+"'>"+reportingUser.getUsername()+"</a></td>"+
+						"<td>"+report.text+"</td>"+
 						"<td><a href='quiz_summary_page.jsp?quiz_id="+offendingQuiz.getQuiz_id()+"'>"+offendingQuiz.getTitle()+"</a></td>"+
 						"<td>"+offendingQuiz.getDescription()+"</td>"+
 						"<td><a href='profile.jsp?id="+offendingUser.getId()+"'>"+offendingUser.getUsername()+"</a></td>"+
-						"<td></td></tr>");
+						"<td>"+"<form method='POST'><input type='hidden' name='delete_report' value='"+report.reportId+"' /><input type='submit' value='Delete report' /></form>"+"</td>"+
+						"</tr>");
 		}
 		out.println("</table>");
 		out.println("</div>");
+	}
+%>
+
+<!-- process report deletion -->
+<%
+	String deleteReport = request.getParameter("delete_report");
+	if(deleteReport != null) {
+		ReportManager.removeReport(Integer.parseInt(deleteReport));
 	}
 %>
 

@@ -133,6 +133,17 @@
 </head>
 <body>
 
+<!-- facebook like button -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=265049076945249";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!-- end -->
+
 <div class="header"><div class="pad"><a href='index.jsp'>Quizzard</a></div></div>
 
 <div class="nav">
@@ -221,7 +232,30 @@
 	<a href="profile.jsp?id=<%=quiz.getUser_id()%>"> <%=manager.getAccountById(String.valueOf(quiz.getUser_id()))
 					.getUsername()%></a>
 	<p></p>
+	
+	Share:<br />
+	<div>
+	<!-- FACEBOOK LIKE BUTTON -->
+	<div class="fb-like" data-href="http://localhost:8080/hw6/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true" data-font="segoe ui"></div>
 
+	<!-- GOOGLE PLUS BUTTON --><br />
+	<!-- Place this tag where you want the +1 button to render. -->
+	<div class="g-plusone" data-annotation="inline" data-width="300"></div>
+
+	<!-- Place this tag after the last +1 button tag. -->
+	<script type="text/javascript">
+	  (function() {
+	    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	    po.src = 'https://apis.google.com/js/plusone.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	  })();
+	</script>
+	
+	<!-- TWITTER SHARE BUTTON --><br />
+	<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</div><br />
+	
 <%
 if(!quiz.isOne_page()) {
 	if(!quiz.isPractice_mode()) {
@@ -365,7 +399,7 @@ private ArrayList<Integer> randomize() {
 		</form>
 	</div>
 
-	<!-- quiz reporting -->
+	<!-- quiz reporting --><br />
 	<%
 		new ReportManager();
 		String report = request.getParameter("report");
