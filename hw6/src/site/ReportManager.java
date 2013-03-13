@@ -46,6 +46,14 @@ public class ReportManager {
 		return -1;
 	}
 	
+	public static void removeReport(int report_id){
+		String execution = "DELETE FROM reports where report_id=" + report_id;
+		try {
+			stmt.executeUpdate(execution);
+		} catch (SQLException e) {
+		}
+	}
+	
 	public static int getNumReports(int quiz_id){
 		String execution = "SELECT COUNT(*) from reports GROUP BY quiz_id";
 		try {
@@ -88,6 +96,7 @@ public class ReportManager {
 	}
 	
 	
+	
 	private static Report getReportFromSet(ResultSet set) {
 		try {
 			int report = set.getInt("report_id");
@@ -112,7 +121,6 @@ public class ReportManager {
 		}
 		return false;
 	}
-	
 	
 	
 }

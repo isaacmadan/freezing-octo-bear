@@ -8,7 +8,9 @@ import java.sql.Statement;
 import java.util.HashSet;
 
 public class AccountManager {
-
+	private static final int SALT_BYTES = 12;
+	
+	
 	private Connection con;
 	
 	public AccountManager() {
@@ -53,6 +55,9 @@ public class AccountManager {
 		
 		String hashedPassword = hashPassword(password);
 		String realPassword = null;
+		
+		/*In order to salt a password, i need to create a string of random chars*/
+		
 		
 		try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs

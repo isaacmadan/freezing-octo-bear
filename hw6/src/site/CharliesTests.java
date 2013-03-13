@@ -147,9 +147,12 @@ public class CharliesTests {
 	public void testREport(){
 		new ReportManager();
 		System.out.println(ReportManager.reportQuiz(5, 67, "This quiz makes fun of my mother"));
+		ReportManager.removeReport(57);	
 		System.out.println(ReportManager.getNumReports(67));
 		
 	}
+	
+	
 	
 	@After
 	public void after(){

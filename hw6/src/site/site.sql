@@ -214,7 +214,7 @@ CREATE TABLE reviews (
 DROP TABLE IF EXISTS reports;
 
 CREATE TABLE reports (
-	review_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	report_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	user_id INT,
 	quiz_id INT,
 	string TEXT,
