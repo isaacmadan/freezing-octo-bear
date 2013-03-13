@@ -144,6 +144,7 @@ CREATE TABLE picture_responses (
 	picture_responses_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     question_id INT,
     string TEXT,
+    question_string TEXT,
     created_timestamp TIMESTAMP
 );
 

@@ -115,5 +115,15 @@ public class ReviewManager {
 		}
 	}
 	
+	/**Pass in a list of ratings and get its score*/
+	public static double getAverageRating(ArrayList<Review> reviews){
+		double totalScore = 0;
+		double scoreCount = 0;
+		for (Review rev: reviews){
+			totalScore += rev.review_score;
+			scoreCount++;
+		}
+		return totalScore / scoreCount;
+	}
 	
 }
