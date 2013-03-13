@@ -102,7 +102,7 @@
 							((MultipleChoiceQuestion)questions.get(i)).getChoices().get(j).getChoiceString() + "<br /><br />");
 			}
 			else {
-				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((PictureResponseQuestion)questions.get(i)).getFileName() + "</br>");
+				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3><img src = \"" + ((PictureResponseQuestion)questions.get(i)).getFileName() + "\" width = 200px ></br>");
 				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(i) + "\" id = \"answer_" + Integer.toString(i) + "\">");
 				out.println("<br /><br />");
 			}	

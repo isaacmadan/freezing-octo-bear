@@ -96,14 +96,19 @@ if(request.getParameter("random") != null) {
 
 
 for(int i = 0; i < questions.size(); i++) {
-	out.println(answers.get(i).getAnswers());
+	//out.println(answers.get(i).getAnswers());
 	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i)))) {
 		score++;
+		out.println("Question " + (i + 1) + ": Correct!<br>");
+		out.println("Acceptable Answers: " + answers.get(i).getAnswers() + "<br><br>");
+	}
+	else {
+		out.println("Question " + (i + 1) + ": Incorrect, Sorry!<br>");
+		out.println("Acceptable Answers: " + answers.get(i).getAnswers() + "<br><br>");
 	}
 }
 int maxScore = quiz.getMax_score();
 %>
-Duration: 
 <%
 long start_time = Long.parseLong(request.getParameter("start_time"));
 long millis = System.currentTimeMillis() - start_time;
