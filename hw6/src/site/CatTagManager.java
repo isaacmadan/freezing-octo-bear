@@ -230,7 +230,6 @@ public class CatTagManager {
 				if (quizNum != -1){
 					Quiz newQuiz = (new QuizManager()).getQuizByQuizId(quizNum); 
 					quizzes.add(newQuiz);
-					System.out.println(newQuiz.getTitle());
 				}
 			}
 			return quizzes;
@@ -249,7 +248,6 @@ public class CatTagManager {
 				if (quizNum != -1){
 					Quiz newQuiz = (new QuizManager()).getQuizByQuizId(quizNum); 
 					quizzes.add(newQuiz);
-					System.out.println(newQuiz.getTitle());
 				}
 			}
 			return quizzes;
