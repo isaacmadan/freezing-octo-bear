@@ -143,7 +143,7 @@
 			//out.println("Correct answer to last question is: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br>");
 		}
 		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null) {
-			ArrayList<String> ans = session.getAttribute("listOfAnswers");
+			ArrayList<String> ans = (ArrayList<String>)session.getAttribute("listOfAnswers");
 			ans.add(request.getParameter("answer_" + Integer.toString(i - 1)));
 			session.setAttribute("listOfAnswers", ans);
 		}
@@ -180,7 +180,6 @@
 	
 	
 	<form action=finished_quiz_multi_page.jsp method="POST" onsubmit="return areYouSure()">
-	<input type='hidden' name='quiz_id' value='<%=request.getParameter("quiz_id") %>'>
 	<input type='hidden' name='max_score' value='<%=thisQuiz.getMax_score()%>'>
 	<input type='hidden' name='start_time' value='<%=request.getParameter("start_time")%>'>
 	<input type='hidden' name='quiz_id' value='<%=thisQuiz.getQuiz_id()%>'>
