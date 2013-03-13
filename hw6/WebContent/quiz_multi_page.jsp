@@ -95,11 +95,13 @@
 			if(request.getParameter("answer_" + Integer.toString(i - 1)) != null && 
 					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(i - 1)))) {
 				score++;
-				out.println("Correct!<br>");
+				out.println("Question " + (i) + ": Correct!<br>");
+				out.println("Acceptable Answers: " + answers.get(i - 1).getAnswers() + "<br><br>");
 				//out.println(score + "<br>");
 			}
 			else {
-				out.println("Incorrect, sorry!<br>");
+				out.println("Question " + (i) + ": Incorrect, Sorry!<br>");
+				out.println("Acceptable Answers: " + answers.get(i - 1).getAnswers() + "<br><br>");
 			}
 			out.println("<input type = \"hidden\" name =\"score\" value = \"" + Integer.toString(score) +"\" >");
 		}
@@ -139,6 +141,11 @@
 		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null) {
 			//out.println("Inputted answer to last question is: " + request.getParameter("answer_" + Integer.toString(i - 1)) + "<br>");
 			//out.println("Correct answer to last question is: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br>");
+		}
+		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null) {
+			ArrayList<String> ans = session.getAttribute("listOfAnswers");
+			ans.add(request.getParameter("answer_" + Integer.toString(i - 1)));
+			session.setAttribute("listOfAnswers", ans);
 		}
 		if(request.getParameter("answer_" + Integer.toString(i - 1)) != null && 
 				Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(i - 1)))) {

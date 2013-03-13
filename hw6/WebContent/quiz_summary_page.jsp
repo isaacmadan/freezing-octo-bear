@@ -226,7 +226,7 @@
 if(!quiz.isOne_page()) {
 	if(!quiz.isPractice_mode()) {
 		out.println("<form action=\"quiz_multi_page.jsp\" method=\"POST\">");
-		session.setAttribute("", arg1)
+		session.setAttribute("listOfAnswers", new ArrayList<String>());
 	}
 	else {
 		quiz.populateQuiz();
