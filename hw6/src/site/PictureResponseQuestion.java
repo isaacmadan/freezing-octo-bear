@@ -9,6 +9,7 @@ public class PictureResponseQuestion implements Question {
     
     private int pictureResponseId;
     private String fileName;
+    private String questionString;
     
     public PictureResponseQuestion(int questionId, int quizId, int pointValue, int questionType, 
     		Answer answer, int pictureResponseId, String fileName) {
@@ -21,11 +22,12 @@ public class PictureResponseQuestion implements Question {
         this.setFileName(fileName);
     }
     
-    public PictureResponseQuestion(int pointValue, int questionType, Answer answer, String fileName) {
+    public PictureResponseQuestion(int pointValue, int questionType, Answer answer, String fileName, String questionString) {
         this.setPointValue(pointValue);
         this.setQuestionType(questionType);
         this.setAnswer(answer);
         this.setFileName(fileName);
+        this.setQuestionString(questionString);
     }
     
     public int getQuestionId() {
@@ -82,5 +84,13 @@ public class PictureResponseQuestion implements Question {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public String getQuestionString() {
+		return questionString;
+	}
+
+	public void setQuestionString(String questionString) {
+		this.questionString = questionString;
 	}
 }

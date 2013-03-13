@@ -253,8 +253,11 @@ public class QuizManager {
 		} catch(Exception e) { }
 	}
 	
-	/** OVERLOADED FOR ANSWERS **/
-	public void addPictureResponseToDataBase(String str, Answer answers) {
+	/** OVERLOADED FOR ANSWERS AND QUESTION-STRING
+	 * @param str - URL string
+	 * @param question_string - question string
+	 * @param Answers - answers **/
+	public void addPictureResponseToDataBase(String str, String question_string, Answer answers) {
 		try {
 			Statement stmt = con.createStatement();
 			String addingToQuestionDB = "INSERT INTO questions (quiz_id, point_value, question_type)"
@@ -265,8 +268,8 @@ public class QuizManager {
 			if (rs.next()){
 				question_id = rs.getInt(1);
 			}
-			String addingToPRDB = "INSERT INTO picture_responses (question_id, string)"
-					+ " VALUES(" + question_id + ",\"" + str + "\")";
+			String addingToPRDB = "INSERT INTO picture_responses (question_id, string, question_string)"
+					+ " VALUES(" + question_id + ",\"" + str + ",\"" + question_string + "\")";
 			stmt.executeUpdate(addingToPRDB);
 			for(String answer : answers.getAnswers()) {
 				String addingToAnswersDB = "INSERT INTO answers (question_id, string)" +

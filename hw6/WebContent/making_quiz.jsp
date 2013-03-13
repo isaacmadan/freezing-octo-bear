@@ -186,7 +186,7 @@ int numQuestions;
 			
 			out.println("<br /><div class='success'>Picture Response created</div><br />");
 			//PictureResponseQuestion question = new PictureResponseQuestion(1, 4, answers, questionString);
-			PictureResponseQuestion question = new PictureResponseQuestion(1, 4, answers, urlString);
+			PictureResponseQuestion question = new PictureResponseQuestion(1, 4, answers, urlString, questionString);
 			quiz.addQuestion(question);
 		}
 %>

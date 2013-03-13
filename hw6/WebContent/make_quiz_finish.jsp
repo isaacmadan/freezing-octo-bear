@@ -92,9 +92,9 @@
 		}
 		else if(question.getQuestionType() == 4) {
 			PictureResponseQuestion newQuestion = (PictureResponseQuestion)question;
-			quizManager.addPictureResponseToDataBase(newQuestion.getFileName(), newQuestion.getAnswer());
+			quizManager.addPictureResponseToDataBase(newQuestion.getFileName(), newQuestion.getQuestionString(), newQuestion.getAnswer());
 		}
-	}
+	} 
 	quiz.setQuiz_id(quizManager.getQuizId());
 	session.setAttribute("quiz", null);
 	
