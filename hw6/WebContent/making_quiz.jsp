@@ -231,6 +231,7 @@ int numQuestions;
 		}	
 		if(thisQuestionType == 4) {
 			PictureResponseQuestion newQuestion = (PictureResponseQuestion)question;
+			out.println(newQuestion.getQuestionString()+"<br />");
 			out.println("<img src='"+newQuestion.getFileName()+"' width='200px' />");
 			out.println("<br />Answers: <br />");
 			Answer newAnswers = newQuestion.getAnswer();

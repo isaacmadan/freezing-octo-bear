@@ -269,14 +269,14 @@ public class QuizManager {
 				question_id = rs.getInt(1);
 			}
 			String addingToPRDB = "INSERT INTO picture_responses (question_id, string, question_string)"
-					+ " VALUES(" + question_id + ",\"" + str + ",\"" + question_string + "\")";
+					+ " VALUES(" + question_id + ",\"" + str + "\",\"" + question_string + "\")";
 			stmt.executeUpdate(addingToPRDB);
 			for(String answer : answers.getAnswers()) {
 				String addingToAnswersDB = "INSERT INTO answers (question_id, string)" +
 						" VALUES(" + question_id + ",\"" + answer + "\")";
 				stmt.executeUpdate(addingToAnswersDB);
 			}
-		} catch(Exception e) { }
+		} catch(Exception e) { System.out.println(e); }
 	}
 	
 	public ArrayList<Quiz> getQuizzesByUserId(int user_id) {
