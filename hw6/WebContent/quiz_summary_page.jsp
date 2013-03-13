@@ -365,6 +365,25 @@ private ArrayList<Integer> randomize() {
 		</form>
 	</div>
 
+	<!-- quiz reporting -->
+	<%
+		new ReportManager();
+		String report = request.getParameter("report");
+		if(report != null) {
+			ReportManager.reportQuiz(user.getId(), quiz.getQuiz_id(), report);
+			out.println("<div class='success'>You have successfully reported this quiz. An administrator will review this.</div><br />");
+		}
+	%>
+	<input type='submit' onclick='showReport()' value='Report as inappropriate' />
+	
+	<div id='report'>
+	<form method="POST">
+		<input type='hidden' name='quiz_id' value='<%= quiz.getQuiz_id() %>' />
+		<textarea name='report'></textarea>
+		<input type='submit' value='Report as inappropriate' />
+	</form>
+	</div>
+
 	<%
 		boolean taken = true;
 		if (QuizResult.getBestQuizTakers(quiz.getQuiz_id(), 0).size() == 0) {

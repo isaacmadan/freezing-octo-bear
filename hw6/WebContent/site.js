@@ -4,6 +4,8 @@ $(function() {
     $( "#announcer" ).dialog("close");
     $( "#review" ).dialog();
     $( "#review" ).dialog("close");
+    $( "#report" ).dialog();
+    $( "#report" ).dialog("close");
     
     $( "#composeFriendSelect" ).change(function() {
     	$( "#to_user" ).val($("#composeFriendSelect").val());
@@ -103,7 +105,6 @@ function showReview() {
 	$('#review').dialog("open");
 }
 
-function submitReview(review, rating) {
-	
-	//return false;
+function showReport() {
+	$('#report').dialog("open");
 }

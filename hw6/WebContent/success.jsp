@@ -95,20 +95,27 @@
 %>
 </div>
 
-<h3>Quizzard Statistics</h3>
-<div>
-<table border='1'>
-<tr><th>Statistic</th><th>Value</th></tr>
+<!-- quizzard statistics - admin only -->
 <%
-	try {
-	ArrayList<Statistic> statistics = AdminControl.getStatistics();
-	for(Statistic statistic : statistics) {
-		out.println("<tr><td>"+statistic.description+"</td><td>"+statistic.stat+"</td></tr>");
+	if(AdminControl.isAdmin(user.getId())) {
+		out.println("<h3>Quizzard Statistics</h3>");
+		out.println("<div>");
+		out.println("<table border='1'>");
+		out.println("<tr><th>Statistic</th><th>Value</th></tr>");
+	
+		try {
+		ArrayList<Statistic> statistics = AdminControl.getStatistics();
+		for(Statistic statistic : statistics) {
+			out.println("<tr><td>"+statistic.description+"</td><td>"+statistic.stat+"</td></tr>");
+		}
+		} catch(Exception e) {}
+		
+		out.println("</table>");
+		out.println("</div>");
 	}
-	} catch(Exception e) {}
 %>
-</table>
-</div>
+
+
 
 <h3>Popular Quizzes</h3>
 <div>

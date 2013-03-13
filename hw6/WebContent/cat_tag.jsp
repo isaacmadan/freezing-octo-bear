@@ -79,7 +79,7 @@
 		new CatTagManager();
 		if(category != null) {
 			for(Quiz quiz : CatTagManager.getQuizzesFromCategory(category)) {
-				out.println("<tr><td>"+quiz.getTitle()+"</td>"+"</tr>");
+				out.println("<tr><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td><td><a href='profile.jsp?id="+quiz.getUser_id()+"'>"+manager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+"</a></td></tr>");
 			}
 		}
 		else if(tag != null) {
