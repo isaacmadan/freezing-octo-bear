@@ -2,10 +2,12 @@ package site;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashSet;
+import java.util.regex.Pattern;
 
 public class AccountManager {
 	private static final int SALT_BYTES = 12;
@@ -55,14 +57,18 @@ public class AccountManager {
 		
 		String hashedPassword = hashPassword(password);
 		String realPassword = null;
-		
-		/*In order to salt a password, i need to create a string of random chars*/
-		
+		//String hashedPassword = hashPassword(salt + password)
+		/*Retrieve the user's salt and hash from the database.
+		Prepend the salt to the given password and hash it using the same hash function.
+		Compare the hash of the given password with the hash from the database.
+		 If they match, the password is correct. Otherwise, the password is incorrect.*/
+			
 		
 		try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
 			ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username='"+username+"'");
 			while(rs.next()) {
+				//realPassword = 
 				realPassword = rs.getString("password");
 			}
 		}
@@ -72,6 +78,36 @@ public class AccountManager {
 			return true;
 		return false; 
 	}
+	
+	/*To Store a Password
+
+Generate a long random salt using a CSPRNG.
+Prepend the salt to the password and hash it with a standard cryptographic hash function such as SHA256.
+Save both the salt and the hash in the user's database record.
+To Validate a Password
+
+Retrieve the user's salt and hash from the database.
+Prepend the salt to the given password and hash it using the same hash function.
+Compare the hash of the given password with the hash from the database. If they match, the password is correct. Otherwise, the password is incorrect.*/
+	
+	private static byte[] createSalt(){
+		 SecureRandom random = new SecureRandom();
+	        byte[] salt = new byte[SALT_BYTES];
+	        random.nextBytes(salt);
+	        return salt;
+	}
+	
+	private byte[] getSalt(String username){
+		try {
+			Statement stmt = con.createStatement(); //construct search query based on inputs
+			ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username='"+username+"'");
+			while(rs.next()) {
+				return rs.getBytes("salt");
+			} 
+		}catch(Exception e) {} 
+		return null;		
+	}
+	
 	
 	public void updateAchievements(int user_id) {
 		int resCount = 0;
@@ -466,6 +502,26 @@ public class AccountManager {
 		return null;
 		
 	}
+	
+	private static final String[] passwordRanks = {"Weak Password","Acceptable Password", "Medium Password", "Strong Password"};
+	
+	public String simpleRankPassword(String password){
+		Pattern lower = Pattern.compile("[a-z]");
+		Pattern upper = Pattern.compile("[A-Z");
+		Pattern digits = Pattern.compile("[0-9]");
+		Pattern nonWords = Pattern.compile("[^\\w]");
+		int ranking = 0;
+		boolean lowMatch = lower.matcher(password).find();
+		boolean upperMatch = upper.matcher(password).find();
+		boolean digitMatch = digits.matcher(password).find();
+		boolean nonWordMatch = nonWords.matcher(password).find();
+		if (lowMatch && upperMatch) ranking++;
+		if (digitMatch && lowMatch || digitMatch && upperMatch) ranking++;
+		if (nonWordMatch) ranking++;
+		
+		return passwordRanks[ranking];
+	}
+
 	
 	/*
 	 Given a byte[] array, produces a hex String,
