@@ -172,6 +172,11 @@
 		out.println("The Quiz is Complete!<br>");
 	%>
 
+	<!-- PracticeMakesPerfect -->
+	<%
+		AccountManager manager = new AccountManager();
+		manager.updateAchievements(user.getId(), false, true);
+	%>
 	
 </div><!-- end content -->
 		
