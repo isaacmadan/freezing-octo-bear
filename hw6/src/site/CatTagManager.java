@@ -210,7 +210,7 @@ public class CatTagManager {
 		String execution = "SELECT * from categories where quiz_id = " + quiz_id + " LIMIT 1";
 		try {
 			ResultSet set = stmt.executeQuery(execution);
-			if (!set.next()) return "No Categories";
+			if (!set.next()) return "No Category";
 			return set.getString("string");
 		} catch (SQLException e) {
 		}

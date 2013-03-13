@@ -58,7 +58,7 @@ public class CharliesTests {
 	@Test
 	public void test3(){
 		new AdminControl();
-		AdminControl.removeAccount(15);
+	//	AdminControl.removeAccount(15);
 		//	System.out.println(AdminControl.getAnnouncements(10));
 //		
 //		
@@ -142,6 +142,14 @@ public class CharliesTests {
 		
 	}
 	
+	
+	@Test 
+	public void testREport(){
+		new ReportManager();
+		System.out.println(ReportManager.reportQuiz(5, 67, "This quiz makes fun of my mother"));
+		System.out.println(ReportManager.getNumReports(67));
+		
+	}
 	
 	@After
 	public void after(){

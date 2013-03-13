@@ -218,7 +218,7 @@ CREATE TABLE reports (
 	user_id INT,
 	quiz_id INT,
 	string TEXT,
-	created_timestamp TIMESTAMP default now(),
+	created_timestamp TIMESTAMP default now()
 );
 
 
