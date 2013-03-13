@@ -115,7 +115,31 @@
 	}
 %>
 
-
+<!-- reporting - admin only -->
+<%
+	if(AdminControl.isAdmin(user.getId())) {
+		out.println("<h3>Reported Quizzes</h3>");
+		out.println("<div>");
+		out.println("<table border='1'>");
+		out.println("<tr><th>Reported on</th><th>Reported by</th><th>Quiz name</th><th>Quiz description</th><th>Quiz creator</th><th>Delete report</th></tr>");
+		new ReportManager();
+		QuizManager manager = new QuizManager();
+		ArrayList<Report> reports = ReportManager.getReportedQuizzes();
+		for(Report report : reports) {
+			User reportingUser = accountManager.getAccountById(String.valueOf(report.userId));
+			Quiz offendingQuiz = manager.getQuizByQuizId(report.quizId);
+			User offendingUser = accountManager.getAccountById(String.valueOf(offendingQuiz.getUser_id()));
+			out.println("<tr><td>"+report.time+"</td>"+
+						"<td><a href='profile.jsp?id="+reportingUser.getId()+"'>"+reportingUser.getUsername()+"</a></td>"+
+						"<td><a href='quiz_summary_page.jsp?quiz_id="+offendingQuiz.getQuiz_id()+"'>"+offendingQuiz.getTitle()+"</a></td>"+
+						"<td>"+offendingQuiz.getDescription()+"</td>"+
+						"<td><a href='profile.jsp?id="+offendingUser.getId()+"'>"+offendingUser.getUsername()+"</a></td>"+
+						"<td></td></tr>");
+		}
+		out.println("</table>");
+		out.println("</div>");
+	}
+%>
 
 <h3>Popular Quizzes</h3>
 <div>
