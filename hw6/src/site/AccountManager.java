@@ -167,6 +167,61 @@ public class AccountManager {
 		catch(Exception e) { System.out.println(e); } 
 	}
 	
+	/** OVERLOADED FOR iAmTheGreatest and practiceMakesPerfect **/
+	public void updateAchievements(int user_id, boolean iAmTheGreatest, boolean practiceMakesPerfect) {
+		int resCount = 0;
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes WHERE user_id="+user_id);
+			while(rs.next()) {
+				resCount++;
+			}
+		}
+		catch(Exception e) { System.out.println(e); }
+		
+		int userCount = 0;
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM achievements WHERE user_id="+user_id);
+			while(rs.next()) {
+				userCount++;
+			}
+			if(userCount == 0) {
+				stmt = con.createStatement();
+				stmt.executeUpdate("INSERT INTO achievements (user_id) VALUES("+user_id+")");
+			}
+		}
+		catch(Exception e) { System.out.println(e); }
+		
+		try {
+			Statement stmt = con.createStatement(); //construct search query based on inputs
+			if(resCount > 0) {
+				stmt.executeUpdate("UPDATE achievements SET amateur_author=true WHERE user_id="+user_id);
+			}
+			if(resCount > 4) {
+				stmt.executeUpdate("UPDATE achievements SET prolific_author=true WHERE user_id="+user_id);
+			}
+			if(resCount > 9) {
+				stmt.executeUpdate("UPDATE achievements SET prodigious_author=true WHERE user_id="+user_id);
+			}
+			int numTaken = QuizResult.numTaken(user_id);
+			if(numTaken > 9) {
+				stmt.executeUpdate("UPDATE achievements SET quiz_machine=true WHERE user_id="+user_id);
+			}
+			
+			//i am the greatest
+			if(iAmTheGreatest) {
+				stmt.executeUpdate("UPDATE achievements SET i_am_greatest=true WHERE user_id="+user_id);
+			}
+			
+			//practice makes perfect
+			if(practiceMakesPerfect) {
+				stmt.executeUpdate("UPDATE achievements SET practice_perfect=true WHERE user_id="+user_id);
+			}
+		}
+		catch(Exception e) { System.out.println(e); } 
+	}
+	
 	public Achievements getAchievements(int user_id) {
 		Achievements achievements = new Achievements();
 		try {

@@ -62,13 +62,32 @@
 
 <div class='content'>
 <div id="userResults">
-<h2>Users</h2>
+<h2>Friends</h2>
 <table border="1">
 <tr><th>Username</th></tr>
 <%
 	String query = request.getParameter("query");
 	ArrayList<User> users = Search.searchUsers(query);
 	
+	AccountManager manager = new AccountManager();
+	HashSet<Integer> friends = manager.getFriends(user.getId()); 
+	boolean areResults = false;
+	for(User resUser : users) {
+		if(friends.contains(resUser.getId())) {
+			areResults = true;
+			out.println("<tr><td><a href='profile.jsp?id="+resUser.getId()+"'>"+resUser.getUsername()+"</a></td></tr>");
+		}	
+	}
+	if(!areResults) out.println("<tr><td>No results</td></tr>");
+%>
+</table>
+</div>
+
+<div id="userResults">
+<h2>Users</h2>
+<table border="1">
+<tr><th>Username</th></tr>
+<%
 	for(User resUser : users) {
 		out.println("<tr><td><a href='profile.jsp?id="+resUser.getId()+"'>"+resUser.getUsername()+"</a></td></tr>");
 	}

@@ -14,6 +14,8 @@ input[type=submit], button { font-size: 0.7em; font-family:'Merriweather', serif
 .nav li { display: inline; list-style-type: none; padding-right: 40px; }
 
 .content { padding:30px; height:100%; }
+.content a { color: #585858; text-decoration: underline; }
+.content a:hover { text-decoration: underline; }
 
 .footer { color:#606060; width:100%; background-color:#F0F0F0; height;40px; font-size:12px; padding-bottom:30px; padding-top:30px; bottom:0; float:left; }
 
