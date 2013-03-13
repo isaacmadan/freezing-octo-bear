@@ -224,8 +224,10 @@
 
 <%
 if(!quiz.isOne_page()) {
-	if(!quiz.isPractice_mode())
+	if(!quiz.isPractice_mode()) {
 		out.println("<form action=\"quiz_multi_page.jsp\" method=\"POST\">");
+		session.setAttribute("", arg1)
+	}
 	else {
 		quiz.populateQuiz();
 		out.println("<form action=\"quiz_multi_page_practice.jsp\" method=\"POST\">");
@@ -252,12 +254,23 @@ else {
 	if(!quiz.isPractice_mode())
 		out.println("<form action=\"quiz_taker.jsp\" method=\"POST\">");
 	else {
+		quiz.populateQuiz();
+		out.println("<form action=\"quiz_multi_page_practice.jsp\" method=\"POST\">");
 		ArrayList<Integer> indices = new ArrayList<Integer>();
 		for(int k = 0; k < quiz.getQuestions().size(); k++) {
 			indices.add(0);
 		}
 		session.setAttribute("indices", indices);
-		out.println("<form action=\"quiz_multi_page_practice.jsp\" method=\"POST\">");
+		out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(0) +"\">");
+		ArrayList<Integer> arr = randomize();
+		if(!quiz.isRandom_question()) {
+			arr = new ArrayList<Integer>();
+			for(int i = 0; i < quiz.getQuestions().size(); i++) {
+				arr.add(i);
+			}
+		}
+		session.setAttribute("randomIndex", arr);
+		session.setAttribute("arrAnswers", setup(request, response, session, out));
 	}
 }
 %>
