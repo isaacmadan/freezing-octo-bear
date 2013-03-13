@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="site.*" %>
+<%@ page import="site.*, java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -72,7 +72,20 @@
 	<table>
 		<input type="hidden" name="from_user" value="<%= user.getUsername() %>" />
 		<tr>
-		<td><label>To (username): </label></td><td><input type="text" name="to_user" id="to_user" /></td>
+		<td><label>To (select a friend or enter a username): </label></td>
+		<td>
+			<select name="friend_id" id="composeFriendSelect">
+  			<option value=""></option>
+  			<% 
+  			AccountManager manager = new AccountManager();
+  			HashSet<Integer> friends = manager.getFriends(user.getId()); 
+  			for(Integer userId : friends) {
+  				out.println("<option value='"+manager.getAccountById(String.valueOf(userId)).getUsername()+"'>"+manager.getAccountById(String.valueOf(userId)).getUsername()+"</option>");
+  			}
+  			%>
+			</select><br />
+			<input type="text" name="to_user" id="to_user" />
+		</td>
 		<input type="hidden" name="message_type" value="3" />
 		</tr>
 		<tr>

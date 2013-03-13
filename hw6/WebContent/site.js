@@ -4,7 +4,13 @@ $(function() {
     $( "#announcer" ).dialog("close");
     $( "#review" ).dialog();
     $( "#review" ).dialog("close");
+    
+    $( "#composeFriendSelect" ).change(function() {
+    	$( "#to_user" ).val($("#composeFriendSelect").val());
+    });
 });
+
+
 
 $(function() {
     $( "input[type=submit], button" )

@@ -36,30 +36,6 @@
 
 <div class="header"><div class="pad"><a href='index.jsp'>Quizzard</a></div></div>
 
-<div class="nav">
-	<div id="links">
-	<ul>
-		<li><a href = "make_quiz.jsp">Make a quiz</a></li>
-		<li><% out.println("<a href='profile.jsp?id="+user.getId()+"'>My public profile</a>"); %></li>
-		<li><% out.println("<a href='inbox.jsp'>My inbox</a>"); %></li>
-		<li><% out.println("<a href='history.jsp'>My performance history</a>"); %></li>
-		<li><a href="logout.jsp">Logout</a></li>
-	</ul>
-	</div>
-</div>
-
-<div class='subheader'>
-<div class="pad">
-<%= user.getUsername() %>
-<div id='search'>
-	<form action="search.jsp" method="GET">
-		<input type="text" name="query" />
-		<input type="submit" value="Search" />
-	</form>
-</div>
-</div>
-</div>
-
 <div class='content'>
 <h3>You've successfully logged out.</h3>
 

@@ -316,14 +316,24 @@ private ArrayList<Integer> randomize() {
 		}
 	%>
 	
+	<!-- process ratings/review -->
+	<%
+		String review = request.getParameter("review");
+		String rating = request.getParameter("rating");
+		if(review != null && rating != null) {
+			ReviewManager.addReview(user.getId(), quiz.getQuiz_id(), review, Integer.parseInt(rating));
+			out.println("<div class='success'>Your review/rating was saved successfully.</div><br />");
+		}
+	%>
+	
 	<div id='review'>
-		<form onsubmit='return submitReview()' method='POST'>
+		<form method='POST'>
 			<input type='hidden' name='quiz_id' value='<%= quiz.getQuiz_id() %>' />
 			<table>
-				<tr><td>Review</td><td><textarea name='review'></textarea></td></tr>
+				<tr><td>Review</td><td><textarea name='review' id='review'></textarea></td></tr>
 				<tr><td>Rating</td>
 					<td>
-						<select name='rating'>
+						<select name='rating' id='rating'>
 							<option value='1'>1</option>
 							<option value='2'>2</option>
 							<option value='3'>3</option>
@@ -439,6 +449,18 @@ private ArrayList<Integer> randomize() {
 			out.println("</p>");
 		}
 	%>
+	</div>
+	
+	<h3>Ratings and Reviews for this quiz</h3>
+	<div>
+		<%
+			ArrayList<Review> reviews = ReviewManager.getReviews(quiz.getQuiz_id());
+			for(Review newReview : reviews) {
+				out.println("<h3>"+manager.getAccountById(String.valueOf(newReview.userId)).getUsername()+" says...</h3>");	
+				out.println("<p>"+newReview.text+"</p>");
+				out.println("<p>[ Rating: "+newReview.review_score+" ]</p>");
+			}
+		%>
 	</div>
 </div><!-- end accordion -->
 </div><!-- end content -->
