@@ -35,9 +35,10 @@ CREATE TABLE tags (
 public class CatTagManager {
 	private static Connection con;
 	private static Statement stmt;
-
 	private static Pattern tagPattern;
 
+	private static final String NO_CAT = "No Category";
+	
 	public CatTagManager(){
 		con = MyDB.getConnection();
 		try {
@@ -140,6 +141,11 @@ public class CatTagManager {
 		return null;
 	}
 
+	/*Category Code -------------------------------------------------------
+	 * Quizzes have one category per quiz
+	 * Quizzes without categories are given "No Category"
+	 * 
+	 * */
 
 	/**Links a quiz to a category in the database. Doesn't do checking for valid categories
 	 * Returns false on some kind of sql failure
@@ -208,11 +214,12 @@ public class CatTagManager {
 			return set.getString("string");
 		} catch (SQLException e) {
 		}
-		return "No Categories";
+		return NO_CAT;
 	}
 	
 	/**Get a list of Quiz objects from the database given a string category*/
 	public static ArrayList<Quiz> getQuizzesFromCategory(String cat){
+		if (cat.equals(NO_CAT)) return getNoCategoryQuizzes();
 		ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
 		String execution = "SELECT DISTINCT quiz_id FROM categories WHERE string = '" + cat + "' AND quiz_id > 0 ";
 		try {
@@ -231,6 +238,24 @@ public class CatTagManager {
 		return null;
 	}
 
+	private static ArrayList<Quiz> getNoCategoryQuizzes(){
+		ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
+		String execution = "select * from quizzes where quiz_id not in (select quiz_id from categories)";
+		try {
+			//System.out.println(execution);
+			ResultSet set = stmt.executeQuery(execution);
+			while(set.next()){
+				int quizNum = set.getInt("quiz_id");
+				if (quizNum != -1){
+					Quiz newQuiz = (new QuizManager()).getQuizByQuizId(quizNum); 
+					quizzes.add(newQuiz);
+					System.out.println(newQuiz.getTitle());
+				}
+			}
+			return quizzes;
+		} catch (SQLException e) {}
+		return null;
+	}
 
 
 }

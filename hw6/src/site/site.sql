@@ -7,6 +7,7 @@ CREATE TABLE users (
 	user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     username CHAR(64),
     password CHAR(64),
+    salt, CHAR(64),
     is_admin BOOLEAN,
     login_count INT,
     created_timestamp timestamp default '0000-00-00 00:00:00', 
@@ -144,8 +145,8 @@ CREATE TABLE picture_responses (
 	picture_responses_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     question_id INT,
     string TEXT,
-    question_string TEXT,
-    created_timestamp TIMESTAMP
+    created_timestamp TIMESTAMP,
+    question_string TEXT
 );
 
 DROP TABLE IF EXISTS multiple_choices_choices;
@@ -169,6 +170,7 @@ CREATE TABLE achievements (
     quiz_machine BOOLEAN,
     i_am_greatest BOOLEAN,
     practice_perfect BOOLEAN
+    created_timestamp TIMESTAMP default now(),
 );
 
 DROP TABLE IF EXISTS announcements;
@@ -209,6 +211,15 @@ CREATE TABLE reviews (
 	created_timestamp TIMESTAMP default now(),
 );
 
+DROP TABLE IF EXISTS reports;
+
+CREATE TABLE reports (
+	review_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT,
+	quiz_id INT,
+	string TEXT,
+	created_timestamp TIMESTAMP default now(),
+);
 
 
 -- Initialize database with these fields

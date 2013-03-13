@@ -27,7 +27,7 @@ public class Review extends Object {
 	public final int quizId;
 	public final String text;
 	public final int review_score;
-	public Timestamp time;
+	public final Timestamp time;
 
 	public Review(int review, int user, int quiz, String text, int score, Timestamp timestamp){
 		this.reviewId = review;
@@ -38,4 +38,8 @@ public class Review extends Object {
 		this.time = timestamp;
 	}
 	
+	public String dateString(){
+		return  java.text.DateFormat.getDateTimeInstance().format(
+				this.time);
+	}
 }
