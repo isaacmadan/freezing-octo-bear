@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.regex.Pattern;
@@ -54,15 +55,10 @@ public class AccountManager {
 	
 	public boolean isPasswordCorrect(String username, String password) { 
 		if(!isExistingAccount(username)) return false;
+		String salt = this.getSalt(username);
 		
-		String hashedPassword = hashPassword(password);
-		String realPassword = null;
-		//String hashedPassword = hashPassword(salt + password)
-		/*Retrieve the user's salt and hash from the database.
-		Prepend the salt to the given password and hash it using the same hash function.
-		Compare the hash of the given password with the hash from the database.
-		 If they match, the password is correct. Otherwise, the password is incorrect.*/
-			
+		String hashedPassword = hashPassword(salt + password);
+		String realPassword = null;	
 		
 		try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
@@ -73,6 +69,11 @@ public class AccountManager {
 			}
 		}
 		catch(Exception e) {} 
+
+		System.out.println("Checking user password: " + username + " Password Given: " + password);
+		System.out.println("Hashed input Password: " + hashedPassword);
+		System.out.println("Salt: " + salt);
+		System.out.println("RealPassword " + realPassword);
 		
 		if(hashedPassword.equals(realPassword))
 			return true;
@@ -88,7 +89,31 @@ To Validate a Password
 
 Retrieve the user's salt and hash from the database.
 Prepend the salt to the given password and hash it using the same hash function.
-Compare the hash of the given password with the hash from the database. If they match, the password is correct. Otherwise, the password is incorrect.*/
+Compare the hash of the given password with the hash from the database. If they match, the password is correct. Otherwise, the password is incorrect.
+
+*What the code is doing now 
+*
+*To store a password - call hashPassword(input) and put that into the database
+*
+*	public static String hexToString(byte[] bytes) {
+
+	public String hashPassword(String input) {
+		byte[] bytes = input.getBytes();
+		MessageDigest hash = null; //SHA hash
+			hash = MessageDigest.getInstance("SHA");
+		String res = null;
+			hash.update(bytes);
+			byte[] output = hash.digest();
+			res = hexToString(output);
+		return res;
+	}
+*
+* to validate a password - just compare hashpassword(attempt) to database
+*
+*/
+	
+	
+	
 	
 	private static byte[] createSalt(){
 		 SecureRandom random = new SecureRandom();
@@ -97,15 +122,35 @@ Compare the hash of the given password with the hash from the database. If they 
 	        return salt;
 	}
 	
-	private byte[] getSalt(String username){
+	private String getSalt(String username){
 		try {
-			Statement stmt = con.createStatement(); //construct search query based on inputs
+			Statement stmt = con.createStatement(); 
 			ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username='"+username+"'");
 			while(rs.next()) {
-				return rs.getBytes("salt");
+				return rs.getString("salt");
 			} 
 		}catch(Exception e) {} 
 		return null;		
+	}
+	
+	/**Updates the passwords within the database to have the correct hash passwords while keeping 
+	 * their previous passwords valid, but with salts included
+	 * Needs to add salts to the database and update the hash values with the new hashes
+	 * Debuggin purposes
+	 * */
+	public boolean updatePasswordWithSalt(int user_id, String prevPassword){
+		String newSalt = hexToString(createSalt());
+		String newPassword = hashPassword(newSalt + prevPassword);
+		String updatePassword = "UPDATE users SET password = '" + newPassword + "'WHERE user_id = " + user_id;
+		String addSalt = "UPDATE users SET salt = '" + newSalt + "'WHERE user_id = " + user_id;
+		try {
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate(updatePassword);
+			stmt.executeUpdate(addSalt);
+		} catch (SQLException ignored){
+			ignored.printStackTrace();
+		}
+		return false;
 	}
 	
 	
@@ -479,7 +524,40 @@ Compare the hash of the given password with the hash from the database. If they 
 		}
 		catch(Exception e) {}
 		
+		/*Here we need to create a random salt that needs to be placed into the datbase
+		 * 
+		 * */
+		String passwordSalt = hexToString(createSalt());
+		String hashedWord = hashPassword(passwordSalt + password);
+		System.out.println("Creating user: " + username);
+		System.out.println("With salt: " + passwordSalt);
+		System.out.println("With hashedpassword: " + hashedWord);
+		
 		try {
+			Statement stmt = con.createStatement(); //construct search query based on inputs
+			String query = "INSERT INTO users (username, password, salt, is_admin, login_count, created_timestamp, last_login_timestamp)" +
+						   " VALUES('"+username+"', '"+hashPassword(passwordSalt + password)+"', '"+passwordSalt+"', "+isAdmin+", "+loginCount+", NULL, NULL)";
+			stmt.executeUpdate(query);
+		}
+		catch(Exception e) { return null; } 
+		
+		int id = 0;
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username='"+username+"'");
+			while(rs.next()) {
+				id = Integer.parseInt(rs.getString("user_id"));
+			}
+			User user = new User(id, username, hashPassword(password), isAdmin, loginCount);
+			return user;
+		}
+		catch(Exception e) {}
+		
+		return null;
+		
+	}
+	
+		/*try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
 			String query = "INSERT INTO users (username, password, is_admin, login_count, created_timestamp, last_login_timestamp)" +
 						   " VALUES('"+username+"', '"+hashPassword(password)+"', "+isAdmin+", "+loginCount+", NULL, NULL)";
@@ -501,7 +579,7 @@ Compare the hash of the given password with the hash from the database. If they 
 		
 		return null;
 		
-	}
+	}*/
 	
 	private static final String[] passwordRanks = {"Weak Password","Acceptable Password", "Medium Password", "Strong Password"};
 	

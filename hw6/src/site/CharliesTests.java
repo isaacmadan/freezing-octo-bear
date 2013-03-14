@@ -142,7 +142,7 @@ public class CharliesTests {
 		
 	}
 	
-	
+	/*
 	@Test 
 	public void testREport(){
 		new ReportManager();
@@ -151,7 +151,14 @@ public class CharliesTests {
 		System.out.println(ReportManager.getNumReports(67));
 		
 	}
+	*/
 	
+	@Test
+	public void testSalt(){
+		AccountManager manager = new AccountManager();
+		//System.out.println(manager.updatePasswordWithSalt(user_id, prevPassword));
+		
+	}
 	
 	
 	@After

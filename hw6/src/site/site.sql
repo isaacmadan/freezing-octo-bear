@@ -6,8 +6,8 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
 	user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     username CHAR(64),
-    password CHAR(64),
-    salt, CHAR(64),
+    password TEXT,
+    salt, TEXT,
     is_admin BOOLEAN,
     login_count INT,
     created_timestamp timestamp default '0000-00-00 00:00:00', 
