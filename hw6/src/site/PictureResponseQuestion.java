@@ -12,7 +12,7 @@ public class PictureResponseQuestion implements Question {
     private String questionString;
     
     public PictureResponseQuestion(int questionId, int quizId, int pointValue, int questionType, 
-    		Answer answer, int pictureResponseId, String fileName) {
+    		Answer answer, int pictureResponseId, String fileName, String questionString) {
     	this.setQuestionId(questionId);
         this.setQuizId(quizId);
         this.setPointValue(pointValue);
@@ -20,6 +20,7 @@ public class PictureResponseQuestion implements Question {
         this.setAnswer(answer);
         this.setPictureResponseId(pictureResponseId);
         this.setFileName(fileName);
+        this.setQuestionString(questionString);
     }
     
     public PictureResponseQuestion(int pointValue, int questionType, Answer answer, String fileName, String questionString) {

@@ -1,7 +1,6 @@
 package site;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -108,7 +107,7 @@ public class Quiz {
 					while(rss.next()) {
 						question = new PictureResponseQuestion(rss.getInt("question_id"),
 							quiz_id, 1, type, answer, rss.getInt("picture_responses_id"), 
-							rss.getString("string"));
+							rss.getString("string"),rss.getString("question_string"));
 					}
 					String getFromAnswer = "SELECT * FROM answers WHERE question_id = " + question_id;
 					rss = stmt2.executeQuery(getFromAnswer);
