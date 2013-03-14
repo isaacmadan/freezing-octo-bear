@@ -24,13 +24,11 @@ CREATE TABLE tags (
 	string TEXT
 );*/
 
-//TODO implement removequiz function
-
 /**CatTag Control manages database structures that relate to categories and tags relating to quizzes
  * Remember to call new CatTagManager() at the beginning of any .jsp using code
  * 
  * Tags should be added by giving a string of tags separated by commas
- * Tags can have whitespace, so can Categories
+ * Tags can have whitespace in between words, so can Categories
  * */
 public class CatTagManager {
 	private static Connection con;

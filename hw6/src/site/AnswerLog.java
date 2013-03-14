@@ -7,9 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /** AnswerLog is responsible for querying the database and generating all of the answers for a result id
- * As well as storing the user given answers 
-
- * 
+ * As well as storing the user given answers. This is necessary to review quizzes
  */
 public class AnswerLog{
 
@@ -37,7 +35,7 @@ public class AnswerLog{
 	 * */
 	public static boolean storeUserAnswer(int questionId, int quizId, int resultId, String answer) {
 		String execution = "INSERT INTO user_answers VALUES(" + resultId + "," + quizId + "," + questionId + ",'" + answer + "')"; 
-		System.out.println(execution);
+		//System.out.println(execution);
 		try {
 			stmt.executeUpdate(execution);
 			return true;

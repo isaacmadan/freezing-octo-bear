@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet implementation class DeleteTextMessageServlet
+ * 
+ * 
  */
 @WebServlet("/DeleteTextMessageServlet")
 public class DeleteTextMessageServlet extends HttpServlet {

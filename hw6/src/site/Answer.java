@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 
+
+/**Answer encapsulates the objec tthat matches answers to a question. A question can have multiple answers */
 public class Answer {
 
 	private HashSet<String> answers;

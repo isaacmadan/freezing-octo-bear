@@ -2,7 +2,7 @@ package site;
 
 import java.sql.Timestamp;
 
-/*A simple wrapper class for a user_id, a text message, and a timestamp. If you want a formated timestamp just call
+/**A simple wrapper class for a user_id, a text message, and a timestamp. If you want a formated timestamp just call
  * announcement.dateString() */
 
 public class Announcement extends Object{
