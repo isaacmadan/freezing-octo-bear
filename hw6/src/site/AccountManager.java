@@ -10,6 +10,9 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.regex.Pattern;
 
+/**AccountManager deals with all database querying and updating relating to User object functionality
+ * Passwords and account creation are managed here
+ * */
 public class AccountManager {
 	private static final int SALT_BYTES = 12;
 	
@@ -21,6 +24,7 @@ public class AccountManager {
 		con = MyDB.getConnection();
 	}
 	
+	/**Checks existence of users by String id #*/
 	public boolean isExistingAccountById(String user_id) { 
 		int resCount = 0;
 		try {
@@ -37,6 +41,7 @@ public class AccountManager {
 		return true;
 	}
 	
+	/**Checks existence of users by name*/
 	public boolean isExistingAccount(String username) { 
 		int resCount = 0;
 		try {
@@ -52,6 +57,12 @@ public class AccountManager {
 		}
 		return true;
 	}
+	
+	/** Validates password - returns boolean
+	Retrieves the user's salt and hash from the database.
+	Prepend the salt to the given password and hash it using the same hash function.
+	Compare the hash of the given password with the hash from the database. If they match, the password is correct. Otherwise, the password is incorrect.
+	*/
 	
 	public boolean isPasswordCorrect(String username, String password) { 
 		if(!isExistingAccount(username)) return false;
@@ -79,49 +90,9 @@ public class AccountManager {
 			return true;
 		return false; 
 	}
-	
-	/*To Store a Password
 
-Generate a long random salt using a CSPRNG.
-Prepend the salt to the password and hash it with a standard cryptographic hash function such as SHA256.
-Save both the salt and the hash in the user's database record.
-To Validate a Password
-
-Retrieve the user's salt and hash from the database.
-Prepend the salt to the given password and hash it using the same hash function.
-Compare the hash of the given password with the hash from the database. If they match, the password is correct. Otherwise, the password is incorrect.
-
-*What the code is doing now 
-*
-*To store a password - call hashPassword(input) and put that into the database
-*
-*	public static String hexToString(byte[] bytes) {
-
-	public String hashPassword(String input) {
-		byte[] bytes = input.getBytes();
-		MessageDigest hash = null; //SHA hash
-			hash = MessageDigest.getInstance("SHA");
-		String res = null;
-			hash.update(bytes);
-			byte[] output = hash.digest();
-			res = hexToString(output);
-		return res;
-	}
-*
-* to validate a password - just compare hashpassword(attempt) to database
-*
-*/
 	
-	
-	
-	
-	private static byte[] createSalt(){
-		 SecureRandom random = new SecureRandom();
-	        byte[] salt = new byte[SALT_BYTES];
-	        random.nextBytes(salt);
-	        return salt;
-	}
-	
+	/**Retrieves a salt for a user for checking*/
 	private String getSalt(String username){
 		try {
 			Statement stmt = con.createStatement(); 
@@ -153,7 +124,7 @@ Compare the hash of the given password with the hash from the database. If they 
 		return false;
 	}
 	
-	
+	/**Checks the status of all achievements and adds them to the database for a given user_id*/
 	public void updateAchievements(int user_id) {
 		int resCount = 0;
 		try {
@@ -308,6 +279,7 @@ Compare the hash of the given password with the hash from the database. If they 
 		catch(Exception e) { System.out.println(e); } 
 	}
 	
+	/**Gets all Achievement object for a given user, which holds booleans for all achievements*/
 	public Achievements getAchievements(int user_id) {
 		Achievements achievements = new Achievements();
 		try {
@@ -328,6 +300,8 @@ Compare the hash of the given password with the hash from the database. If they 
 		return achievements;
 	}
 	
+	/**Returns the entire achievements object for all achievements if a user has gotten one in the last
+	 * interval of time, where interval is in days*/
 	public Achievements getRecentAchievements(int user_id,int interval) {
 		Achievements achievements = new Achievements();
 		try {
@@ -348,6 +322,7 @@ Compare the hash of the given password with the hash from the database. If they 
 		return achievements;
 	}
 	
+	/**Returns a set of Integers of all friend user_ids for a given user_id */
 	public HashSet<Integer> getFriends(int user_id) {
 		
 		HashSet<Integer> xFriends = new HashSet<Integer>();
@@ -375,6 +350,7 @@ Compare the hash of the given password with the hash from the database. If they 
 		return xFriends;
 	}
 	
+	/**Checks if two users are friends by seeing if both have called addFriends on each other*/
 	public boolean areFriends(int x_id, int y_id) {
 		boolean areFriends = false;
 		
@@ -403,6 +379,7 @@ Compare the hash of the given password with the hash from the database. If they 
 		return areFriends;
 	}
 	
+	/**Removes both directions of friendship from the database*/
 	public void removeFriend(int from_id, int to_id) {
 		try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
@@ -419,6 +396,8 @@ Compare the hash of the given password with the hash from the database. If they 
 		catch(Exception e) {} 
 	}
 	
+	/**Adds a one way friendship to the database. Both users need to have called addFriend 
+	 * in order to actually be friends*/
 	public void addFriend(int from_id, int to_id) {
 		try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
@@ -429,6 +408,7 @@ Compare the hash of the given password with the hash from the database. If they 
 		catch(Exception e) {} 
 	}
 	
+	/**Sends a friend a challenge to take a quiz. Directly writes html code to database*/
 	public void sendChallenge(String challengerScore, String quizId, String from_id, String to_id) {
 		User fromUser = this.getAccountById(from_id);
 		User toUser = this.getAccountById(to_id);
@@ -445,6 +425,7 @@ Compare the hash of the given password with the hash from the database. If they 
 		Inbox.sendTextMessage(message);
 	}
 	
+	/**Sends a friend request to a friend. Directly writes html code into database*/
 	public void sendFriendRequest(String from_id, String to_id) {
 		User fromUser = this.getAccountById(from_id);
 		User toUser = this.getAccountById(to_id);
@@ -461,6 +442,7 @@ Compare the hash of the given password with the hash from the database. If they 
 		Inbox.sendTextMessage(message);
 	}
 	
+	/**Returns a User object by string id #*/
 	public User getAccountById(String user_id) {
 		if(!isExistingAccountById(user_id)) return null;
 		
@@ -487,6 +469,7 @@ Compare the hash of the given password with the hash from the database. If they 
 		return null;
 	}
 	
+	/**Returns an User object from a username*/
 	public User getAccount(String username) {
 		if(!isExistingAccount(username)) return null;
 		
@@ -511,6 +494,20 @@ Compare the hash of the given password with the hash from the database. If they 
 		return null;
 	}
 	
+
+
+	
+	
+	
+	/**Generates a random salt to add to a new password*/
+	private static byte[] createSalt(){
+		 SecureRandom random = new SecureRandom();
+	        byte[] salt = new byte[SALT_BYTES];
+	        random.nextBytes(salt);
+	        return salt;
+	}
+	
+	/**Adds an account to the database*/
 	public User createNewAccount(String username, String password, boolean isAdmin) {
 		if(isExistingAccount(username)) return null;
 		int loginCount = 0;
@@ -524,15 +521,13 @@ Compare the hash of the given password with the hash from the database. If they 
 		}
 		catch(Exception e) {}
 		
-		/*Here we need to create a random salt that needs to be placed into the datbase
-		 * 
-		 * */
+		/*To Store a Password
+
+		Generate a long random salt using a CSPRNG.
+		Prepend the salt to the password and hash it with a standard cryptographic hash function such as SHA256.
+		Save both the salt and the hash in the user's database record.
+		To Validate a Password*/
 		String passwordSalt = hexToString(createSalt());
-		String hashedWord = hashPassword(passwordSalt + password);
-		System.out.println("Creating user: " + username);
-		System.out.println("With salt: " + passwordSalt);
-		System.out.println("With hashedpassword: " + hashedWord);
-		
 		try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
 			String query = "INSERT INTO users (username, password, salt, is_admin, login_count, created_timestamp, last_login_timestamp)" +
@@ -556,30 +551,6 @@ Compare the hash of the given password with the hash from the database. If they 
 		return null;
 		
 	}
-	
-		/*try {
-			Statement stmt = con.createStatement(); //construct search query based on inputs
-			String query = "INSERT INTO users (username, password, is_admin, login_count, created_timestamp, last_login_timestamp)" +
-						   " VALUES('"+username+"', '"+hashPassword(password)+"', "+isAdmin+", "+loginCount+", NULL, NULL)";
-			stmt.executeUpdate(query);
-		}
-		catch(Exception e) { return null; } 
-		
-		int id = 0;
-		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username='"+username+"'");
-			while(rs.next()) {
-				id = Integer.parseInt(rs.getString("user_id"));
-			}
-			User user = new User(id, username, hashPassword(password), isAdmin, loginCount);
-			return user;
-		}
-		catch(Exception e) {}
-		
-		return null;
-		
-	}*/
 	
 	private static final String[] passwordRanks = {"Weak Password","Acceptable Password", "Medium Password", "Strong Password"};
 	
