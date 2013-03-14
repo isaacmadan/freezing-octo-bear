@@ -22,13 +22,9 @@ Quizzes
 		Picture-Response with Question
 
 	All questions can have multiple answers
-
 	Random Question Order
-	
 	One Page vs multiple Pages
-	
 	Immediate Correction
-	
 	Practice Mode
 
 	Scoring
@@ -74,7 +70,9 @@ Administration
 		Admins can create announcements
 		Accouncements appear on homepage
 		Admins can remove user accounts - popup box asks for verification
+			Removes all quizzes, quiz results, friends and reviews related to this user
 		Admins can remove quizzes - popup box asks for verification
+			Removes all quiz results 
 		Admins can clear all the history for a quiz from the quiz homepage
 		Admins can promote other users to admin status
 			Notifies user with notes that they have been promoted and who promoted them
@@ -85,26 +83,100 @@ Administration
 			Number of quizzes taken
 			Number of times a quiz has been taken
 		
+
+Landing page
+	User can log in with a username
+		If username or password is invalid, user is notified
+	Users can create new accounts
+		If username is already in use, user is notified
+		If a field is blank, the user is notified
+		
 Homepage - on logging in
 
-	Administrator announcements
 	List of popular quizzes
 	List of recently created quizzes
 	List of own recent quiz taking activity
 	List of own recent quiz creating activity
 	List of achievements earned
 	Indicator for messages, friend requests, and challenges
+		Counts instances of each type of message
+		Shows how many have been received in the last week
 	Recent friend activities - links to friends profile
 		quizzes taken by friends
 		achievements earned by friends
 	
+	Extensions:
+		Administrator announcements
+		Administrator can add announcements
+		
+	
 Quiz Summary Page
 
 	User can take quiz
+	Notes creator of quiz
+	List of user's past performance on quiz
+	List of high scores of all time
+	List of high scores in last day
+	List showing all recent performances, good and bad
+	Summary statistics for quiz
 	
+	Quiz Result page
+		Shows score and time
+		Shows incorrect answers
+		Links back to quiz summary page
+	
+	Extensions:
 
+User sessions and threading
+	
+	Multiple users can simultaneously visit Quizzard
+	
+Other Extensions
+	
+	Tags and Categories
+		Users can search for tags and categories
+		Tags
+			Tags displayed on quiz summary page
+			Quizzes can be tagged on creation
+			Quizzes can have multiple tags
+			Clicking on a tag brings up a page of all quizzes with the same tag 
+		Category
+			Categories displayed on quiz summary page
+			Quizzes must be categorized with a pre-defined category
+			Clicking on a category brings up a page of all quizzes with the same category
+			Administrators can create categories
+		
+	Ratings and Reviews
+		Users can review quizzes they have already taken
+		Each review is composed of a written review and score
+		Quizzes display their average rating
 
+	Reporting Users
+		Users can report quizzes on a quiz summary page
+		Admins can review all reported quizzes and delete those quizzes
+		
+	Error Handling
+		User is prompted to enter data in to blank fields whenever non-empty input is relevant
+		
+	Non-Registered Access
+		Users cannot visit pages unless they are logged in
+		
+	Cookies
+		Users are automatically logged back in when they visit if they have not logged out in a previous session
+		
+	Practice Mode
+		Users can take a quiz in practice mode
+		Repeats questions a user has difficulty with up to three times
+		Removes questions that the user got right
+		
+	Social Sharing
+		From the quiz summary page, users can
+			Like on Facebook
+			+1 on Google Plus
+			Tweet the quiz
+			
 Notes and Bugs:
+	Mysql Database is sometimes very slow - causing pages to be shown with information that is not up to date
 	
 
 </body>
