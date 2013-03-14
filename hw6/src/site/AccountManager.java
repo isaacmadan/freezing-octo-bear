@@ -81,10 +81,10 @@ public class AccountManager {
 		}
 		catch(Exception e) {} 
 
-		System.out.println("Checking user password: " + username + " Password Given: " + password);
-		System.out.println("Hashed input Password: " + hashedPassword);
-		System.out.println("Salt: " + salt);
-		System.out.println("RealPassword " + realPassword);
+		//System.out.println("Checking user password: " + username + " Password Given: " + password);
+		//System.out.println("Hashed input Password: " + hashedPassword);
+		//System.out.println("Salt: " + salt);
+		//System.out.println("RealPassword " + realPassword);
 		
 		if(hashedPassword.equals(realPassword))
 			return true;
@@ -134,7 +134,7 @@ public class AccountManager {
 				resCount++;
 			}
 		}
-		catch(Exception e) { System.out.println(e); }
+		catch(Exception e) { /*System.out.println(e);*/ }
 		
 		int userCount = 0;
 		try {
@@ -148,7 +148,7 @@ public class AccountManager {
 				stmt.executeUpdate("INSERT INTO achievements (user_id) VALUES("+user_id+")");
 			}
 		}
-		catch(Exception e) { System.out.println(e); }
+		catch(Exception e) { /*System.out.println(e);*/ }
 		
 		try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
@@ -169,7 +169,7 @@ public class AccountManager {
 			//i am the greatest
 			//practice makes perfect
 		}
-		catch(Exception e) { System.out.println(e); } 
+		catch(Exception e) { /*System.out.println(e);*/ } 
 	}
 	
 	/** OVERLOADED FOR iAmTheGreatest **/
@@ -182,7 +182,7 @@ public class AccountManager {
 				resCount++;
 			}
 		}
-		catch(Exception e) { System.out.println(e); }
+		catch(Exception e) { /*System.out.println(e);*/ }
 		
 		int userCount = 0;
 		try {
@@ -196,7 +196,7 @@ public class AccountManager {
 				stmt.executeUpdate("INSERT INTO achievements (user_id) VALUES("+user_id+")");
 			}
 		}
-		catch(Exception e) { System.out.println(e); }
+		catch(Exception e) { /*System.out.println(e);*/ }
 		
 		try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
@@ -221,7 +221,7 @@ public class AccountManager {
 			
 			//practice makes perfect
 		}
-		catch(Exception e) { System.out.println(e); } 
+		catch(Exception e) { /*System.out.println(e);*/ } 
 	}
 	
 	/** OVERLOADED FOR iAmTheGreatest and practiceMakesPerfect **/
@@ -234,7 +234,7 @@ public class AccountManager {
 				resCount++;
 			}
 		}
-		catch(Exception e) { System.out.println(e); }
+		catch(Exception e) { /*System.out.println(e);*/ }
 		
 		int userCount = 0;
 		try {
@@ -248,7 +248,7 @@ public class AccountManager {
 				stmt.executeUpdate("INSERT INTO achievements (user_id) VALUES("+user_id+")");
 			}
 		}
-		catch(Exception e) { System.out.println(e); }
+		catch(Exception e) { /*System.out.println(e);*/ }
 		
 		try {
 			Statement stmt = con.createStatement(); //construct search query based on inputs
@@ -276,7 +276,7 @@ public class AccountManager {
 				stmt.executeUpdate("UPDATE achievements SET practice_perfect=true WHERE user_id="+user_id);
 			}
 		}
-		catch(Exception e) { System.out.println(e); } 
+		catch(Exception e) { /*System.out.println(e);*/ } 
 	}
 	
 	/**Gets all Achievement object for a given user, which holds booleans for all achievements*/
@@ -295,7 +295,7 @@ public class AccountManager {
 				
 			}
 		}
-		catch(Exception e) {System.out.println(e);}
+		catch(Exception e) {/*System.out.println(e);*/}
 		
 		return achievements;
 	}
@@ -317,7 +317,7 @@ public class AccountManager {
 				
 			}
 		}
-		catch(Exception e) {System.out.println(e);}
+		catch(Exception e) {/*System.out.println(e);*/}
 		
 		return achievements;
 	}

@@ -12,8 +12,6 @@ import java.util.ArrayList;
  * Admin Control does not check if the user is an admin. The caller to AdminControl should check beforehand
  * 
  * */
-
-
 public class AdminControl {
 
 	private static Connection con;
@@ -100,11 +98,11 @@ public class AdminControl {
 		String selectQuiz = "SELECT * FROM quizzes where user_id = " + userId;
 		String deleteUserResults = "DELETE FROM results WHERE user_id = " + userId;
 		String deleteAchievements = "DELETE FROM achievements WHERE user_id = " + userId;
-		
-		System.out.println(deleteUser);
-		System.out.println(selectQuiz);
-		System.out.println(deleteUserResults);
-		System.out.println(deleteAchievements);
+//		
+//		System.out.println(deleteUser);
+//		System.out.println(selectQuiz);
+//		System.out.println(deleteUserResults);
+//		System.out.println(deleteAchievements);
 		
 		try {
 			stmt.executeUpdate(deleteUserResults);
@@ -141,20 +139,7 @@ public class AdminControl {
 	/**Remove quiz removes a quiz and all results and questions associated with it
 	 * */
 	public static boolean removeQuiz(int quizId){
-		/*For each result related to that quiz, 
-		 * 	remove all the user_answers related to that question
-		 *	remove the quiz result
-		 *Then for each question in the quiz, and the answer associated with it, 
-		 *then remove that question
-		 *then remove tags
-		 *then remove categories
- 		 *then removes reports for that quiz
-		 *then finally remove that quiz
-		 * 
-		 * */
-		
 		String deleteQuiz = "DELETE FROM quizzes WHERE quiz_id = " + quizId;
-		
 		try {
 			
 			stmt.executeUpdate(deleteQuiz);
@@ -163,7 +148,6 @@ public class AdminControl {
 			new ReviewManager();
 			CatTagManager.removeQuizCatsTags(quizId);
 			ReviewManager.clearReviewsByQuiz(quizId);
-			
 			return true;
 		} catch (SQLException e) {}
 		return false;
@@ -251,9 +235,6 @@ public class AdminControl {
 	 * 0 - Integer - number of users
 	 * 1 - Integer - number of quizzes
 	 * 2 - Integer - number of quizzes taken
-	 * 3 - User - User object of most something user
-	 * 
-	 * 
 	 * */
 
 	public static ArrayList<Statistic> getStatistics(){

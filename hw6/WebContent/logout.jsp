@@ -45,7 +45,7 @@
 	if(cookies != null) {
 		for(Cookie cookie : cookies) {
 			if(cookie.getName().equals("freezing-octo-bear")) {
-				System.out.println("cooke 0");
+				//System.out.println("cooke 0");
 				response.setContentType("text/html");
 				cookie.setMaxAge(0);
 				response.addCookie(cookie);

@@ -1,8 +1,8 @@
 package site;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
+/**Achievements is encapsulates several boolean fields relating to each achievement*/
 public class Achievements {
 
 	private boolean amateurAuthor;
