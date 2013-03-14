@@ -4,25 +4,30 @@ body { font-family:'Merriweather', serif!important; margin:0px; }
 
 input[type=submit], button { font-size: 0.7em; font-family:'Merriweather', serif!important; }
 
-.header { color:white; width:100%; background-color:black; height:40px; font-size:36px; padding-bottom:30px; padding-top:30px; }
+.header { color:white; width:100%; background-color:#351330; height:40px; font-size:36px; padding-bottom:40px; padding-top:40px; border-bottom:1px; }
 .header a, .subheader a { color: white; text-decoration: none; }
 
-.subheader { color:#606060; width:100%; background-color:#F0F0F0; height;40px; font-size:30px; padding-bottom:30px; padding-top:30px; }
+.subheader input, button { font-size: 0.5em; }
+.subheader { color:white; width:100%; background-color:#424254; height;40px; font-size:30px; padding-bottom:15px; padding-top:15px; }
+.subheader input[type=text] { height:20px; font-size:20px; font-family:'Merriweather', serif!important; padding:5px; color:#505050; width:300px; }
 
-.nav, .nav a{ color:#F0F0F0; width:100%; background-color:#909090; font-size:14px; padding-bottom:5px; padding-top:5px;  }
+.nav { padding-bottom:15px; padding-top:15px; padding-left:30px; }
+.nav, .nav a { color:#F0F0F0; width:100%; background-color:#64908A; font-size:14px; }
 .nav a { color:F0F0F0; text-decoration:none; }
 .nav li { display: inline; list-style-type: none; padding-right: 40px; }
+ul, li
+{
+padding:0px; margin 0px;
+}
 
-.content { padding:30px; height:100%; }
+.content { padding:30px; height:100%;  }
 .content a { color: #585858; text-decoration: underline; }
 .content a:hover { text-decoration: underline; }
 
-.footer { color:#606060; width:100%; background-color:#F0F0F0; height;40px; font-size:12px; padding-bottom:30px; padding-top:30px; bottom:0; float:left; }
+.footer { color:#111111; width:100%; background-color:#CC2A41; height;40px; font-size:12px; padding-bottom:30px; padding-top:30px; bottom:0; float:left; }
 
-.subheader input[type=text] { height:20px; font-size:20px; font-family:"Helvetica"; padding:5px; color:#505050; width:300px; }
-
-td, th { font-size:1em; border:1px solid #E8E8E8; padding:3px 7px 2px 7px; }
-th { font-size:1.1em; text-align:left; padding-top:5px; padding-bottom:4px; background-color:#800000  ; color:#ffffff; }
+td, th { font-size:1em; border:1px solid #E8E8E8; padding:3px 7px 2px 7px; max-width: 300px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+th { font-size:1.1em; text-align:left; padding-top:5px; padding-bottom:4px; background-color:#64908A; color:white; }
 td { color:#000000; background-color:#E8E8E8; }
 
 .login { color:white; margin-right:auto; margin-left:auto; margin-top: 50px; margin-bottom: 100px; width: 400px; text-align:center; }
@@ -47,3 +52,45 @@ td { color:#000000; background-color:#E8E8E8; }
 
 .error { padding: 5px; background-color: #FF6666; opacity: 0.75; }
 .success { padding: 5px; background-color: #70DB70; opacity: 0.75; }
+
+
+
+
+
+
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, caption, tbody, tfoot, thead,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+

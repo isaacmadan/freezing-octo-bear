@@ -61,7 +61,7 @@
 </div>
 
 <div class='content'>
-<div id="accordion">
+<div id="accordion-off">
 
 <h3>Admin News</h3>
 <div>
@@ -278,7 +278,7 @@ if(achievementsStrings.size() == 0)
 </div>
 
 <h3>Recent Friends' Activities</h3>
-<div>
+<div class='inner'>
 <%
 	HashSet<Integer> friendsIds = accountManager.getFriends(user.getId());
 	for(Integer friendId : friendsIds) {
