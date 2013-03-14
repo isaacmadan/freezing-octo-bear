@@ -276,7 +276,7 @@ public class QuizManager {
 						" VALUES(" + question_id + ",\"" + answer + "\")";
 				stmt.executeUpdate(addingToAnswersDB);
 			}
-		} catch(Exception e) { System.out.println(e); }
+		} catch(Exception e) { /*System.out.println(e);*/ }
 	}
 	
 	public ArrayList<Quiz> getQuizzesByUserId(int user_id) {
@@ -314,7 +314,7 @@ public class QuizManager {
 			}
 		}
 		catch(Exception e) {
-			System.out.println(e);
+			/*System.out.println(e);*/
 		} 
 		
 		return quizzes;
@@ -355,7 +355,7 @@ public ArrayList<Quiz> getRecentQuizzesByUserId(int user_id, int interval) {
 			}
 		}
 		catch(Exception e) {
-			System.out.println(e);
+			/*System.out.println(e);*/
 		} 
 		
 		return quizzes;

@@ -94,22 +94,22 @@ public class MakeQuizServlet extends HttpServlet {
 		if(questionResponseStatus == true) {
 			printOutQuestionResponse(Integer.parseInt(request.getParameter("question_response_num")), out);
 			maxScore += Integer.parseInt(request.getParameter("question_response_num"));
-			System.out.println(Integer.parseInt(request.getParameter("question_response_num")));
+			//System.out.println(Integer.parseInt(request.getParameter("question_response_num")));
 		}
 		if(fillInTheBlankStatus == true) {
 			printOutFillInTheBlank(Integer.parseInt(request.getParameter("fill_in_the_blank_num")), out);
 			maxScore += Integer.parseInt(request.getParameter("fill_in_the_blank_num"));
-			System.out.println(Integer.parseInt(request.getParameter("fill_in_the_blank_num")));
+			//System.out.println(Integer.parseInt(request.getParameter("fill_in_the_blank_num")));
 		}
 		if(multipleChoiceStatus == true) {
 			printOutMultipleChoice(Integer.parseInt(request.getParameter("multiple_choice_num")), out);
 			maxScore += Integer.parseInt(request.getParameter("multiple_choice_num"));
-			System.out.println(Integer.parseInt(request.getParameter("multiple_choice_num")));
+			//System.out.println(Integer.parseInt(request.getParameter("multiple_choice_num")));
 		}
 		if(pictureResponseStatus == true) {
 			printOutPictureResponse(Integer.parseInt(request.getParameter("picture_response_num")), out);
 			maxScore += Integer.parseInt(request.getParameter("picture_response_num"));
-			System.out.println(Integer.parseInt(request.getParameter("picture_response_num")));
+			//System.out.println(Integer.parseInt(request.getParameter("picture_response_num")));
 		}
 		
 		out.println("<input name=\"max_score\" type=\"hidden\" value=\"" + Integer.toString(maxScore) + "\">");

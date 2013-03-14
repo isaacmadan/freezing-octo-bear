@@ -38,7 +38,7 @@ public class Quiz {
 					ResultSet rss = null;
 					try{
 						rss = stmt2.executeQuery(getFromQRDB);
-					} catch(Exception e) { System.out.println(e); }
+					} catch(Exception e) { /*System.out.println(e);*/ }
 					Answer answer = new Answer();
 					Question question = null;
 					while(rss.next()) {

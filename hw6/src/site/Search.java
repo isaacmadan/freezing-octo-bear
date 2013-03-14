@@ -30,7 +30,7 @@ public class Search {
 				users.add(user);
 			}
 		}
-		catch(Exception e) { System.out.println(e); } 
+		catch(Exception e) { /*System.out.println(e); */} 
 		
 		return users;
 	}
@@ -58,7 +58,7 @@ public class Search {
 				quizzes.add(quiz);
 			}
 		}
-		catch(Exception e) { System.out.println(e); } 
+		catch(Exception e) { /*System.out.println(e);*/ } 
 		
 		return quizzes;
 	}

@@ -57,7 +57,7 @@ public class Inbox {
 				messages.add(message);
 			}
 		}
-		catch(Exception e) { System.out.println(e); }
+		catch(Exception e) { /*System.out.println(e);*/ }
 		
 		return messages;
 	}
@@ -88,7 +88,7 @@ public class Inbox {
 				messages.add(message);
 			}
 		}
-		catch(Exception e) { System.out.println(e); }
+		catch(Exception e) { /*System.out.println(e);*/ }
 		
 		return messages;
 	}
@@ -106,7 +106,7 @@ public class Inbox {
 			stmt.executeUpdate(query);
 			return true;
 		}
-		catch(Exception e) { System.out.println(e); } 
+		catch(Exception e) { /*System.out.println(e);*/ } 
 		
 		return false;
 	}
@@ -123,7 +123,7 @@ public class Inbox {
 			stmt.executeUpdate(query);
 			return true;
 		}
-		catch(Exception e) { System.out.println(e); }
+		catch(Exception e) { /*System.out.println(e);*/ }
 		
 		return false;
 	}
