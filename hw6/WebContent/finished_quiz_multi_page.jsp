@@ -83,11 +83,9 @@ for(int i = 0; i < questions.size(); i++){
 	answers.add(a);
 }
 ArrayList<Integer> randomIndex = (ArrayList<Integer>)session.getAttribute("randomIndex");
-//System.out.println("all input answer2: " + ans);
 
 if(!quiz.isImmediate_correction()) {
 for(int i = 0; i < questions.size(); i++) {
-	//System.out.println(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers());
 	questions.get(randomIndex.get(i));
 	System.out.println(ans.get(i));
 	if(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).contains(ans.get(i))) {

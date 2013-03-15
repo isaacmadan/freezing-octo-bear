@@ -100,7 +100,6 @@ if(request.getParameter("random") != null) {
 
 
 for(int i = 0; i < questions.size(); i++) {
-	//out.println(answers.get(i).getAnswers());
 	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i)))) {
 		score++;
 		out.println("Question " + (i + 1) + ": Correct!<br>");

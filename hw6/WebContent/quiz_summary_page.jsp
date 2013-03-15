@@ -360,6 +360,7 @@ private ArrayList<Integer> randomize() {
   			}
   			%>
 		</select>
+		<input type="hidden" name="quiz_id" value="<%=quiz.getQuiz_id()%>" />
 		<input type="submit" value="Challenge this friend" />
 	</form>
 

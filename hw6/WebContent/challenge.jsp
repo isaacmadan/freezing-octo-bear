@@ -92,6 +92,9 @@
 	out.println("Your challenge has been sent!");
 	
 %>
+
+<br /><br />
+<p><a href='quiz_summary_page.jsp?quiz_id=<%= request.getParameter("quiz_id") %>'>Back to quiz</a></p>
 </div>
 </div>
 
