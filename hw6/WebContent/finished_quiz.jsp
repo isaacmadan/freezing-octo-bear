@@ -68,12 +68,12 @@ ArrayList<Answer> answers;
 
 <div class='content-wrapper'>
 <div class='content'>
-<h2>
+<h1>
 Congrats, you have finished the quiz!
-</h2>
-<h3>
+</h1>
+<h2>
 Your results:
-</h3>
+</h2>
 <p>
 <%
 Quiz quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request.getParameter("quiz_id")));
@@ -101,24 +101,30 @@ if(request.getParameter("random") != null) {
 
 
 for(int i = 0; i < questions.size(); i++) {
+	String color = "section-white";
+	if(i % 2 == 0) color = "section";
 	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i)))) {
 		score++;
-		out.println("Question " + (i + 1) + ": Correct!<br>");
-		out.println("Acceptable Answers: <br>");
-		out.println("<ul>");
+		out.println("<div class='"+color+"'>");
+		out.println("<h3>Question " + (i + 1) + ": Correct!</h3><br>");
+		out.println("<h4>Acceptable Answers: </h4>");
+		out.println("<span>");
 		for(String str:answers.get(i).getAnswers()) {
-			out.println("<li>" + str + "</li>");
+			out.println("<p>" + str + "</p>");
 		}
-		out.println("</ul>");
+		out.println("</span>");
+		out.println("</div>");
 	}
 	else {
-		out.println("Question " + (i + 1) + ": Incorrect, Sorry!<br>");
-		out.println("Acceptable Answers: <br>");
-		out.println("<ul>");
+		out.println("<div class='"+color+"'>");
+		out.println("<h3>Question " + (i + 1) + ": Incorrect, sorry!</h3><br>");
+		out.println("<h4>Acceptable Answers: </h4>");
+		out.println("<span>");
 		for(String str:answers.get(i).getAnswers()) {
-			out.println("<li>" + str + "</li>");
+			out.println("<p>" + str + "</p>");
 		}
-		out.println("</ul>");
+		out.println("</span>");
+		out.println("</div>");
 	}
 }
 int maxScore = quiz.getMax_score();
@@ -133,8 +139,10 @@ String dur = String.format("%d min, %d sec",
 	);
 %>
 
-Duration: <%= dur %><br>
-Score: <%=score%>/<%=maxScore %>
+<div class='section'><br /><br />
+<h2>Duration: <%= dur %><br>
+Score: <%=score%>/<%=maxScore %></h2>
+</div>
 </p>
 <br>
 <br>
