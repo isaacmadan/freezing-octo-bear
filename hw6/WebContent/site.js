@@ -108,3 +108,11 @@ function showReview() {
 function showReport() {
 	$('#report').dialog("open");
 }
+
+function validateRadio(name) {
+	var $checkedElement = $('input[name='+name+']:checked');
+	if ($checkedElement.length == 0) {
+	   // no option was selected, return false or alert
+		alert("You must select an option.");
+	} 
+}

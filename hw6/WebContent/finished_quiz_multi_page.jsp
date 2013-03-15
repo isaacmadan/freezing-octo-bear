@@ -134,10 +134,6 @@ Score: <%=score%>/<%= maxScore %>
 <%
 int result_id = QuizResult.addResult(user.getId(), Integer.parseInt(request.getParameter("quiz_id")), 
 		score, maxScore, dur);
-for(int i = 0; i < questions.size(); i++) {
-	//System.out.println(ans);
-	AnswerLog.storeUserAnswer(quiz.getQuestions().get(randomIndex.get(i)).getQuestionId(), quiz.getQuiz_id(), result_id, ans.get(i));
-}
 
 
 %>
