@@ -69,6 +69,19 @@
 
 <div class='section-white no-border'>
 <h3><a name='top'>Menu</a></h3>
+<% 
+	new AdminControl();
+	if(AdminControl.isAdmin(user.getId())) {
+		out.println("<p><a href='#adminTools'>Admin tools</a></p>");
+	}
+%>	
+<p><a href='#adminNews'>Admin news</a></p>
+<% 
+	if(AdminControl.isAdmin(user.getId())) {
+		out.println("<p><a href='#quizzardStatistics'>Quizzard statistics</a></p>");
+		out.println("<p><a href='#reportedQuizzes'>Reported quizzes</a></p>");
+	}
+%>	
 <p><a href='#popularQuizzes'>Popular quizzes</a></p>
 <p><a href='#recentCreated'>Recently created quizzes</a></p>
 <p><a href='#recentTaken'>My recent quiz taking</a></p>
@@ -77,6 +90,42 @@
 <p><a href='#messages'>Messages</a></p>
 <p><a href='#recentFriends'>Recent friends' activities</a></p>
 </div>
+
+<!-- admin tools -->
+<% 
+	new CatTagManager();
+	String newCategory = request.getParameter("new_category");
+	if(newCategory != null) {
+		CatTagManager.createCategory(newCategory);
+	}
+	
+	String deleteCategory = request.getParameter("delete_category");
+	if(deleteCategory != null) {
+		CatTagManager.deleteCategory(deleteCategory);
+	}
+	
+	if(AdminControl.isAdmin(user.getId())) {
+		out.println("<div class='section-white'>");
+		out.println("<h3><a name='adminTools'>Admin Tools</a></h3>");
+		
+		out.println("<h4>Manage categories</h3>");
+		out.println("<form action='success.jsp' method='POST'>");
+		out.println("<div id='table'><div id='row'><div id='left'><input type='text' name='new_category' /></div>");
+		out.println("<div id='right'><input type='submit' value='Add' /></div></div>");
+		out.println("</form>");
+		
+		out.println("<form action='success.jsp' method='POST'>");
+		out.println("<div id='row'><div id='left'><select name='delete_category'>");
+		ArrayList<String> categories = CatTagManager.getCategories();
+		for(String category : categories) {
+			out.println("<option value='"+category+"'>"+category+"</option>");
+		}
+		out.println("</select></div>");
+		out.println("<div id='right'><input type='submit' value='Delete' /></div></div></div>");
+		out.println("</form>");
+		out.println("</div>");
+	}
+%>	
 
 <div class='section'>
 <h3><a name='adminNews'>Admin News</a></h3>
@@ -315,15 +364,23 @@ if(achievementsStrings.size() == 0)
 		out.println("<ul>");
 		ArrayList<Result> friendResults = QuizResult.getRecentUserPerformances(friend.getId(), 7); //7 days
 		out.println("<li>&#8226; Took ");
-		for(int i = 0; i < friendResults.size(); i++) {
+		int limit = 10;
+		boolean anyLeft = false;
+		if(friendResults.size() < limit) limit = friendResults.size();
+		if(friendResults.size() > 10) anyLeft = true;
+		for(int i = 0; i < limit; i++) {
 			Result result = friendResults.get(i);
 			Quiz quiz = manager.getQuizByQuizId(result.quizId);
 			String titleString = String.valueOf(result.quizId);
 			if(quiz != null) {
 				titleString = quiz.getTitle();
 			}
-			if(i == friendResults.size()-1)
-				out.println("<a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"+titleString+"</a>");
+			if(i == limit-1) {
+				if(anyLeft)
+					out.println("<a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"+titleString+"</a> and more");
+				else
+					out.println("<a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"+titleString+"</a>");
+			}
 			else
 				out.println("<a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"+titleString+"</a>"+", ");
 		}
@@ -333,10 +390,18 @@ if(achievementsStrings.size() == 0)
 		out.println("<br />");
 		ArrayList<Quiz> friendQuizzes = manager.getRecentQuizzesByUserId(friend.getId(), 7); //7 days	
 		out.println("</li><li>&#8226; Created ");
-		for(int i = 0; i < friendQuizzes.size(); i++) {
+		limit = 10;
+		anyLeft = false;
+		if(friendQuizzes.size() < limit) limit = friendQuizzes.size();
+		if(friendQuizzes.size() > 10) anyLeft = true;
+		for(int i = 0; i < limit; i++) {
 			Quiz quiz = friendQuizzes.get(i);
-			if(i == friendQuizzes.size()-1)
-				out.println("<a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a>");
+			if(i == limit-1) {
+				if(anyLeft)
+					out.println("<a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a> and more");
+				else
+					out.println("<a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a>");
+			}
 			else
 				out.println("<a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a>"+", ");
 		}

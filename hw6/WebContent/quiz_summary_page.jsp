@@ -195,25 +195,27 @@
 	%>
 
 	<br />
-	<div>
-		<h3>
+		<!-- challenger -->
 		<%
 			if(request.getParameter("challenger_id") != null) {
 				challenger = manager.getAccountById(request.getParameter("challenger_id"));
-			}
-			String challengerBestScore = "";
-			if(request.getParameter("challenger_best_score") != null) {
-				challengerBestScore = request.getParameter("challenger_best_score");
-			}
-			if(challenger != null) {
-				String bestScoreString = "Their best score is " + challengerBestScore + ".";
-				if(challengerBestScore.equals("-1"))
-					bestScoreString = "They haven't taken this quiz yet.";
-				out.println(challenger.getUsername()+" has challenged you! " + bestScoreString);
+				out.println("<div class='success'>");
+				out.println("<h3>");
+				
+				String challengerBestScore = "";
+				if(request.getParameter("challenger_best_score") != null) {
+					challengerBestScore = request.getParameter("challenger_best_score");
+				}
+				if(challenger != null) {
+					String bestScoreString = "Their best score is " + challengerBestScore + ".";
+					if(challengerBestScore.equals("-1"))
+						bestScoreString = "They haven't taken this quiz yet.";
+					out.println(challenger.getUsername()+" has challenged you! " + bestScoreString);
+				}
+				out.println("</h3>");
+				out.println("</div>");
 			}
 		%>
-		</h3>
-	</div>
 
 	<div class='col-1-4'>
 	<div class='pad-left-small'>
@@ -429,7 +431,11 @@ private ArrayList<Integer> randomize() {
 	
 	<p class='h3'>Average Rating:
 	<%
-		out.println(ReviewManager.getAverageRating(ReviewManager.getReviews(quiz.getQuiz_id())));
+		double averageRating = ReviewManager.getAverageRating(ReviewManager.getReviews(quiz.getQuiz_id()));
+		if(Double.isNaN(averageRating)) 
+			out.println("No ratings");
+		else
+			out.println(averageRating);
 	%></p>
 	</div>
 	</div>

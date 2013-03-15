@@ -139,7 +139,7 @@
 <h2>History</h2>
 <div class='pad-right'>
 <div id='table'>
-<div id='row' class='th'><div id='left'>Date</div><div id='right'>Quiz name</div><div id='right'>Score</div><div id='right'>Duration</div></div>
+<div id='row-td'><div id='left'>Date</div><div id='right'>Quiz name</div><div id='right'>Score</div><div id='right'>Duration</div></div>
 <%
 	QuizManager quizManager = new QuizManager();	
 

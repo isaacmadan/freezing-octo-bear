@@ -88,7 +88,7 @@
 	}
 
 %>
-
+<br />
 <a href="index.jsp">Back home</a>
 </div><!-- end content -->
 </div>
