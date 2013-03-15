@@ -28,7 +28,7 @@ public class AccountManagerTest {
 		manager.addFriend(7, 1);
 		manager.addFriend(9, 1);
 		
-		System.out.println(manager.getFriends(1));
+		//System.out.println(manager.getFriends(1));
 	}
 
 }
