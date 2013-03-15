@@ -532,8 +532,9 @@ private ArrayList<Integer> randomize() {
 					+ (df2.format(numStats.get(QuizResult.NUM_TIMES))));
 			out.println("</div></div><div id='row'><div id='left'>Average percent correct:</div><div id='right'>"
 					+ df.format(numStats.get(QuizResult.AVG_PERCENT)));
+			long millis = Math.round(numStats.get(QuizResult.AVG_TIME));
 			out.println("</div></div><div id='row'><div id='left'>Average time taken:</div><div id='right'>"
-					+ df2.format((numStats.get(QuizResult.AVG_TIME))));
+					+ Result.durationString(millis));
 			out.println("</div></div><div id='row'><div id='left'>Number of plays since yesterday:</div><div id='right'>"
 					+ df2.format((numStats.get(QuizResult.NUM_DAY_PLAYS))));
 

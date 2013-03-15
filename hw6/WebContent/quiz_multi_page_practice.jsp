@@ -124,26 +124,26 @@
 			
 			
 			if(type == 1) {
-				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((QuestionResponseQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
+				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((QuestionResponseQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br><br />");
 				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i)) + "\">");
 				out.println("<br /><br />");
 			}
 			else if(type == 2) {
 				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((FillInTheBlankQuestion)questions.get(randomIndex.get(i))).getFrontString() + 
-						"______" + ((FillInTheBlankQuestion)questions.get(randomIndex.get(i))).getBackString() + "</br>");
+						"______" + ((FillInTheBlankQuestion)questions.get(randomIndex.get(i))).getBackString() + "</br><br />");
 				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i)) + "\">");
 				out.println("<br /><br />");
 			}
 			else if(type == 3) {
-				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
+				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br><br />");
 				for(int j = 0; j < ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().size(); j++)
 					out.println("<input type = \"radio\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i))
 					+ "\" value = \"" + ((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "\">" +
 							((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "<br /><br />");
 			}
 			else {
-				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
-				out.println("<img src = \"" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getFileName() + "\" width = 200px ></br>");
+				out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br><br />");
+				out.println("<img src = \"" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getFileName() + "\" width = 200px ></br><br />");
 				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i)) + "\">");
 				out.println("<br /><br />");
 			}	
