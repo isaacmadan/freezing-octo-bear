@@ -17,7 +17,6 @@ public class Answer {
 	}
 	
 	public Answer(String strToSplit, String symbol) {
-		System.out.println(strToSplit);
 		String[] result = strToSplit.split(symbol);
 		answers = new HashSet<String>();
 		for(int i = 0; i < result.length; i++) {
@@ -30,7 +29,6 @@ public class Answer {
 	}
 	
 	public boolean contains(String response) {
-		System.out.println(answers);
 		if(answers.contains(response)) return true;
 		return false;
 	}
