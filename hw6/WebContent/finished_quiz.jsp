@@ -37,32 +37,36 @@ ArrayList<Answer> answers;
 </head>
 <body>
 
-<div class="header"><div class="pad"><a href='index.jsp'>Quizzard</a></div></div>
+<div class='header-wrapper'>
+<div class="header"><a href='index.jsp'>QUIZZARD</a>
 
-<div class="nav">
-	<div id="links">
-	<ul>
-		<li><a href = "make_quiz.jsp">Make a Quiz</a></li>
+	<ul class='menu'>
+		<li><a href = "make_quiz.jsp">Make a quiz</a></li>
 		<li><% out.println("<a href='profile.jsp?id="+user.getId()+"'>My public profile</a>"); %></li>
 		<li><% out.println("<a href='inbox.jsp'>My inbox</a>"); %></li>
 		<li><% out.println("<a href='history.jsp'>My performance history</a>"); %></li>
 		<li><a href="logout.jsp">Logout</a></li>
 	</ul>
-	</div>
+	
+</div>
 </div>
 
+<div class='subheader-wrapper'>
 <div class='subheader'>
-<div class="pad">
-<%= user.getUsername() %>
+
+<div id='subheader-username'><%= user.getUsername() %></div>
+
 <div id='search'>
 	<form action="search.jsp" method="GET">
 		<input type="text" name="query" />
 		<input type="submit" value="Search" />
 	</form>
 </div>
+
 </div>
 </div>
 
+<div class='content-wrapper'>
 <div class='content'>
 <p>
 Congrats, you have finished the quiz!
@@ -144,6 +148,8 @@ int result_id = QuizResult.addResult(user.getId(), Integer.parseInt(request.getP
 
 %>
 </div><!-- end content -->
+</div>
+
 </body>
 <%! 
 private void randomize(int seed) {
