@@ -138,8 +138,8 @@
 <div class="col-3-5">
 <h2>History</h2>
 <div class='pad-right'>
-<table>
-<tr><th>Date</th><th>Quiz name</th><th>Score</th><th>Duration</th></tr>
+<div id='table'>
+<div id='row' class='th'><div id='left'>Date</div><div id='right'>Quiz name</div><div id='right'>Score</div><div id='right'>Duration</div></div>
 <%
 	QuizManager quizManager = new QuizManager();	
 
@@ -150,16 +150,16 @@
 		if(quiz != null) {
 			titleString = quiz.getTitle();
 		}
-		out.println("<tr><td>"+result.dateString()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"
-					+titleString+"</a></td><td>"+result.pointsScored+"/"+result.maxPossiblePoints+"</td><td>"
-					+result.durationString()+"</td></tr>");
+		out.println("<div id='row'><div id='left'>"+result.dateString()+"</div><div id='right'><a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"
+					+titleString+"</a></div><div id='right'>"+result.pointsScored+"/"+result.maxPossiblePoints+"</div><div id='right'>"
+					+result.durationString()+"</div></div>");
 		
 	}
 	if(results.size() == 0) {
 		out.println("No quiz results");
 	}
 %>
-</table>
+</div>
 </div>
 </div>
 
