@@ -1,6 +1,8 @@
 package site;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 
 /**Result encapsulates all the fields relevant to a single quiz result. All fields
@@ -54,8 +56,12 @@ public class Result extends Object{
 
 	/**Returns a formatted date string from a Result*/
 	public String dateString(){
-		return  java.text.DateFormat.getDateTimeInstance().format(
-				this.timeStamp);
+		  
+		 DateFormat formatter = new SimpleDateFormat ("MMM DD H");
+		 return formatter.format(this.timeStamp);
+		    
+//		return  java.text.DateFormat.getDateTimeInstance().format(
+//				this.timeStamp);
 	}
 	
 	public String durationString(){
