@@ -92,10 +92,16 @@
 				score++;
 				out.println("Question " + (randomIndex.get(i - 1) + 1) + ": Correct!<br>");
 				out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br><br>");
+				ArrayList<String> ans = (ArrayList<String>)session.getAttribute("listOfAnswers");
+				ans.add(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))));
 			}
 			else {
 				out.println("Question " + (randomIndex.get(i - 1) + 1) + ": Incorrect, Sorry!<br>");
 				out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br><br>");
+				if(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null) {
+					ArrayList<String> ans = (ArrayList<String>)session.getAttribute("listOfAnswers");
+					ans.add(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))));
+				}
 			}
 			out.println("<input type = \"hidden\" name =\"score\" value = \"" + Integer.toString(score) +"\" >");
 		}
@@ -121,7 +127,8 @@
 						((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "<br /><br />");
 		}
 		else {
-			out.println("<h3>Question " + Integer.toString(i+1) + ": </h3><img src = \"" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getFileName() + "\" width = 200px></br>");
+			out.println("<h3>Question " + Integer.toString(i+1) + ": </h3>" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
+			out.println("<img src = \"" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getFileName() + "\" width = 200px ></br>");
 			out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i)) + "\">");
 			out.println("<br /><br />");
 		}	
@@ -130,8 +137,9 @@
 			out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(i + 1) + "\" />");
 		}
 		if(i > 0 && request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null) {
-			System.out.println("randomIndex is: " + Integer.toString(randomIndex.get(i) - 1));
+			//System.out.println("randomIndex is: " + Integer.toString(randomIndex.get(i - 1)));
 			ArrayList<String> ans = (ArrayList<String>)session.getAttribute("listOfAnswers");
+			//System.out.println("last input answer is: " + request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))));
 			ans.add(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))));
 			session.setAttribute("listOfAnswers", ans);
 		}
@@ -150,7 +158,10 @@
 			score++;
 		}
 		ArrayList<String> ans = (ArrayList<String>)session.getAttribute("listOfAnswers");
-		ans.add(request.getParameter("answer_" + Integer.toString(randomIndex.get(questions.size() - 1))));
+		if(request.getParameter("answer_" + Integer.toString(randomIndex.get(questions.size() - 1))) != null)
+			ans.add(request.getParameter("answer_" + Integer.toString(randomIndex.get(questions.size() - 1))));
+		//System.out.println("last input answer is: " + request.getParameter("answer_" + Integer.toString(randomIndex.get(questions.size() - 1))));
+		//System.out.println("all input answer: " + ans);
 		session.setAttribute("listOfAnswers", ans);
 	}
 	%>

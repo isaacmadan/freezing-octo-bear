@@ -84,22 +84,17 @@
 	if(!isComplete(indices)) {
 
 		int i = Integer.parseInt(request.getParameter("question_num"));
+		
+		
 		if(request.getParameter("immediate") != null) {
-			// output result for this question
-			
-			//out.println(indices + "<br>");
-					
 			if(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null && 
 					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + randomIndex.get(i - 1)))) {
 				out.println("Question " + (randomIndex.get(i - 1) + 1) + ": Correct!<br>");
 				out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br><br>");
 				indices.set(i - 1, indices.get(i - 1) + 1);
 				if(indices.get(i - 1) == 3) {
-					//out.println("hit");
-					//out.println(randomIndex + "<br>");
 					randomIndex.remove(i - 1);
 					indices.remove(i - 1);
-					//out.println(randomIndex + "<br>");
 					i--;
 				}
 			}
@@ -107,8 +102,6 @@
 				out.println("Question " + (randomIndex.get(i - 1) + 1) + ": Incorrect, Sorry!<br>");
 				out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br><br>");
 			}
-		
-			//out.println(indices + "<br>");
 			
 			if(i != randomIndex.size())
 				out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + i + "\" />");
@@ -144,10 +137,15 @@
 							((MultipleChoiceQuestion)questions.get(randomIndex.get(i))).getChoices().get(j).getChoiceString() + "<br /><br />");
 			}
 			else {
-				out.println("<h3>Question " + Integer.toString(randomIndex.get(i)+1) + ": </h3><img src = \"" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getFileName() + "\" width = 200px \"></br>");
+				out.println("<h3>Question " + Integer.toString(randomIndex.get(i)+1) + ": </h3>" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getQuestionString() + "</br>");
+				out.println("<img src = \"" + ((PictureResponseQuestion)questions.get(randomIndex.get(i))).getFileName() + "\" width = 200px ></br>");
 				out.println("Answer: <input type = \"text\" name = \"answer_" + Integer.toString(randomIndex.get(i)) + "\" id = \"answer_" + Integer.toString(randomIndex.get(i)) + "\">");
 				out.println("<br /><br />");
 			}	
+			
+			
+			
+			
 			out.println("<input type = \"hidden\" name =\"immediate\" value = \"ON\" >");
 			out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(i + 1) + "\" />");
 		}

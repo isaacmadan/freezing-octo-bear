@@ -79,11 +79,12 @@ for(int i = 0; i < questions.size(); i++){
 	answers.add(a);
 }
 ArrayList<Integer> randomIndex = (ArrayList<Integer>)session.getAttribute("randomIndex");
+//System.out.println("all input answer2: " + ans);
 
+if(!quiz.isImmediate_correction()) {
 for(int i = 0; i < questions.size(); i++) {
-	System.out.println(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers());
-	if(request.getParameter("answer_" + Integer.toString(randomIndex.get(i))) != null && 
-					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).contains(ans.get(i))) {
+	//System.out.println(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers());
+	if(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).contains(ans.get(i))) {
 		out.println("Question " + (i + 1) + ": Correct!<br>");
 		out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers() + "<br><br>");
 	}
@@ -92,7 +93,7 @@ for(int i = 0; i < questions.size(); i++) {
 		out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers() + "<br><br>");
 	}
 }
-
+}
 
 
 %>
@@ -132,13 +133,8 @@ Score: <%=score%>/<%= maxScore %>
 int result_id = QuizResult.addResult(user.getId(), Integer.parseInt(request.getParameter("quiz_id")), 
 		score, maxScore, dur);
 for(int i = 0; i < questions.size(); i++) {
-	//System.out.println("question id is: " + quiz.getQuestions().get(randomIndex.get(i)).getQuestionId());
-	//System.out.println("quiz id is: " + quiz.getQuiz_id());
-	//System.out.println("result id is: " + result_id);
-	//System.out.println("answer is: " + ans.get(i));
 	//System.out.println(ans);
-	//new AnswerLog();
-	//AnswerLog.storeUserAnswer(quiz.getQuestions().get(randomIndex.get(i)).getQuestionId(), quiz.getQuiz_id(), result_id, ans.get(i));
+	AnswerLog.storeUserAnswer(quiz.getQuestions().get(randomIndex.get(i)).getQuestionId(), quiz.getQuiz_id(), result_id, ans.get(i));
 }
 
 

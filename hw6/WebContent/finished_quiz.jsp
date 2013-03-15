@@ -142,6 +142,7 @@ Score: <%=score%>/<%=maxScore %>
 int result_id = QuizResult.addResult(user.getId(), Integer.parseInt(request.getParameter("quiz_id")), 
 		score, maxScore, millis);
 for(int i = 0; i < questions.size(); i++) {
+		new AnswerLog();
 		AnswerLog.storeUserAnswer(questions.get(i).getQuestionId(), quiz.getQuiz_id(), result_id, request.getParameter("answer_" + Integer.toString(i)));
 }
 
