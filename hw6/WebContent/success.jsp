@@ -68,16 +68,20 @@
 <div class='content'>
 <div id="accordion-off">
 
-Popular quizzes
-Recently created quizzes
-My recent quiz taking
-My recent quiz creation
-Achievements
-Messages
-Recent friends' activities
+<div class='section-white no-border'>
+<h3><a name='top'>Menu</a></h3>
+<p><a href='#popularQuizzes'>Popular quizzes</a></p>
+<p><a href='#recentCreated'>Recently created quizzes</a></p>
+<p><a href='#recentTaken'>My recent quiz taking</a></p>
+<p><a href='#myRecentCreated'>My recent quiz creation</a></p>
+<p><a href='#achievements'>Achievements</a></p>
+<p><a href='#messages'>Messages</a></p>
+<p><a href='#recentFriends'>Recent friends' activities</a></p>
+</div>
 
-<h3>Admin News</h3>
-<div>
+<div class='section'>
+<h3><a name='adminNews'>Admin News</a></h3>
+
 <table border='1'>
 <tr><th>Date</th><th>Posted By</th><th>Announcement</th></tr>
 <%
@@ -97,7 +101,6 @@ Recent friends' activities
 	catch(Exception e) { System.out.println(e); }
 %>
 </table>
-
 <br />
 <%
 	if(AdminControl.isAdmin(user.getId())) {
@@ -106,13 +109,16 @@ Recent friends' activities
 		out.println("<div id='announcer'>Announcement:<br /><form action='admin.jsp' method='POST'><textarea rows='10' cols='10' name='text'></textarea><input type='hidden' name='user_id' value='"+user.getId()+"' /><input type='submit' /></form></div>");
 	}
 %>
+
+<br /><br />
+<p><a href='#top'>Back to top</a></p>
 </div>
 
 <!-- quizzard statistics - admin only -->
 <%
 	if(AdminControl.isAdmin(user.getId())) {
-		out.println("<h3>Quizzard Statistics</h3>");
-		out.println("<div>");
+		out.println("<div class='section-white'>");
+		out.println("<h3><a name='quizzardStatistics'>Quizzard Statistics</a></h3>");
 		out.println("<table border='1'>");
 		out.println("<tr><th>Statistic</th><th>Value</th></tr>");
 	
@@ -123,7 +129,8 @@ Recent friends' activities
 		}
 		} catch(Exception e) {}
 		
-		out.println("</table>");
+		out.println("</table><br />");
+		out.println("<p><a href='#top'>Back to top</a></p>");
 		out.println("</div>");
 	}
 %>
@@ -131,8 +138,8 @@ Recent friends' activities
 <!-- reporting - admin only -->
 <%
 	if(AdminControl.isAdmin(user.getId())) {
-		out.println("<h3>Reported Quizzes</h3>");
-		out.println("<div>");
+		out.println("<div class='section reported'>");
+		out.println("<h3><a name='reportedQuizzes'>Reported Quizzes</a></h3>");
 		out.println("<table border='1'>");
 		out.println("<tr><th>Reported on</th><th>Reported by</th><th>Report text</th><th>Quiz name</th><th>Quiz description</th><th>Quiz creator</th><th>Delete report</th></tr>");
 		new ReportManager();
@@ -148,10 +155,11 @@ Recent friends' activities
 						"<td><a href='quiz_summary_page.jsp?quiz_id="+offendingQuiz.getQuiz_id()+"'>"+offendingQuiz.getTitle()+"</a></td>"+
 						"<td>"+offendingQuiz.getDescription()+"</td>"+
 						"<td><a href='profile.jsp?id="+offendingUser.getId()+"'>"+offendingUser.getUsername()+"</a></td>"+
-						"<td>"+"<form method='POST'><input type='hidden' name='delete_report' value='"+report.reportId+"' /><input type='submit' value='Delete report' /></form>"+"</td>"+
+						"<td>"+"<form action='success.jsp' method='POST'><input type='hidden' name='delete_report' value='"+report.reportId+"' /><input type='submit' value='Delete report' /></form>"+"</td>"+
 						"</tr>");
 		}
-		out.println("</table>");
+		out.println("</table><br />");
+		out.println("<p><a href='#top'>Back to top</a></p>");
 		out.println("</div>");
 	}
 %>
@@ -164,8 +172,8 @@ Recent friends' activities
 	}
 %>
 
-<h3>Popular Quizzes</h3>
-<div>
+<div class='section-white'>
+<h3><a name='popularQuizzes'>Popular Quizzes</a></h3>
 <table border="1">
 <tr><th>Date</th><th>Quiz name</th><th>Description</th><th>Created by</th></tr>
 <%
@@ -182,11 +190,12 @@ Recent friends' activities
 			out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td><td><a href='profile.jsp?id="+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getId()+"'>"+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+"</a></td></tr>");
 	}
 %>
-</table>
+</table><br />
+<p><a href='#top'>Back to top</a></p>
 </div>
 
-<h3>Recently Created Quizzes</h3>
-<div>
+<div class='section'>
+<h3><a name='recentCreated'>Recently Created Quizzes</a></h3>
 <table border="1">
 <tr><th>Date</th><th>Quiz name</th><th>Description</th><th>Created by</th></tr>
 <%
@@ -213,11 +222,12 @@ Recent friends' activities
 		}
 	}
 %>
-</table>
+</table><br />
+<p><a href='#top'>Back to top</a></p>
 </div>
 
-<h3>My Recent Quiz Taking Activities</h3>
-<div>
+<div class='section-white'>
+<h3><a name='recentTaken'>My Recent Quiz Taking Activities</a></h3>
 <table border="1">
 <tr><th>Date</th><th>Quiz name</th><th>Score</th><th>Duration</th></tr>
 <%
@@ -236,11 +246,12 @@ Recent friends' activities
 		out.println("No quiz results");
 	}
 %>
-</table>
+</table><br />
+<p><a href='#top'>Back to top</a></p>
 </div>
 
-<h3>My Recent Quiz Creating Activities</h3>
-<div>
+<div class='section'>
+<h3><a name='myRecentCreated'>My Recent Quiz Creating Activities</a></h3>
 <table border="1">
 <tr><th>Date</th><th>Quiz name</th><th>Quiz Description</th></tr>
 <%
@@ -253,11 +264,12 @@ Recent friends' activities
 		out.println("No quiz results");
 	}
 %>
-</table>
+</table><br />
+<p><a href='#top'>Back to top</a></p>
 </div>
 
-<h3>Achievements</h3>
-<div>
+<div class='section-white'>
+<h3><a name='achievements'>Achievements</a></h3>
 <%
 accountManager.updateAchievements(user.getId());
 Achievements achievements = accountManager.getAchievements(user.getId());
@@ -268,10 +280,12 @@ for(String achievement : achievementsStrings) {
 if(achievementsStrings.size() == 0)
 	out.println("No achievements");
 %>
+<br />
+<p><a href='#top'>Back to top</a></p>
 </div>
 
-<h3>Messages</h3>
-<div>
+<div class='section'>
+<h3><a name='messages'>Messages</a></h3>
 	<%
 		//AccountManager manager = new AccountManager();
 		ArrayList<TextMessage> messages = Inbox.getRecentMessagesById(user.getId(), 7);
@@ -288,10 +302,12 @@ if(achievementsStrings.size() == 0)
 			out.println("("+numFriendRequests+" Friend Requests, "+numChallenges+" Challenges, and "+numNotes+" Notes)");
 		}
 	%>
+	<br /><br />
+	<p><a href='#top'>Back to top</a></p>
 </div>
 
-<h3>Recent Friends' Activities</h3>
-<div class='inner'>
+<div class='inner section-white'>
+<h3><a name='recentFriends'>Recent Friends' Activities</a></h3>
 <%
 	HashSet<Integer> friendsIds = accountManager.getFriends(user.getId());
 	for(Integer friendId : friendsIds) {
@@ -344,6 +360,8 @@ if(achievementsStrings.size() == 0)
 		out.println("</li></ul>");
 	}
 %>
+<br />
+<p><a href='#top'>Back to top</a></p>
 </div>
 
 </div><!-- end of accordion div -->

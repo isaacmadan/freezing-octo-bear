@@ -37,6 +37,7 @@ padding:0px; margin 0px;
 td, th { font-size:1em; border:1px solid #E8E8E8; padding:3px 7px 2px 7px; max-width: 300px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 th { font-size:1.1em; text-align:left; padding-top:5px; padding-bottom:4px; background-color:#64908A; color:white; }
 td { color:#000000; background-color:#E8E8E8; }
+.reported td, .reported th { max-width: 125px; }
 
 .login { color:white; margin-right:auto; margin-left:auto; margin-top: 50px; margin-bottom: 100px; width: 400px; text-align:center; }
 .login h1 { font-size:48px; }
@@ -66,7 +67,9 @@ td { color:#000000; background-color:#E8E8E8; }
 #left, #right, #middle { display: table-cell; }
 #left { padding-right: 10px; font-weight:bold; }
 
-
+.section { background: #f4f4f4; border-top: 1px solid #ddd; padding-bottom:30px; padding-left:10px; }
+.section-white { background: #ffffff; border-top: 1px solid #ddd; padding-bottom:30px; padding-left:10px; padding-right:10px; }
+.no-border { border-top: 0px; }
 
 
 
