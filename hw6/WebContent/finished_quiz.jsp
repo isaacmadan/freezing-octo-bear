@@ -104,11 +104,21 @@ for(int i = 0; i < questions.size(); i++) {
 	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i)))) {
 		score++;
 		out.println("Question " + (i + 1) + ": Correct!<br>");
-		out.println("Acceptable Answers: " + answers.get(i).getAnswers() + "<br><br>");
+		out.println("Acceptable Answers: <br>");
+		out.println("<ul>");
+		for(String str:answers.get(i).getAnswers()) {
+			out.println("<li>" + str + "</li>");
+		}
+		out.println("</ul>");
 	}
 	else {
 		out.println("Question " + (i + 1) + ": Incorrect, Sorry!<br>");
-		out.println("Acceptable Answers: " + answers.get(i).getAnswers() + "<br><br>");
+		out.println("Acceptable Answers: <br>");
+		out.println("<ul>");
+		for(String str:answers.get(i).getAnswers()) {
+			out.println("<li>" + str + "</li>");
+		}
+		out.println("</ul>");
 	}
 }
 int maxScore = quiz.getMax_score();

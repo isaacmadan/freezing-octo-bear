@@ -94,7 +94,12 @@
 			if((request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null && 
 					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + randomIndex.get(i - 1))))) {
 				out.println("Question " + (i) + ": Correct!<br>");
-				out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br><br>");
+				out.println("Acceptable Answers: <br>");
+				out.println("<ul>");
+				for(String str:Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers()) {
+					out.println("<li>" + str + "</li>");
+				}
+				out.println("</ul>");
 				indices.set(i - 1, indices.get(i - 1) + 1);
 				if(indices.get(i - 1) == 3) {
 					randomIndex.remove(i - 1);
@@ -105,7 +110,12 @@
 			}
 			else {
 				out.println("Question " + (i) + ": Incorrect, Sorry!<br>");
-				out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br><br>");
+				out.println("Acceptable Answers: <br>");
+				out.println("<ul>");
+				for(String str:Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers()) {
+					out.println("<li>" + str + "</li>");
+				}
+				out.println("</ul>");
 			}
 			
 			if(i != randomIndex.size())

@@ -88,11 +88,21 @@ if(!quiz.isImmediate_correction()) {
 for(int i = 0; i < questions.size(); i++) {
 	if(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).contains(ans.get(i))) {
 		out.println("Question " + (i + 1) + ": Correct!<br>");
-		out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers() + "<br><br>");
+		out.println("Acceptable Answers: <br>");
+		out.println("<ul>");
+		for(String str:Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers()) {
+			out.println("<li>" + str + "</li>");
+		}
+		out.println("</ul>");
 	}
 	else {
 		out.println("Question " + (i + 1) + ": Incorrect, Sorry!<br>");
-		out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers() + "<br><br>");
+		out.println("Acceptable Answers: <br>");
+		out.println("<ul>");
+		for(String str:Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers()) {
+			out.println("<li>" + str + "</li>");
+		}
+		out.println("</ul>");
 	}
 }
 }
