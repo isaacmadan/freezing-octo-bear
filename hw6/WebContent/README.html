@@ -37,10 +37,12 @@
 	<h3>Questions</h3>
 		<p>Question Response</p>
 		<p>Fill in the Blank</p>
-		<p>Multiple Choice</p>
+		<p>Multiple Choice with radio buttons</p>
 		<p>Picture Response with Question</p>
-		<p><b>Note: </b>All questions can have multiple acceptable answers</p>
-	
+		<br />
+		<p><b>Note: </b>All questions can have multiple acceptable answers through Javascript</p>
+		<p>You cannot make a quiz with no questions</p>
+		
 	<h3>Options</h3>
 	<p>Random Question Order</p>
 	<p>One Page vs multiple Pages</p>
@@ -88,25 +90,25 @@
 		<p>Admins can create announcements</p>
 		<p>Accouncements appear on homepage</p>
 		<p>Admins can remove user accounts - popup box asks for verification</p>
-			<p>Removes all quizzes, quiz results, friends and reviews related to this user</p>
+			<p>	&nbsp;&nbsp;&nbsp;&nbsp; Removes all quizzes, quiz results, friends and reviews related to this user</p>
 		<p>Admins can remove quizzes - popup box asks for verification</p>
-			<p>Removes all quiz results </p>
+			<p>		&nbsp;&nbsp;&nbsp;&nbsp;Removes all quiz results as well </p>
 		<p>Admins can clear all the history for a quiz from the quiz homepage</p>
 		<p>Admins can promote other users to admin status</p>
-			<p>Notifies user with notes that they have been promoted and who promoted them</p>
+			<p>		&nbsp;&nbsp;&nbsp;&nbsp;Notifies user with notes that they have been promoted and who promoted them</p>
 		<p>Admins can also demote other users</p>
-			<p>Notifies user with notes that they have been demoted and who demoted them</p>
+			<p>		&nbsp;&nbsp;&nbsp;&nbsp;Notifies user with notes that they have been demoted and who demoted them</p>
 		<p>Admins can see site statistics</p>
-			<p>Number of users</p>
-			<p>Number of quizzes taken</p>
-			<p>Number of times a quiz has been taken</p>
+			<p>	&nbsp;&nbsp;&nbsp;&nbsp;Number of users</p>
+			<p>	&nbsp;&nbsp;&nbsp;&nbsp;Number of quizzes taken</p>
+			<p>	&nbsp;&nbsp;&nbsp;&nbsp;Number of times a quiz has been taken</p>
 		
 <h2>Landing page</h2>
 	<p>User can log in with a username</p>
-		<p>If username or password is invalid, user is notified</p>
+		<p>	&nbsp;&nbsp;&nbsp;&nbsp;If username or password is invalid, user is notified</p>
 	<p>Users can create new accounts</p>
-		<p>If username is already in use, user is notified</p>
-		<p>If a field is blank, the user is notified</p>
+		<p>	&nbsp;&nbsp;&nbsp;&nbsp;If username is already in use, user is notified</p>
+		<p>	&nbsp;&nbsp;&nbsp;&nbsp;If a field is blank, the user is notified</p>
 		
 <h2>Homepage - on logging in</h2>
 
@@ -116,15 +118,15 @@
 	<p>List of own recent quiz creating activity</p>
 	<p>List of achievements earned</p>
 	<p>Indicator for messages, friend requests, and challenges</p>
-		<p>Counts instances of each type of message</p>
-		<p>Shows how many have been received in the last week</p>
+		<p>	&nbsp;&nbsp;&nbsp;&nbsp;Counts instances of each type of message</p>
+		<p>	&nbsp;&nbsp;&nbsp;&nbsp;Shows how many have been received in the last week</p>
 	<p>Recent friend activities - links to friends profile</p>
-		<p>quizzes taken by friends</p>
-		<p>achievements earned by friends</p>
+		<p>	&nbsp;&nbsp;&nbsp;&nbsp;quizzes taken by friends</p>
+		<p>	&nbsp;&nbsp;&nbsp;&nbsp;achievements earned by friends</p>
 	
 	<h4>Extensions:</h4>
-		<p>Administrator announcements</p>
-		<p>Administrator can add announcements</p>
+		<p>	&nbsp;&nbsp;&nbsp;&nbsp;Administrator announcements</p>
+		<p>	&nbsp;&nbsp;&nbsp;&nbsp;Administrator can add announcements</p>
 		
 	
 <h2>Quiz Summary Page</h2>
@@ -164,16 +166,22 @@
 	<h3>Ratings and Reviews</h3>
 		<p>Users can review quizzes they have already taken</p>
 		<p>Users can only review a quiz once</p>
+		<p>Reports are written through JQuery dialog boxes</p>
 		<p>Each review is composed of a written review and score</p>
 		<p>Quizzes display their average rating</p>
 		
 
 	<h3>Reporting Users</h3>
 		<p>Users can report quizzes on a quiz summary page</p>
+		<p>Reports are written through JQuery dialog boxes</p>
 		<p>Admins can review all reported quizzes and delete those quizzes</p>
+		<p>Admins can delete reports</p>
 		
-	<h3>Error Handling</h3>
+	<h3>Error Handling and Form Validation</h3>
 		<p>User is prompted to enter data in to blank fields whenever non-empty input is relevant</p>
+		
+	<h3>Javascript Confirmations on trying to:</h3>
+		<p>Deleting Quiz, Clearing Quiz History, Deleting a User</p>
 		
 	<h3>Non-Registered Access</h3>
 		<p>Users cannot visit pages unless they are logged in</p>
@@ -196,9 +204,11 @@
 </div>
 
 <div class='section'>
-<h1>Notes and Bugs:</h1>
-	Mysql Database is sometimes very slow - causing pages to be shown with information that is not up to date
-	For taking the quiz, the user must choose a radio button for multiple choice questions.
+<h1>Known and Bugs and Interface Issues:</h1>
+	<p>Mysql Database is sometimes very slow - sometimes loading pages with information that is not up to date
+	</p><p> If a user goes to a page not related to making quizzes while making a quiz, that quiz will be lost
+	</p><p>You can make blank answers, which could be ok if you wan't the correct answer to a question to be blank. 
+	</p><p> There are times when if you let the session expire, the page will not fail gracefully</p>
 </div>
 	
 </div>
