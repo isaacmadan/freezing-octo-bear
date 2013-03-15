@@ -73,7 +73,7 @@
 
 <a href="compose.jsp">Send a message</a>
 
-<table border="1">
+<table>
 	<tr><th>Date</th><th>From</th><th>Message</th><th>Delete</th></tr>
 	<%
 		AccountManager manager = new AccountManager();

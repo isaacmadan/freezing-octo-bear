@@ -81,7 +81,7 @@
 <div class='section'>
 <h3><a name='adminNews'>Admin News</a></h3>
 
-<table border='1'>
+<table>
 <tr><th>Date</th><th>Posted By</th><th>Announcement</th></tr>
 <%
 	AccountManager accountManager = new AccountManager();
@@ -118,7 +118,7 @@
 	if(AdminControl.isAdmin(user.getId())) {
 		out.println("<div class='section-white'>");
 		out.println("<h3><a name='quizzardStatistics'>Quizzard Statistics</a></h3>");
-		out.println("<table border='1'>");
+		out.println("<table>");
 		out.println("<tr><th>Statistic</th><th>Value</th></tr>");
 	
 		try {
@@ -139,7 +139,7 @@
 	if(AdminControl.isAdmin(user.getId())) {
 		out.println("<div class='section reported'>");
 		out.println("<h3><a name='reportedQuizzes'>Reported Quizzes</a></h3>");
-		out.println("<table border='1'>");
+		out.println("<table>");
 		out.println("<tr><th>Reported on</th><th>Reported by</th><th>Report text</th><th>Quiz name</th><th>Quiz description</th><th>Quiz creator</th><th>Delete report</th></tr>");
 		new ReportManager();
 		QuizManager manager = new QuizManager();
@@ -173,7 +173,7 @@
 
 <div class='section-white'>
 <h3><a name='popularQuizzes'>Popular Quizzes</a></h3>
-<table border="1">
+<table>
 <tr><th>Date</th><th>Quiz name</th><th>Description</th><th>Created by</th></tr>
 <%
 	new QuizResult();
@@ -195,7 +195,7 @@
 
 <div class='section'>
 <h3><a name='recentCreated'>Recently Created Quizzes</a></h3>
-<table border="1">
+<table>
 <tr><th>Date</th><th>Quiz name</th><th>Description</th><th>Created by</th></tr>
 <%
 	QuizManager manager = new QuizManager();
@@ -227,7 +227,7 @@
 
 <div class='section-white'>
 <h3><a name='recentTaken'>My Recent Quiz Taking Activities</a></h3>
-<table border="1">
+<table>
 <tr><th>Date</th><th>Quiz name</th><th>Score</th><th>Duration</th></tr>
 <%
 	ArrayList<Result> results = QuizResult.getRecentUserPerformances(user.getId(), 7); //7 days
@@ -237,7 +237,7 @@
 		if(quiz != null) {
 			titleString = quiz.getTitle();
 		}
-		out.println("<tr><td>"+result.timeStamp+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"
+		out.println("<tr><td>"+result.dateString()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"
 					+titleString+"</a></td><td>"+result.pointsScored+"/"+result.maxPossiblePoints+"</td><td>"
 					+result.durationString()+"</td></tr>");
 	}
@@ -251,7 +251,7 @@
 
 <div class='section'>
 <h3><a name='myRecentCreated'>My Recent Quiz Creating Activities</a></h3>
-<table border="1">
+<table>
 <tr><th>Date</th><th>Quiz name</th><th>Quiz Description</th></tr>
 <%
 	//ArrayList<Quiz> quizzes = manager.getQuizzesByUserId(user.getId());	

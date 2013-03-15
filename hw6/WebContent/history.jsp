@@ -66,7 +66,7 @@
 <div class='content-wrapper'>
 <div class='content'>
 <h2>My performance history</h2>
-<table border="1">
+<table>
 <tr><th>Date</th><th>Quiz name</th><th>Score</th><th>Duration</th></tr>
 <%
 	QuizManager manager = new QuizManager();	

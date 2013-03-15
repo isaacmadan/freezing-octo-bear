@@ -67,7 +67,7 @@
 <div class='content'>
 <div id="userResults">
 <h2>Friends</h2>
-<table border="1">
+<table>
 <tr><th>Username</th></tr>
 <%
 	String query = request.getParameter("query");
@@ -89,7 +89,7 @@
 
 <div id="userResults">
 <h2>Users</h2>
-<table border="1">
+<table>
 <tr><th>Username</th></tr>
 <%
 	for(User resUser : users) {
@@ -102,7 +102,7 @@
 
 <div id="userResults">
 <h2>Quizzes</h2>
-<table border="1">
+<table>
 <tr><th>Quiz name</th><th>Description</th></tr>
 <%
 	query = request.getParameter("query");
@@ -118,7 +118,7 @@
 
 <div id="userResults">
 <h2>Tags</h2>
-<table border="1">
+<table>
 <tr><th>Quiz name</th><th>Description</th></tr>
 <%
 	query = request.getParameter("query");

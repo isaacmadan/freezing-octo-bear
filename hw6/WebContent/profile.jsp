@@ -137,7 +137,7 @@
 <div class="col-1-3">
 <h2>History</h2>
 <div class='pad-right'>
-<table border="1">
+<table>
 <tr><th>Date</th><th>Quiz name</th><th>Score</th><th>Duration</th></tr>
 <%
 	QuizManager quizManager = new QuizManager();	
