@@ -200,47 +200,47 @@ int numQuestions;
 	ArrayList<Question> questions = quiz.getQuestions();
 	for(Question question : questions) {
 		int thisQuestionType = question.getQuestionType();
-		out.println("<strong>Question: "+QUESTION_TYPES[thisQuestionType]+"</strong><br />");
+		out.println("<span class='make_question_head'>"+QUESTION_TYPES[thisQuestionType]+"</span><br />");
 		if(thisQuestionType == 1) {
 			QuestionResponseQuestion newQuestion = (QuestionResponseQuestion)question;
-			out.println(newQuestion.getQuestionString() + "<br />");
+			out.println("<br />Question: " + newQuestion.getQuestionString() + "<br />");
 			out.println("<br />Answers: <br />");
 			Answer newAnswers = newQuestion.getAnswer();
 			for(String newAnswer : newAnswers.getAnswers()) {
-				out.println(newAnswer + "<br />");
+				out.println("<br />"+newAnswer + "<br />");
 			}
 		}
 		if(thisQuestionType == 2) {
 			FillInTheBlankQuestion newQuestion = (FillInTheBlankQuestion)question;
-			out.println(newQuestion.getFrontString() + " ____________ " + newQuestion.getBackString() + ".<br />");
+			out.println("<br />Question: " +newQuestion.getFrontString() + " ____________ " + newQuestion.getBackString() + ".<br />");
 			out.println("<br />Answers: <br />");
 			Answer newAnswers = newQuestion.getAnswer();
 			for(String newAnswer : newAnswers.getAnswers()) {
-				out.println(newAnswer + "<br />");
+				out.println("<br />"+newAnswer + "<br />");
 			}
 		}
 		if(thisQuestionType == 3) {
 			MultipleChoiceQuestion newQuestion = (MultipleChoiceQuestion)question;
-			out.println(newQuestion.getQuestionString() + "<br />");
+			out.println("<br />Question: " +newQuestion.getQuestionString() + "<br />");
 			out.println("<br />Choices: <br />");
 			ArrayList<MultipleChoiceChoices> newChoices = newQuestion.getChoices();
 			for(MultipleChoiceChoices choice : newChoices) {
-				out.println(choice.getChoiceString() + "<br />");
+				out.println("<br />"+choice.getChoiceString() + "<br />");
 			}
 			out.println("<br />Answers: <br />");
 			Answer newAnswers = newQuestion.getAnswer();
 			for(String newAnswer : newAnswers.getAnswers()) {
-				out.println(newAnswer + "<br />");
+				out.println("<br />"+newAnswer + "<br />");
 			}
 		}	
 		if(thisQuestionType == 4) {
 			PictureResponseQuestion newQuestion = (PictureResponseQuestion)question;
-			out.println(newQuestion.getQuestionString()+"<br />");
+			out.println("<br />Question: " +newQuestion.getQuestionString()+"<br />");
 			out.println("<img src='"+newQuestion.getFileName()+"' width='200px' />");
 			out.println("<br />Answers: <br />");
 			Answer newAnswers = newQuestion.getAnswer();
 			for(String newAnswer : newAnswers.getAnswers()) {
-				out.println(newAnswer + "<br />");
+				out.println("<br />"+newAnswer + "<br />");
 			}
 		}
 		out.println("<hr>");
