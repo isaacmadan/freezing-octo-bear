@@ -12,16 +12,23 @@
 <script src="site.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Unauthorized</title>
+<title>Quizzard - Unauthorized</title>
 </head>
 <body>
 
-<div class="header"><div class="pad"><a href='index.jsp'>Quizzard</a></div></div>
+<div class='header-wrapper'>
+<div class="header"><a href='index.jsp'>QUIZZARD</a>
 
+</div>
+</div>
+
+<div class='content-wrapper'>
 <div class='content'>
+
 <h3>You are not authorized to access this resource.</h3>
 
 <p>Try <a href="index.jsp">logging in</a>.</p>
+</div>
 </div>
 
 <div class='footer'><div class="pad">Quizzard 2013.</div></div>

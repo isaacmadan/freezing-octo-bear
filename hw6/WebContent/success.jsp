@@ -47,7 +47,6 @@
 	
 </div>
 </div>
-</div>
 
 <div class='subheader-wrapper'>
 <div class='subheader'>
@@ -187,7 +186,7 @@
 		if(quiz == null)
 			out.println("<tr><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td></tr>");
 		else
-			out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td><td><a href='profile.jsp?id="+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getId()+"'>"+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+"</a></td></tr>");
+			out.println("<tr><td>"+quiz.dateString()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td><td><a href='profile.jsp?id="+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getId()+"'>"+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+"</a></td></tr>");
 	}
 %>
 </table><br />
@@ -210,7 +209,7 @@
 			out.println("<tr><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td></tr>");
 		else {
 			try {
-				out.println("<tr><td>"+quiz.getCreated_timestamp()+
+				out.println("<tr><td>"+quiz.dateString()+
 							"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+
 							"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+
 							"</td><td><a href='profile.jsp?id="+
@@ -258,7 +257,7 @@
 	//ArrayList<Quiz> quizzes = manager.getQuizzesByUserId(user.getId());	
 	ArrayList<Quiz> quizzes = manager.getRecentQuizzesByUserId(user.getId(), 7); //7 days	
 	for(Quiz quiz : quizzes) {
-		out.println("<tr><td>"+quiz.getCreated_timestamp()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td></tr>");
+		out.println("<tr><td>"+quiz.dateString()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td></tr>");
 	}
 	if(results.size() == 0) {
 		out.println("No quiz results");
@@ -315,7 +314,7 @@ if(achievementsStrings.size() == 0)
 		out.println("<h3><a href='profile.jsp?id="+friend.getId()+"'>"+friend.getUsername()+"</a></h3>");
 		out.println("<ul>");
 		ArrayList<Result> friendResults = QuizResult.getRecentUserPerformances(friend.getId(), 7); //7 days
-		out.println("<li>Recently took ");
+		out.println("<li>&#8226; Took ");
 		for(int i = 0; i < friendResults.size(); i++) {
 			Result result = friendResults.get(i);
 			Quiz quiz = manager.getQuizByQuizId(result.quizId);
@@ -333,7 +332,7 @@ if(achievementsStrings.size() == 0)
 		}
 		out.println("<br />");
 		ArrayList<Quiz> friendQuizzes = manager.getRecentQuizzesByUserId(friend.getId(), 7); //7 days	
-		out.println("</li><li>Recently created ");
+		out.println("</li><li>&#8226; Created ");
 		for(int i = 0; i < friendQuizzes.size(); i++) {
 			Quiz quiz = friendQuizzes.get(i);
 			if(i == friendQuizzes.size()-1)
@@ -347,7 +346,8 @@ if(achievementsStrings.size() == 0)
 		out.println("<br />");
 		Achievements friendAchievements = accountManager.getRecentAchievements(friend.getId(), 7); //7 days
 		ArrayList<String> friendAchievementsStrings = friendAchievements.getStrings();
-		out.println("</li><li>Earned ");
+		out.println("</li><li>&#8226; Earned ");
+		/**
 		for(int i = 0; i < friendAchievementsStrings.size(); i++) {
 			String str = friendAchievementsStrings.get(i);
 			if(i == friendAchievementsStrings.size()-1)
@@ -355,8 +355,11 @@ if(achievementsStrings.size() == 0)
 			else
 				out.println(str+", ");
 		}
+		**/
 		if(friendAchievementsStrings.size() == 0)
 			out.println("no recent achievements");
+		else
+			out.println("a recent achievement");
 		out.println("</li></ul>");
 	}
 %>

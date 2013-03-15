@@ -34,9 +34,15 @@
 	}
 %>
 
-<div class="header"><div class="pad"><a href='index.jsp'>Quizzard</a></div></div>
+<div class='header-wrapper'>
+<div class="header"><a href='index.jsp'>QUIZZARD</a>
 
+</div>
+</div>
+
+<div class='content-wrapper'>
 <div class='content'>
+
 <h3>You've successfully logged out.</h3>
 
 <%
@@ -61,6 +67,7 @@
 
 <a href="index.jsp">Login again</a>
 </div><!-- end content -->
+</div>
 
 <div class='footer'><div class="pad">Quizzard 2013.</div></div>
 </body>
