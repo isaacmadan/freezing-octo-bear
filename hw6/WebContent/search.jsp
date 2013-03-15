@@ -65,10 +65,10 @@
 
 <div class='content-wrapper'>
 <div class='content'>
-<div id="userResults">
+<div id="userResults" class='section-white'>
 <h2>Friends</h2>
-<table>
-<tr><th>Username</th></tr>
+<div id='table'>
+<div id='row-td'><div id='left'>Username</div></div>
 <%
 	String query = request.getParameter("query");
 	ArrayList<User> users = Search.searchUsers(query);
@@ -79,59 +79,60 @@
 	for(User resUser : users) {
 		if(friends.contains(resUser.getId())) {
 			areResults = true;
-			out.println("<tr><td><a href='profile.jsp?id="+resUser.getId()+"'>"+resUser.getUsername()+"</a></td></tr>");
+			out.println("<div id='row'><div id='left'><a href='profile.jsp?id="+resUser.getId()+"'>"+resUser.getUsername()+"</a></div></div>");
 		}	
 	}
-	if(!areResults) out.println("<tr><td>No results</td></tr>");
+	if(!areResults) out.println("<div id='row'><div id='left'>No results</div></div>");
 %>
-</table>
+</div>
 </div>
 
-<div id="userResults">
+<div id="userResults" class='section'>
 <h2>Users</h2>
-<table>
-<tr><th>Username</th></tr>
+<div id='table'>
+<div id='row-td'><div id='left'>Username</div></div>
 <%
 	for(User resUser : users) {
-		out.println("<tr><td><a href='profile.jsp?id="+resUser.getId()+"'>"+resUser.getUsername()+"</a></td></tr>");
+		out.println("<div id='row'><div id='left'><a href='profile.jsp?id="+resUser.getId()+"'>"+resUser.getUsername()+"</a></div></div>");
 	}
-	if(users.size() == 0) out.println("<tr><td>No results</td></tr>");
+	if(users.size() == 0) out.println("<div id='row'><div id='left'>No results</div></div>");
 %>
-</table>
+</div>
 </div>
 
-<div id="userResults">
+<div id="userResults" class='section-white'>
 <h2>Quizzes</h2>
-<table>
-<tr><th>Quiz name</th><th>Description</th></tr>
+<div id='table'>
+<div id='row-td'><div id='left'>Quiz name</div><div id='left'>Description</div></div>
 <%
 	query = request.getParameter("query");
 	ArrayList<Quiz> quizzes = Search.searchQuizzes(query);
 	
 	for(Quiz quiz : quizzes) {
-		out.println("<tr><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td></tr>");
+		out.println("<div id='row'><div id='left'><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></div><div id='right'>"+quiz.getDescription()+"</div></div>");
 	}
-	if(quizzes.size() == 0) out.println("<tr><td></td><td>No results</td></tr>");
+	if(quizzes.size() == 0) out.println("<div id='row'><div id='left'></div><div id='right'>No results</div></div>");
 %>
-</table>
+</div>
 </div>
 
-<div id="userResults">
+<div id="userResults" class='section'>
 <h2>Tags</h2>
-<table>
-<tr><th>Quiz name</th><th>Description</th></tr>
+<div id='table'>
+<div id='row-td'><div id='left'>Quiz name</div><div id='left'>Description</div></div>
 <%
 	query = request.getParameter("query");
 	new CatTagManager();
 	quizzes = CatTagManager.getQuizzesFromTag(query);
 	
 	for(Quiz quiz : quizzes) {
-		out.println("<tr><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td></tr>");
+		out.println("<div id='row'><div id='left'><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></div><div id='right'>"+quiz.getDescription()+"</div></div>");
 	}
-	if(quizzes.size() == 0) out.println("<tr><td></td><td>No results</td></tr>");
+	if(quizzes.size() == 0) out.println("<div id='row'><div id='left'></div><div id='right'>No results</div></div>");
 %>
-</table>
 </div>
+</div>
+
 </div><!-- end content -->
 </div>
 

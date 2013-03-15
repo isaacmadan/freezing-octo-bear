@@ -73,11 +73,11 @@
 
 
 <form action="SendTextMessageServlet" method="POST" onsubmit="return validateForm(['to_user','content'])">
-	<table>
+	<div id='table'>
 		<input type="hidden" name="from_user" value="<%= user.getUsername() %>" />
-		<tr>
-		<td><label>To (select a friend or enter a username): </label></td>
-		<td>
+		<div id='row'>
+		<div id='left'><label>To (select a friend or enter a username): </label></div>
+		<div id='right'>
 			<select name="friend_id" id="composeFriendSelect">
   			<option value=""></option>
   			<% 
@@ -89,13 +89,13 @@
   			%>
 			</select><br />
 			<input type="text" name="to_user" id="to_user" />
-		</td>
+		</div>
 		<input type="hidden" name="message_type" value="3" />
-		</tr>
-		<tr>
-		<td><label>Message: </label></td><td><textarea name="content" rows="10" cols="30" id="content"></textarea></td>
-		</tr>
-	</table>
+		</div>
+		<div id='row'>
+		<div id='left'><label>Message: </label></div><div id='right'><textarea name="content" rows="10" cols="20" id="content"></textarea></div>
+		</div>
+	</div>
 	<input type="submit" />
 </form>
 <a href="inbox.jsp">Back to inbox</a>
