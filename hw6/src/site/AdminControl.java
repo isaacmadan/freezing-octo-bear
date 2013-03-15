@@ -165,7 +165,7 @@ public class AdminControl {
 		try {
 			//Getting all the results
 			ResultSet allResults = stmt.executeQuery(selectResults);
-			System.out.println(selectResults);
+			//System.out.println(selectResults);
 			ArrayList<String> toBeRemoved = new ArrayList<String>();
 			while(allResults.next()){
 				//For each result, delete user_answers with that quiz
@@ -174,9 +174,9 @@ public class AdminControl {
 			}
 			for (String toRemove: toBeRemoved){
 				stmt.executeUpdate(deleteAnswers + toRemove);
-				System.out.println(deleteAnswers + toRemove);
+				//System.out.println(deleteAnswers + toRemove);
 			}
-			System.out.println(deleteResults);
+			//System.out.println(deleteResults);
 			stmt.executeUpdate(deleteResults);
 			return true;
 		} catch (SQLException e) {

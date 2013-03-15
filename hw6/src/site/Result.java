@@ -75,4 +75,12 @@ public class Result extends Object{
 		return dur;
 	}
 
+	public static String durationString(long millis){
+	String dur = String.format("%d min, %d sec", 
+		    TimeUnit.MILLISECONDS.toMinutes(millis),
+		    TimeUnit.MILLISECONDS.toSeconds(millis) - 
+		    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
+		);
+	return dur;
+}
 }

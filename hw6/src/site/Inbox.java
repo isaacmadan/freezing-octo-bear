@@ -3,6 +3,7 @@ package site;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Inbox {
@@ -49,7 +50,8 @@ public class Inbox {
 			while(rs.next()) {
 				
 				messageId = rs.getInt("message_id");
-				date = String.valueOf(rs.getTimestamp("created_timestamp"));
+				String dateString = (new SimpleDateFormat ("MM/dd/yy hh:mm aa")).format(rs.getTimestamp("created_timestamp"));
+				date = dateString;
 				fromUserId = rs.getString("from_id");
 				content = rs.getString("content");
 				messageType = rs.getInt("message_type");
@@ -80,7 +82,8 @@ public class Inbox {
 			while(rs.next()) {
 				
 				messageId = rs.getInt("message_id");
-				date = String.valueOf(rs.getTimestamp("created_timestamp"));
+				String dateString = (new SimpleDateFormat ("MM/dd/yy hh:mm aa")).format(rs.getTimestamp("created_timestamp"));
+				date = dateString;
 				fromUserId = rs.getString("from_id");
 				content = rs.getString("content");
 				messageType = rs.getInt("message_type");
