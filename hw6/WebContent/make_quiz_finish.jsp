@@ -77,41 +77,45 @@
 	//set max score
 	quiz.setMax_score(quiz.getQuestions().size());
 	
-	QuizManager quizManager = new QuizManager(request, quiz);
-	quizManager.addQuizToDataBase();
-	
-	for(Question question : quiz.getQuestions()) {
-		if(question.getQuestionType() == 1) {
-			QuestionResponseQuestion newQuestion = (QuestionResponseQuestion)question;
-			quizManager.addQuestionResponseToDataBase(newQuestion.getQuestionString(), newQuestion.getAnswer());
-		}
-		else if(question.getQuestionType() == 2) {
-			FillInTheBlankQuestion newQuestion = (FillInTheBlankQuestion)question;
-			quizManager.addFillInTheBlankToDataBase(newQuestion.getFrontString(), 
-													newQuestion.getBackString(), newQuestion.getAnswer());
-		}
-		else if(question.getQuestionType() == 3) {
-			MultipleChoiceQuestion newQuestion = (MultipleChoiceQuestion)question;
-			quizManager.addMultipleChoiceToDataBase(newQuestion.getQuestionString(), newQuestion.getChoices(), newQuestion.getAnswer());
-		}
-		else if(question.getQuestionType() == 4) {
-			PictureResponseQuestion newQuestion = (PictureResponseQuestion)question;
-			quizManager.addPictureResponseToDataBase(newQuestion.getFileName(), newQuestion.getQuestionString(), newQuestion.getAnswer());
-		}
-	} 
-	quiz.setQuiz_id(quizManager.getQuizId());
-	session.setAttribute("quiz", null);
-	
-	//category, tags
-	new CatTagManager();
-	CatTagManager.categorizeQuiz(quiz.getQuiz_id(), quiz.getCategory());
-	CatTagManager.addStringOfTagsToQuiz(quiz.getQuiz_id(), quiz.getTags());
+	if(quiz.getQuestions().size() == 0) {
+		out.println("<h3>Sorry, you can't make a quiz without any questions!</h3>");
+		out.println("<h4><a href='making_quiz.jsp'>Go back</a></h4>");
+	}
+	else {
+		QuizManager quizManager = new QuizManager(request, quiz);
+		quizManager.addQuizToDataBase();
+		
+		for(Question question : quiz.getQuestions()) {
+			if(question.getQuestionType() == 1) {
+				QuestionResponseQuestion newQuestion = (QuestionResponseQuestion)question;
+				quizManager.addQuestionResponseToDataBase(newQuestion.getQuestionString(), newQuestion.getAnswer());
+			}
+			else if(question.getQuestionType() == 2) {
+				FillInTheBlankQuestion newQuestion = (FillInTheBlankQuestion)question;
+				quizManager.addFillInTheBlankToDataBase(newQuestion.getFrontString(), 
+														newQuestion.getBackString(), newQuestion.getAnswer());
+			}
+			else if(question.getQuestionType() == 3) {
+				MultipleChoiceQuestion newQuestion = (MultipleChoiceQuestion)question;
+				quizManager.addMultipleChoiceToDataBase(newQuestion.getQuestionString(), newQuestion.getChoices(), newQuestion.getAnswer());
+			}
+			else if(question.getQuestionType() == 4) {
+				PictureResponseQuestion newQuestion = (PictureResponseQuestion)question;
+				quizManager.addPictureResponseToDataBase(newQuestion.getFileName(), newQuestion.getQuestionString(), newQuestion.getAnswer());
+			}
+		} 
+		quiz.setQuiz_id(quizManager.getQuizId());
+		session.setAttribute("quiz", null);
+		
+		//category, tags
+		new CatTagManager();
+		CatTagManager.categorizeQuiz(quiz.getQuiz_id(), quiz.getCategory());
+		CatTagManager.addStringOfTagsToQuiz(quiz.getQuiz_id(), quiz.getTags());
+		
+		out.println("<h3>You've created your quiz successfully!</h3>");
+		out.println("<h4><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>Check it out</a></h4>");
+	}
 %>
-
-<h3>You've created your quiz successfully!</h3>
-
-
-<h4><a href='quiz_summary_page.jsp?quiz_id=<%= quiz.getQuiz_id() %>'>Check it out</a></h4>
 
 </div><!-- end content -->
 </div>

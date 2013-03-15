@@ -130,132 +130,130 @@ int numQuestions;
 
 <%
 		String questionType = request.getParameter("question_type");
-		if(questionType == null) return;
+		boolean validQuestion = false;
+		if(questionType != null) validQuestion = true;
 		
 		String QUESTION_TYPES[] = {"", "Question Response", "Fill in the Blank", "Multiple Choice", "Picture Response" };
-		
-		// public QuestionResponseQuestion(int quizId, int pointValue, int questionType, Answer answer, String questionString) {
-		if(questionType.equals("question_response")) {
-			String questionString = request.getParameter("question_string");
-			Integer numAnswers = Integer.parseInt(request.getParameter("num_answers"));
-			Answer answers = new Answer();
-			for(int i = 1; i <= numAnswers; i++) {
-				answers.addAnswer(request.getParameter("answer"+i));
+		if(validQuestion) {
+			// public QuestionResponseQuestion(int quizId, int pointValue, int questionType, Answer answer, String questionString) {
+			if(questionType.equals("question_response")) {
+				String questionString = request.getParameter("question_string");
+				Integer numAnswers = Integer.parseInt(request.getParameter("num_answers"));
+				Answer answers = new Answer();
+				for(int i = 1; i <= numAnswers; i++) {
+					answers.addAnswer(request.getParameter("answer"+i));
+				}
+				out.println("<br /><div class='success'>Question Response created</div><br />");
+				QuestionResponseQuestion question = new QuestionResponseQuestion(0, 1, 1, answers, questionString);
+				quiz.addQuestion(question);
 			}
-			out.println("<br /><div class='success'>Question Response created</div><br />");
-			QuestionResponseQuestion question = new QuestionResponseQuestion(0, 1, 1, answers, questionString);
-			quiz.addQuestion(question);
-		}
-		//public FillInTheBlankQuestion(int pointValue, int questionType, Answer answer, String frontString, String backString) {
-		else if(questionType.equals("fill_in_the_blank")) {
-			String frontString = request.getParameter("front_string");
-			String backString = request.getParameter("back_string");
-			Integer numAnswers = Integer.parseInt(request.getParameter("num_answers"));
-			Answer answers = new Answer();
-			for(int i = 1; i <= numAnswers; i++) {
-				answers.addAnswer(request.getParameter("answer"+i));
+			//public FillInTheBlankQuestion(int pointValue, int questionType, Answer answer, String frontString, String backString) {
+			else if(questionType.equals("fill_in_the_blank")) {
+				String frontString = request.getParameter("front_string");
+				String backString = request.getParameter("back_string");
+				Integer numAnswers = Integer.parseInt(request.getParameter("num_answers"));
+				Answer answers = new Answer();
+				for(int i = 1; i <= numAnswers; i++) {
+					answers.addAnswer(request.getParameter("answer"+i));
+				}
+				
+				out.println("<br /><div class='success'>Fill in the Blank created</div><br />");
+				FillInTheBlankQuestion question = new FillInTheBlankQuestion(1, 2, answers, frontString, backString);
+				quiz.addQuestion(question);
 			}
-			
-			out.println("<br /><div class='success'>Fill in the Blank created</div><br />");
-			FillInTheBlankQuestion question = new FillInTheBlankQuestion(1, 2, answers, frontString, backString);
-			quiz.addQuestion(question);
-		}
-		//public MultipleChoiceQuestion(int pointValue, int questionType, Answer answer, String questionString, ArrayList<MultipleChoiceChoices> choices) {
-		else if(questionType.equals("multiple_choice")) {
-			String questionString = request.getParameter("question_string");
-			Integer numChoices = Integer.parseInt(request.getParameter("num_choices"));
-			ArrayList<MultipleChoiceChoices> choices = new ArrayList<MultipleChoiceChoices>();
-			for(int i = 1; i <= numChoices; i++) {
-				choices.add(new MultipleChoiceChoices(request.getParameter("choice"+i)));
+			//public MultipleChoiceQuestion(int pointValue, int questionType, Answer answer, String questionString, ArrayList<MultipleChoiceChoices> choices) {
+			else if(questionType.equals("multiple_choice")) {
+				String questionString = request.getParameter("question_string");
+				Integer numChoices = Integer.parseInt(request.getParameter("num_choices"));
+				ArrayList<MultipleChoiceChoices> choices = new ArrayList<MultipleChoiceChoices>();
+				for(int i = 1; i <= numChoices; i++) {
+					choices.add(new MultipleChoiceChoices(request.getParameter("choice"+i)));
+				}
+				Integer numAnswers = Integer.parseInt(request.getParameter("num_answers"));
+				Answer answers = new Answer();
+				for(int i = 1; i <= numAnswers; i++) {
+					answers.addAnswer(request.getParameter("answer"+i));
+				}
+				
+				out.println("<br /><div class='success'>Multiple Choice created</div><br />");
+				MultipleChoiceQuestion question = new MultipleChoiceQuestion(1, 3, answers, questionString, choices);
+				quiz.addQuestion(question);
 			}
-			Integer numAnswers = Integer.parseInt(request.getParameter("num_answers"));
-			Answer answers = new Answer();
-			for(int i = 1; i <= numAnswers; i++) {
-				answers.addAnswer(request.getParameter("answer"+i));
+			//public PictureResponseQuestion(int pointValue, int questionType, Answer answer, String fileName) {
+			else if(questionType.equals("picture_response")) {
+				String questionString = request.getParameter("question_string");
+				String urlString = request.getParameter("url_string");
+				Integer numAnswers = Integer.parseInt(request.getParameter("num_answers"));
+				Answer answers = new Answer();
+				for(int i = 1; i <= numAnswers; i++) {
+					answers.addAnswer(request.getParameter("answer"+i));
+				}
+				
+				out.println("<br /><div class='success'>Picture Response created</div><br />");
+				//PictureResponseQuestion question = new PictureResponseQuestion(1, 4, answers, questionString);
+				PictureResponseQuestion question = new PictureResponseQuestion(1, 4, answers, urlString, questionString);
+				quiz.addQuestion(question);
 			}
-			
-			out.println("<br /><div class='success'>Multiple Choice created</div><br />");
-			MultipleChoiceQuestion question = new MultipleChoiceQuestion(1, 3, answers, questionString, choices);
-			quiz.addQuestion(question);
-		}
-		//public PictureResponseQuestion(int pointValue, int questionType, Answer answer, String fileName) {
-		else if(questionType.equals("picture_response")) {
-			String questionString = request.getParameter("question_string");
-			String urlString = request.getParameter("url_string");
-			Integer numAnswers = Integer.parseInt(request.getParameter("num_answers"));
-			Answer answers = new Answer();
-			for(int i = 1; i <= numAnswers; i++) {
-				answers.addAnswer(request.getParameter("answer"+i));
-			}
-			
-			out.println("<br /><div class='success'>Picture Response created</div><br />");
-			//PictureResponseQuestion question = new PictureResponseQuestion(1, 4, answers, questionString);
-			PictureResponseQuestion question = new PictureResponseQuestion(1, 4, answers, urlString, questionString);
-			quiz.addQuestion(question);
 		}
 %>
 
 <div>
 <%
-	ArrayList<Question> questions = quiz.getQuestions();
-	for(Question question : questions) {
-		int thisQuestionType = question.getQuestionType();
-		out.println("<span class='make_question_head'>"+QUESTION_TYPES[thisQuestionType]+"</span><br />");
-		if(thisQuestionType == 1) {
-			QuestionResponseQuestion newQuestion = (QuestionResponseQuestion)question;
-			out.println("<br />Question: " + newQuestion.getQuestionString() + "<br />");
-			out.println("<br />Answers: <br />");
-			Answer newAnswers = newQuestion.getAnswer();
-			for(String newAnswer : newAnswers.getAnswers()) {
-				out.println("<br />"+newAnswer + "<br />");
+	if(validQuestion) {
+		ArrayList<Question> questions = quiz.getQuestions();
+		for(Question question : questions) {
+			int thisQuestionType = question.getQuestionType();
+			out.println("<span class='make_question_head'>"+QUESTION_TYPES[thisQuestionType]+"</span><br />");
+			if(thisQuestionType == 1) {
+				QuestionResponseQuestion newQuestion = (QuestionResponseQuestion)question;
+				out.println("<br />Question: " + newQuestion.getQuestionString() + "<br />");
+				out.println("<br />Answers: <br />");
+				Answer newAnswers = newQuestion.getAnswer();
+				for(String newAnswer : newAnswers.getAnswers()) {
+					out.println("<br />"+newAnswer + "<br />");
+				}
 			}
+			if(thisQuestionType == 2) {
+				FillInTheBlankQuestion newQuestion = (FillInTheBlankQuestion)question;
+				out.println("<br />Question: " +newQuestion.getFrontString() + " ____________ " + newQuestion.getBackString() + ".<br />");
+				out.println("<br />Answers: <br />");
+				Answer newAnswers = newQuestion.getAnswer();
+				for(String newAnswer : newAnswers.getAnswers()) {
+					out.println("<br />"+newAnswer + "<br />");
+				}
+			}
+			if(thisQuestionType == 3) {
+				MultipleChoiceQuestion newQuestion = (MultipleChoiceQuestion)question;
+				out.println("<br />Question: " +newQuestion.getQuestionString() + "<br />");
+				out.println("<br />Choices: <br />");
+				ArrayList<MultipleChoiceChoices> newChoices = newQuestion.getChoices();
+				for(MultipleChoiceChoices choice : newChoices) {
+					out.println("<br />"+choice.getChoiceString() + "<br />");
+				}
+				out.println("<br />Answers: <br />");
+				Answer newAnswers = newQuestion.getAnswer();
+				for(String newAnswer : newAnswers.getAnswers()) {
+					out.println("<br />"+newAnswer + "<br />");
+				}
+			}	
+			if(thisQuestionType == 4) {
+				PictureResponseQuestion newQuestion = (PictureResponseQuestion)question;
+				out.println("<br />Question: " +newQuestion.getQuestionString()+"<br />");
+				out.println("<img src='"+newQuestion.getFileName()+"' width='200px' />");
+				out.println("<br />Answers: <br />");
+				Answer newAnswers = newQuestion.getAnswer();
+				for(String newAnswer : newAnswers.getAnswers()) {
+					out.println("<br />"+newAnswer + "<br />");
+				}
+			}
+			out.println("<hr>");
 		}
-		if(thisQuestionType == 2) {
-			FillInTheBlankQuestion newQuestion = (FillInTheBlankQuestion)question;
-			out.println("<br />Question: " +newQuestion.getFrontString() + " ____________ " + newQuestion.getBackString() + ".<br />");
-			out.println("<br />Answers: <br />");
-			Answer newAnswers = newQuestion.getAnswer();
-			for(String newAnswer : newAnswers.getAnswers()) {
-				out.println("<br />"+newAnswer + "<br />");
-			}
-		}
-		if(thisQuestionType == 3) {
-			MultipleChoiceQuestion newQuestion = (MultipleChoiceQuestion)question;
-			out.println("<br />Question: " +newQuestion.getQuestionString() + "<br />");
-			out.println("<br />Choices: <br />");
-			ArrayList<MultipleChoiceChoices> newChoices = newQuestion.getChoices();
-			for(MultipleChoiceChoices choice : newChoices) {
-				out.println("<br />"+choice.getChoiceString() + "<br />");
-			}
-			out.println("<br />Answers: <br />");
-			Answer newAnswers = newQuestion.getAnswer();
-			for(String newAnswer : newAnswers.getAnswers()) {
-				out.println("<br />"+newAnswer + "<br />");
-			}
-		}	
-		if(thisQuestionType == 4) {
-			PictureResponseQuestion newQuestion = (PictureResponseQuestion)question;
-			out.println("<br />Question: " +newQuestion.getQuestionString()+"<br />");
-			out.println("<img src='"+newQuestion.getFileName()+"' width='200px' />");
-			out.println("<br />Answers: <br />");
-			Answer newAnswers = newQuestion.getAnswer();
-			for(String newAnswer : newAnswers.getAnswers()) {
-				out.println("<br />"+newAnswer + "<br />");
-			}
-		}
-		out.println("<hr>");
 	}
 %>
 </div>
 
 </div><!-- end content -->
 </div>
-
-<%
-/**/
-
-
-%>
 
 <div class='footer'><div class="pad">Quizzard 2013.</div></div>
 </body>

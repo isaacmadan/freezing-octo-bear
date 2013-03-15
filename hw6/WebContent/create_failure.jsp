@@ -31,6 +31,7 @@
 	</table>
 	<input type="submit" />
 </form>
+<p><a href="index.jsp">Cancel</a></p>
 </div>
 
 </body>

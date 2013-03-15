@@ -17,7 +17,8 @@
 </head>
 <body>
 
-<%
+<%  session.setMaxInactiveInterval(7200);
+
 	User user = (User)session.getAttribute("user");
 	if(user != null) {
 		//out.println(user.getUsername()+"'s Dashboard");
