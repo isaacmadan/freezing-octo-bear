@@ -90,7 +90,7 @@ public class CharliesTests {
 
 	//	System.out.println(CatTagManager.addStringOfTagsToQuiz(2, "love,have,suplex"));
 		
-//		System.out.println(CatTagManager.parseTags(""));
+		System.out.println(CatTagManager.parseTags("S&M"));
 //		System.out.println(CatTagManager.parseTags(" love , have, suplex "));
 //		System.out.println(CatTagManager.parseTags("qw asdfasd ,asdfafeq d,asdfasdf2,,,,"));
 //		System.out.println(CatTagManager.parseTags("qw asdfasdasa;sduf98234qvnds8f"));

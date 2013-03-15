@@ -19,15 +19,17 @@ public class ReviewManager {
 		} catch (SQLException e) {
 		}		
 	}
-	
-	
+
+
 	/**Checks if a user even took a quiz. Users should only review quizzes if they've taken them*/
 	public static boolean tookQuiz(int user_id, int quiz_id){
 		new QuizResult();
 		if (QuizResult.getUserPerformanceOnQuiz(user_id, quiz_id).size() > 0) return true;
 		return false;
 	}
-	
+
+
+
 	/**Adds a review to the database, returns the Review Id that was just stored
 	 * @param user userId
 	 * @param quiz quizId
@@ -46,12 +48,12 @@ public class ReviewManager {
 		}
 		return -1;
 	}
-	
+
 	/**Returns an arraylist of Review Objects for a given quizId in terms of most recent reviews written*/
 	public static ArrayList<Review> getReviews(int quizId){
 		String execution = "SELECT * FROM reviews WHERE quiz_id = " + quizId + " ORDER BY created_timestamp DESC";
 		ArrayList<Review> reviews = new ArrayList<Review>();
-		
+
 		try {
 			ResultSet set = stmt.executeQuery(execution);
 			while(set.next()){
@@ -62,12 +64,12 @@ public class ReviewManager {
 		}
 		return reviews;
 	}
-	
+
 	/**Returns an arraylist of Review Objects written by a user*/
 	public static ArrayList<Review> getReviewsByUser(int user_id){
 		String execution = "SELECT * FROM reviews WHERE user_id = " + user_id;
 		ArrayList<Review> reviews = new ArrayList<Review>();
-		
+
 		try {
 			ResultSet set = stmt.executeQuery(execution);
 			while(set.next()){
@@ -77,6 +79,17 @@ public class ReviewManager {
 		} catch (SQLException e) {
 		}
 		return reviews;
+	}
+
+	/**Returns true if user has already reviewed quiz*/
+	public static boolean alreadyReviewed(int user_id, int quiz_id){
+		String execution = "SELECT * FROM reviews WHERE user_id = " + user_id + " AND quiz_id = " + quiz_id;
+		try {
+			ResultSet set = stmt.executeQuery(execution);
+			return set.next();
+		} catch (SQLException e) {
+			return false;
+		}
 	}
 	/**Assumes Set is looking at the relevant row and returns a Review Object*/
 	private static Review getReviewFromSet(ResultSet set){
@@ -92,7 +105,7 @@ public class ReviewManager {
 		}
 		return null;
 	}
-	
+
 	/**Removes all reviews associated with a quiz*/
 	public static boolean clearReviewsByQuiz(int quiz_id){
 		String deleteQuiz = "DELETE FROM reviews where quiz_id = " + quiz_id;
@@ -103,7 +116,7 @@ public class ReviewManager {
 			return false;
 		}
 	}
-	
+
 	/**Removes all reviews associated with a user*/
 	public static boolean clearReviewsByUser(int user_id){
 		String deleteQuiz = "DELETE FROM reviews where user_id = " + user_id;
@@ -114,7 +127,7 @@ public class ReviewManager {
 			return false;
 		}
 	}
-	
+
 	/**Pass in a list of ratings and get its score*/
 	public static double getAverageRating(ArrayList<Review> reviews){
 		double totalScore = 0;
@@ -125,5 +138,5 @@ public class ReviewManager {
 		}
 		return totalScore / scoreCount;
 	}
-	
+
 }

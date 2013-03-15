@@ -367,16 +367,21 @@ private ArrayList<Integer> randomize() {
 	<!-- ratings/reviews -->
 	<%
 		new ReviewManager();
+		String review = request.getParameter("review");
+		String rating = request.getParameter("rating");
+		boolean justTookIt = false;
+		if(review != null && rating != null)
+			justTookIt = true;
+		
 		boolean tookQuiz = ReviewManager.tookQuiz(user.getId(), quiz.getQuiz_id());
-		if(tookQuiz) {
+		if(!justTookIt && (tookQuiz && !ReviewManager.alreadyReviewed(taker.getId(), quiz.getQuiz_id()))) {
 			out.println("<input type='submit' onclick='showReview()' value='Review/rate this quiz' />");
 		}
 	%>
 	
 	<!-- process ratings/review -->
 	<%
-		String review = request.getParameter("review");
-		String rating = request.getParameter("rating");
+		
 		if(review != null && rating != null) {
 			ReviewManager.addReview(user.getId(), quiz.getQuiz_id(), review, Integer.parseInt(rating));
 			out.println("<div class='success'>Your review/rating was saved successfully.</div><br />");
