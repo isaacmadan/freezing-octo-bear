@@ -84,7 +84,7 @@
 				User user = users.get(i);
 				listResult(out, result, user);
 			}
-			out.println("</table><hr>");
+			out.println("</table>");
 		} catch (IOException ignored) {
 		}
 	}%>
@@ -128,7 +128,7 @@
 	 */
 %>
 
-<title><%=quiz.getTitle()%></title>
+<title>Quizzard - <%=quiz.getTitle()%></title>
 
 </head>
 <body>
@@ -233,6 +233,11 @@
 					.getUsername()%></a>
 	<p></p>
 	
+	Average Rating:
+	<%
+		out.println(ReviewManager.getAverageRating(ReviewManager.getReviews(quiz.getQuiz_id())));
+	%>
+	<br />
 	Share:<br />
 	<div>
 	<!-- FACEBOOK LIKE BUTTON -->
@@ -427,9 +432,19 @@ private ArrayList<Integer> randomize() {
 	%>
 	<br />
 	<br />
+
+<div>
+	<h3><a name='top'>Menu</a></h3>
+	<p><a href='#yourPastScores'>Your past scores</a></p>
+	<p><a href='#bestScoresAllTime'>Best scores of all time</a></p>
+	<p><a href='#bestScoresLastDay'>Best scores in the last day</a></p>
+	<p><a href='#recentScores'>Recent scores</a></p>
+	<p><a href='#statistics'>Statistics</a></p>
+	<p><a href='#ratingsReviews'>Ratings and review</a></p>
+</div>	
 	
-<div id='accordion'>	
-	<h3>Your past scores with this quiz</h3>
+<div id='accordion-off'>	
+	<h3><a name='yourPastScores'>Your past scores with this quiz</a></h3>
 	<div>
 	<%
 		// List of user's past performance on specific quiz
@@ -437,9 +452,10 @@ private ArrayList<Integer> randomize() {
 				taker.getId(), quiz.getQuiz_id());
 		listPerformers(out, results, resultsToUsers(results));
 	%>
+	<br /><a href='#top'>Back to top</a>
 	</div>
 	
-	<h3>Best scores of all time</h3>
+	<h3><a name='bestScoresAllTime'>Best scores of all time</a></h3>
 	<div>
 	<%
 		// List of highest performers of all time
@@ -447,9 +463,10 @@ private ArrayList<Integer> randomize() {
 		ArrayList<User> bestAllTime = resultsToUsers(results);
 		listPerformers(out, results, bestAllTime);
 	%>
+	<br /><a href='#top'>Back to top</a>
 	</div>
 	
-	<h3>Best scores in the last day</h3>
+	<h3><a name='bestScoresLastDay'>Best scores in the last day</a></h3>
 	<div>
 	<%
 		// List of recent best scores in the last day
@@ -457,9 +474,10 @@ private ArrayList<Integer> randomize() {
 		ArrayList<User> bestLastDay = resultsToUsers(results);
 		listPerformers(out, results, bestLastDay);
 	%>
+	<br /><a href='#top'>Back to top</a>
 	</div>
 	
-	<h3>Recent quiz scores</h3>
+	<h3><a name='recentScores'>Recent quiz scores</a></h3>
 	<div>
 	<%
 		// List of recent 
@@ -467,10 +485,11 @@ private ArrayList<Integer> randomize() {
 		ArrayList<User> lastDay = resultsToUsers(results);
 		listPerformers(out, results, lastDay);
 	%>
+	<br /><a href='#top'>Back to top</a>
 	</div>
 	
-	<h3>Statistics for this quiz</h3>
-	<div>
+	<h3><a name='statistics'>Statistics for this quiz</a></h3>
+	<div id='table'>
 	<%
 		ArrayList<Double> numStats = QuizResult.getNumericStatistics(quiz
 				.getQuiz_id());
@@ -478,21 +497,21 @@ private ArrayList<Integer> randomize() {
 		if (results != null) {
 			DecimalFormat df = new DecimalFormat("0%");
 			DecimalFormat df2 = new DecimalFormat("#");
-			out.println("<p>Number of users who have taken this quiz: "
+			out.println("<div id='row'><div id='left'>Number of users who have taken this quiz:</div><div id='right'>"
 					+ (df2.format(numStats.get(QuizResult.NUM_USERS))));
-			out.println("</p><p>Number of times this quiz has been taken: "
+			out.println("</div></div><div id='row'><div id='left'>Number of times this quiz has been taken:</div><div id='right'>"
 					+ (df2.format(numStats.get(QuizResult.NUM_TIMES))));
-			out.println("</p><p>Average Percent Correct: "
+			out.println("</div></div><div id='row'><div id='left'>Average percent correct:</div><div id='right'>"
 					+ df.format(numStats.get(QuizResult.AVG_PERCENT)));
-			out.println("</p><p>Average time taken: "
+			out.println("</div></div><div id='row'><div id='left'>Average time taken:</div><div id='right'>"
 					+ df2.format((numStats.get(QuizResult.AVG_TIME))));
-			out.println("</p><p>Number of plays since yesterday: "
+			out.println("</div></div><div id='row'><div id='left'>Number of plays since yesterday:</div><div id='right'>"
 					+ df2.format((numStats.get(QuizResult.NUM_DAY_PLAYS))));
 
-			String tags[] = { "</p><p>Best Score: ",
-					"</p><p>Worst Score: ", "</p><p>Longest Play: ",
-					"</p><p>Shortest Play: ", "</p><p>Most Recent Play: ",
-					"</p><p>First Play: " };
+			String tags[] = { "</div></div><div id='row'><div id='left'>Best Score:</div><div id='right'>",
+					"</div></div><div id='row'><div id='left'>Worst Score:</div><div id='right'>", "</div></div><div id='row'><div id='left'>Longest Play:</div><div id='right'>",
+					"</div></div><div id='row'><div id='left'>Shortest Play:</div><div id='right'>", "</div></div><div id='row'><div id='left'>Most Recent Play:</div><div id='right'>",
+					"</div></div><div id='row'><div id='left'>First Play:</div><div id='right'>" };
 
 			results = QuizResult.getResultStatistics(quiz.getQuiz_id());
 
@@ -512,12 +531,13 @@ private ArrayList<Integer> randomize() {
 						+ " by <a href='profile.jsp?id=" + rs.userId + "'>"
 						+ userName + "</a> on " + rs.dateString());
 			}
-			out.println("</p>");
+			out.println("</div></div></div>");
 		}
 	%>
+	<br /><a href='#top'>Back to top</a>
 	</div>
 	
-	<h3>Ratings and Reviews for this quiz</h3>
+	<h3><a name='ratingsReviews'>Ratings and Reviews for this quiz</a></h3>
 	<div>
 		<%
 			ArrayList<Review> reviews = ReviewManager.getReviews(quiz.getQuiz_id());
@@ -527,6 +547,7 @@ private ArrayList<Integer> randomize() {
 				out.println("<p>[ Rating: "+newReview.review_score+" ]</p>");
 			}
 		%>
+	<br /><a href='#top'>Back to top</a>
 	</div>
 </div><!-- end accordion -->
 </div><!-- end content -->

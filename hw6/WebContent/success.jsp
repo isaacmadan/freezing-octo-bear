@@ -9,7 +9,7 @@
 <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
-<link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Patrick+Hand+SC|Sintony|Merriweather|Merriweather+Sans' rel='stylesheet' type='text/css'>
 <script src="site.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -34,34 +34,47 @@
 	}
 %>
 
-<div class="header"><div class="pad"><a href='index.jsp'>Quizzard</a></div></div>
+<div class='header-wrapper'>
+<div class="header"><a href='index.jsp'>QUIZZARD</a>
 
-<div class="nav">
-	<div id="links">
-	<ul>
+	<ul class='menu'>
 		<li><a href = "make_quiz.jsp">Make a quiz</a></li>
 		<li><% out.println("<a href='profile.jsp?id="+user.getId()+"'>My public profile</a>"); %></li>
 		<li><% out.println("<a href='inbox.jsp'>My inbox</a>"); %></li>
 		<li><% out.println("<a href='history.jsp'>My performance history</a>"); %></li>
 		<li><a href="logout.jsp">Logout</a></li>
 	</ul>
-	</div>
+	
+</div>
+</div>
 </div>
 
+<div class='subheader-wrapper'>
 <div class='subheader'>
-<div class="pad">
-<%= user.getUsername() %>
+
+<div id='subheader-username'><%= user.getUsername() %></div>
+
 <div id='search'>
 	<form action="search.jsp" method="GET">
 		<input type="text" name="query" />
 		<input type="submit" value="Search" />
 	</form>
 </div>
+
 </div>
 </div>
 
+<div class='content-wrapper'>
 <div class='content'>
 <div id="accordion-off">
+
+Popular quizzes
+Recently created quizzes
+My recent quiz taking
+My recent quiz creation
+Achievements
+Messages
+Recent friends' activities
 
 <h3>Admin News</h3>
 <div>
@@ -335,6 +348,7 @@ if(achievementsStrings.size() == 0)
 
 </div><!-- end of accordion div -->
 </div><!-- end of content div -->
+</div>
 
 <div class='footer'><div class="pad">Quizzard 2013.</div></div>
 </body>
