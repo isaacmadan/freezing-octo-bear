@@ -1,6 +1,8 @@
 package site;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**A simple wrapper class for a user_id, a text message, and a timestamp. If you want a formated timestamp just call
  * announcement.dateString() */
@@ -22,8 +24,8 @@ public class Announcement extends Object{
 		return "Announcement [user_id=" + user_id + ", text=" + text + "]";
 	}
 	public String dateString(){
-		return  java.text.DateFormat.getDateTimeInstance().format(
-				this.time);
+		DateFormat formatter = new SimpleDateFormat ("MMMM dd, yyyy hh:mm aa");
+		 return formatter.format(this.time);
 	}
 
 }

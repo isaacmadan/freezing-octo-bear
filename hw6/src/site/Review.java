@@ -1,6 +1,8 @@
 package site;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /*
 CREATE TABLE reviews (
@@ -39,7 +41,7 @@ public class Review extends Object {
 	}
 	
 	public String dateString(){
-		return  java.text.DateFormat.getDateTimeInstance().format(
-				this.time);
+		DateFormat formatter = new SimpleDateFormat ("MMMM dd, yyyy hh:mm aa");
+		 return formatter.format(this.time);
 	}
 }

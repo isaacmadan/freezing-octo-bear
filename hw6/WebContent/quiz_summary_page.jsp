@@ -58,8 +58,7 @@
 		double score = result.pointsScored / (double) result.maxPossiblePoints;
 		DecimalFormat df = new DecimalFormat("0%");
 		String score2 = df.format(score);
-		String date = java.text.DateFormat.getDateTimeInstance().format(
-				result.timeStamp);
+		String date = result.dateString();
 		try {
 			out.println("<tr><td> <a href='profile.jsp?id=" + result.userId
 					+ "'>" + user.getUsername() + "</a>" + "</td><td>" + score2

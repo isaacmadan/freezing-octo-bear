@@ -1,6 +1,8 @@
 package site;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**Allows users to flag as inappropriate*/
 public class Report extends Object {
@@ -20,8 +22,8 @@ public class Report extends Object {
 	}
 	
 	public String dateString(){
-		return  java.text.DateFormat.getDateTimeInstance().format(
-				this.time);
+		 DateFormat formatter = new SimpleDateFormat ("MMMM dd, yyyy hh:mm aa");
+		 return formatter.format(this.time);
 	}
 	
 }
