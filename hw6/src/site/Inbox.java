@@ -80,7 +80,6 @@ public class Inbox {
 			String query = "SELECT * FROM messages WHERE to_id="+user_id+" ORDER BY created_timestamp DESC";
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
-				
 				messageId = rs.getInt("message_id");
 				String dateString = (new SimpleDateFormat ("MM/dd/yy hh:mm aa")).format(rs.getTimestamp("created_timestamp"));
 				date = dateString;

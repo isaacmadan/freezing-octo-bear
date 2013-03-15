@@ -98,7 +98,8 @@
 					out.println("<br /><form action='making_quiz.jsp' method='POST'>"
 							+ "<input type='hidden' value='question_response' name='question_type' />"
 							+ "<div id='row'><div id='left'>Question? </div><div id='right'><input type='text' name='question_string' /></div></div>"
-							+ "<div id='row'><div id='left'>Answer(s)? </div><div id='right'><div id='answers'><input type='hidden' value='1' name='num_answers' /><input type='text' name='answer1' /></div></div></div>"
+							//+ "<div id='row'><div id='left'>Answer(s)? </div><div id='right'><div id='answers'><input type='hidden' value='1' name='num_answers' /><input type='text' name='answer1' /></div></div></div>"
+									+ "Answer(s)? <div id='answers'><input type='hidden' value='1' name='num_answers' /><input type='text' name='answer1' /></div>"
 							+ "<button>Add Question</button>" + "</form>");
 					out.println("</div>");
 				}

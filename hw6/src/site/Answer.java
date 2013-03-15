@@ -17,6 +17,7 @@ public class Answer {
 	}
 	
 	public Answer(String strToSplit, String symbol) {
+		System.out.println(strToSplit);
 		String[] result = strToSplit.split(symbol);
 		answers = new HashSet<String>();
 		for(int i = 0; i < result.length; i++) {
@@ -29,6 +30,7 @@ public class Answer {
 	}
 	
 	public boolean contains(String response) {
+		System.out.println(answers);
 		if(answers.contains(response)) return true;
 		return false;
 	}
@@ -55,8 +57,13 @@ public class Answer {
 				Statement stmt = con.createStatement();
 				String execution = "Select * from answers WHERE question_id = " + Integer.toString(questionID);
 				ResultSet set = stmt.executeQuery(execution);
-				set.first();
-				Answer result = (new Answer(set.getString("string"),","));
+				Answer result = new Answer();
+				while (set.next()){
+					result.addAnswer(set.getString("string"));
+				}
+				/* Aojia's code
+				set.first();				
+				Answer result = (new Answer(set.getString("string"),","));*/
 				//MyDB.close();
 				return result;
 			} catch (SQLException e) {
