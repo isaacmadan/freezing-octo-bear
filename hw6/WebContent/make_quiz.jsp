@@ -12,31 +12,6 @@
 <link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
 <script src="site.js"></script>
 
-<% /**
-
-miscellania todo list:
-	get review page down - show answers results and points
-
- * Make Quiz servlet should behave as follows
- * 
- * Landing page - quiz name, quiz description, 
- * 					quiz choices 
- * 
- * Start quiz making - "empty quiz - add a question!"
- * 
- * 		display types of questions - then add question button, add point value button, add possible scores
- * 		finish quiz button - takes you to 
- * 
- * quiz summarypage
- *	 allows user to review and change questions, especially picture questions, which might be awful
- 
- 	Relevant methods and their locations
- 		addQuiz to database - quizmanager
- 		generatequizservlet - displays quiz at end of making session
- 		
- */
- %>
-
 <!-- NO TOUCH - USER AUTH CODE -->
 <%
 	if(session == null) {
@@ -86,6 +61,10 @@ miscellania todo list:
 
 </div>
 </div>
+
+<%
+	session.setAttribute("quiz",null);
+%>
 
 <div class='content-wrapper'>
 <div class='content'>
