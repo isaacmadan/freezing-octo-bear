@@ -224,12 +224,30 @@ CREATE TABLE reports (
 
 -- Initialize database with these fields
 
-INSERT INTO messages VALUES
-	(NULL, 1, 3, "Stop crying", 3, NOW()),
-	(NULL, 3, 1, "Now I love crying", 3, NOW()),
-	(NULL, 5, 1, "Love me baby I am lonely", 3, NOW()),
+INSERT INTO users(user_id, username, password, salt, is_admin, login_count) VALUES
 
-INSERT INTO users(user_id, username, password, is_admin, login_count) VALUES
-	(NULL, "isaac", "fb464ec99929d760e016f677dd8537570621835b", FALSE, 0),
-	(NULL, "aojia", "3da541559918a808c2402bba5012f6c60b27661c", FALSE, 1),
-	(NULL, "charlie", "167b6c4a4e415fdfc65024a01a1d46b38344ab1b", FALSE, 300);
+	(NULL, "isaac", "85603b51e76bac1c5a9c316118ae1312254aaaa8", "be0c2801b4d37421556b250f", TRUE, 0),
+	(NULL, "aojia", "3fae269b34f482dd8598d8810211fa4fec74020d","c4dc150822df05ae26f53652", FALSE, 1),
+	(NULL, "charlie", "e05221fe9b8af2eb1b05129b32b4bf0c3e277968","dddc2916e4c9b51699d65444", FALSE, 300);
+	
+INSERT INTO categories VALUES
+(NULL, -1, "Food"),
+(NULL, -1, "Politics"),
+(NULL, -1, "Techonology"),
+(NULL, -1,  "Lifestyle"),
+(NULL, -1,  "Art"),
+(NULL, -1,  "Science"),
+(NULL, -1,  "People"),
+(NULL, -1,  "World"),
+(NULL, -1,  "Film"),
+(NULL, -1,  "Cars"),
+(NULL, -1,  "Music"),
+(NULL, -1,  "Style"),
+(NULL, -1,  "Religion"),
+(NULL, -1,  "Health"),
+(NULL, -1,  "Opinion"),
+(NULL, -1,  "Fashion"),
+(NULL, -1,  "Design"),
+(NULL, -1,  "Culture");
+
+
