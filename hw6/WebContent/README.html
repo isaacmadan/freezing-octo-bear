@@ -21,181 +21,185 @@
 
 <div class='content-wrapper'>
 <div class='content'>
-Team Members: Isaac Madan, Aojia Zhao, Charlie Yang
-SUNet ID's: imadan, aojia93, charlesy
 
-Website: Quizzard
-Main Browser: Chrome Version 25.0.1364.172 m
+<div class='section-white no-border'>
+<h1>Team Members: Isaac Madan, Aojia Zhao, Charlie Yang</h1>
+<h4>SUNet ID's: imadan, aojia93, charlesy</h4>
+</div>
+<div class='section'>
+<h1>Website: Quizzard</h1>
+<h4>Main Browser: Chrome Version 25.0.1364.172 m</h4>
+</div>
 
-Features Implemented: 
-
-Quizzes
-
-	Questions
-		Question - Response 
-		Fill in the Blank
-		Multiple Choice
-		Picture-Response with Question
-
-	All questions can have multiple acceptable answers
-	Random Question Order
-	One Page vs multiple Pages
-	Immediate Correction
-	Practice Mode
-
-	Scoring
-		Quizzes display users's score and completion time
-		Quizzes keep history of user performance
-		Quiz displays top user performances by ranking
-			Breaks ties by duration
+<div class='section-white'>
+<h1>Features Implemented:</h1>
+<h2>Quizzes</h2>
+	<h3>Questions</h3>
+		<p>Question Response</p>
+		<p>Fill in the Blank</p>
+		<p>Multiple Choice</p>
+		<p>Picture Response with Question</p>
+		<p><b>Note: </b>All questions can have multiple acceptable answers</p>
+	
+	<h3>Options</h3>
+	<p>Random Question Order</p>
+	<p>One Page vs multiple Pages</p>
+	<p>Immediate Correction</p>
+	<p>Practice Mode</p>
+	
+	<h3>Scoring</h3>
+		<p>Quizzes display users's score and completion time</p>
+		<p>Quizzes keep history of user performance</p>
+		<p>Quiz displays top user performances by ranking</p>
+		<p>Breaks ties by duration</p>
 			
-Users
+<h2>Users</h2>
+	<h3>Passwords</h3>
+		<p>Passwords are stored as SHA hashes in database</p>
+		<p>Passwords are also salted</p>
+	
+	<h3>Friends</h3>
+		<p>Users can friend each other</p>
+		<p>Users must accept friend request to be friends</p>
+		<p>User profile includes "add as friend button"</p>
+		<p>Search bar lists friends</p>
+		<p>Friends can be removed</p>	
+	
+	<h3>Mail messages</h3>
+		<p>Friend Requests are supported</p>
+		<p>Challenges link to quiz with high score noted</p>
+		<p>Notes - basic messages implemented</p>
+		
+	<h3>History</h3>
+		<p>User performance is listed on quiz pages</p>
+		<p>Abbreviated history noted on profile page</p>
+		
+	<h3>Achievements</h3>
+		<p>Displayed on user homepage</p>
+		<p>Amateur Author - €”The user created a quiz.</p>
+		<p>Prolific Author - The user created five quizzes.</p>
+		<p>Prodigious Author -The user created ten quizzes.</p>
+		<p>Quiz Machine - The user took ten quizzes.</p>
+		<p>I am the Greatest - highest score on quiz,</p>
+		<p>Practice Makes Perfect - taken a quiz in practice mode</p>
 
-	Passwords
-		Passwords are stored as hashes in database
-		Passwords are also salted 
-	
-	Friends
-		Users can friend each other
-		Users must accept friend request to be friends
-		User profile includes "add as friend button"
-		Search bar lists friends
-		Friends can be removed	
-	
-	Mail messages
-		Friend Requests are supported
-		Challenges link to quiz with high score noted
-		Notes - basic messages implemented
+<h2>Administration</h2>
+	<h3>Announcements</h3>
+		<p>Admins can create announcements</p>
+		<p>Accouncements appear on homepage</p>
+		<p>Admins can remove user accounts - popup box asks for verification</p>
+			<p>Removes all quizzes, quiz results, friends and reviews related to this user</p>
+		<p>Admins can remove quizzes - popup box asks for verification</p>
+			<p>Removes all quiz results </p>
+		<p>Admins can clear all the history for a quiz from the quiz homepage</p>
+		<p>Admins can promote other users to admin status</p>
+			<p>Notifies user with notes that they have been promoted and who promoted them</p>
+		<p>Admins can also demote other users</p>
+			<p>Notifies user with notes that they have been demoted and who demoted them</p>
+		<p>Admins can see site statistics</p>
+			<p>Number of users</p>
+			<p>Number of quizzes taken</p>
+			<p>Number of times a quiz has been taken</p>
 		
-	History
-		User performance is listed on quiz pages
-		Abbreviated history noted on profile page
+<h2>Landing page</h2>
+	<p>User can log in with a username</p>
+		<p>If username or password is invalid, user is notified</p>
+	<p>Users can create new accounts</p>
+		<p>If username is already in use, user is notified</p>
+		<p>If a field is blank, the user is notified</p>
 		
-	Achievements
-		Displayed on user homepage
-		Amateur Author - €”The user created a quiz.
-		Prolific Author - The user created five quizzes.
-		Prodigious Author -The user created ten quizzes.
-		Quiz Machine - The user took ten quizzes.
-		I am the Greatest - highest score on quiz,
-		Practice Makes Perfect - taken a quiz in practice mode
+<h2>Homepage - on logging in</h2>
 
-Administration
+	<p>List of popular quizzes</p>
+	<p>List of recently created quizzes</p>
+	<p>List of own recent quiz taking activity</p>
+	<p>List of own recent quiz creating activity</p>
+	<p>List of achievements earned</p>
+	<p>Indicator for messages, friend requests, and challenges</p>
+		<p>Counts instances of each type of message</p>
+		<p>Shows how many have been received in the last week</p>
+	<p>Recent friend activities - links to friends profile</p>
+		<p>quizzes taken by friends</p>
+		<p>achievements earned by friends</p>
 	
-	Announcements
-		Admins can create announcements
-		Accouncements appear on homepage
-		Admins can remove user accounts - popup box asks for verification
-			Removes all quizzes, quiz results, friends and reviews related to this user
-		Admins can remove quizzes - popup box asks for verification
-			Removes all quiz results 
-		Admins can clear all the history for a quiz from the quiz homepage
-		Admins can promote other users to admin status
-			Notifies user with notes that they have been promoted and who promoted them
-		Admins can also demote other users
-			Notifies user with notes that they have been demoted and who demoted them
-		Admins can see site statistics
-			Number of users
-			Number of quizzes taken
-			Number of times a quiz has been taken
+	<h4>Extensions:</h4>
+		<p>Administrator announcements</p>
+		<p>Administrator can add announcements</p>
 		
+	
+<h2>Quiz Summary Page</h2>
 
-Landing page
-	User can log in with a username
-		If username or password is invalid, user is notified
-	Users can create new accounts
-		If username is already in use, user is notified
-		If a field is blank, the user is notified
+	<p>User can take quiz</p>
+	<p>Shows creator of quiz</p>
+	<p>List of user's past performance on quiz</p>
+	<p>List of high scores of all time</p>
+	<p>List of high scores in last day</p>
+	<p>List showing all recent performances, good and bad</p>
+	<p>Summary statistics for quiz</p>
+	
+	<h4>Quiz Result page - on finishing quiz</h4>
+		<p>Shows score and time</p>
+		<p>Shows incorrect answers</p>
+		<p>Links back to quiz summary page</p>
+	
+<h2>User sessions and threading</h2>
+	
+	<p>Multiple users can simultaneously visit Quizzard</p>
+	
+<h2>Other Extensions for 3 person group</h2>
+	
+	<h3>Tags and Categories</h3>
+		<p>Users can search for tags and categories</p>
+		<h4>Tags</h3>
+			<p>Tags displayed on quiz summary page</p>
+			<p>Quizzes can be tagged on creation</p>
+			<p>Quizzes can have multiple tags</p>
+			<p>Clicking on a tag brings up a page of all quizzes with the same tag</p>
+		<h4>Category</h4>
+			<p>Categories displayed on quiz summary page</p>
+			<p>Quizzes must be categorized with a pre-defined category</p>
+			<p>Clicking on a category brings up a page of all quizzes with the same category</p>
+			<p>Administrators can create categories</p>
 		
-Homepage - on logging in
-
-	List of popular quizzes
-	List of recently created quizzes
-	List of own recent quiz taking activity
-	List of own recent quiz creating activity
-	List of achievements earned
-	Indicator for messages, friend requests, and challenges
-		Counts instances of each type of message
-		Shows how many have been received in the last week
-	Recent friend activities - links to friends profile
-		quizzes taken by friends
-		achievements earned by friends
-	
-	Extensions:
-		Administrator announcements
-		Administrator can add announcements
-		
-	
-Quiz Summary Page
-
-	User can take quiz
-	Shows creator of quiz
-	List of user's past performance on quiz
-	List of high scores of all time
-	List of high scores in last day
-	List showing all recent performances, good and bad
-	Summary statistics for quiz
-	
-	Quiz Result page - on finishing quiz
-		Shows score and time
-		Shows incorrect answers
-		Links back to quiz summary page
-	
-User sessions and threading
-	
-	Multiple users can simultaneously visit Quizzard
-	
-Other Extensions for 3 person group
-	
-	Tags and Categories
-		Users can search for tags and categories
-		Tags
-			Tags displayed on quiz summary page
-			Quizzes can be tagged on creation
-			Quizzes can have multiple tags
-			Clicking on a tag brings up a page of all quizzes with the same tag 
-		Category
-			Categories displayed on quiz summary page
-			Quizzes must be categorized with a pre-defined category
-			Clicking on a category brings up a page of all quizzes with the same category
-			Administrators can create categories
-		
-	Ratings and Reviews
-		Users can review quizzes they have already taken
-		Users can only review a quiz once
-		Each review is composed of a written review and score
-		Quizzes display their average rating
+	<h3>Ratings and Reviews</h3>
+		<p>Users can review quizzes they have already taken</p>
+		<p>Users can only review a quiz once</p>
+		<p>Each review is composed of a written review and score</p>
+		<p>Quizzes display their average rating</p>
 		
 
-	Reporting Users
-		Users can report quizzes on a quiz summary page
-		Admins can review all reported quizzes and delete those quizzes
+	<h3>Reporting Users</h3>
+		<p>Users can report quizzes on a quiz summary page</p>
+		<p>Admins can review all reported quizzes and delete those quizzes</p>
 		
-	Error Handling
-		User is prompted to enter data in to blank fields whenever non-empty input is relevant
+	<h3>Error Handling</h3>
+		<p>User is prompted to enter data in to blank fields whenever non-empty input is relevant</p>
 		
-	Non-Registered Access
-		Users cannot visit pages unless they are logged in
+	<h3>Non-Registered Access</h3>
+		<p>Users cannot visit pages unless they are logged in</p>
 		
-	Cookies
-		Users are automatically logged back in when they visit if they have not logged out in a previous session
+	<h3>Cookies</h3>
+		<p>Users are automatically logged back in when they visit if they have not logged out in a previous session</p>
 		
-	Practice Mode
-		Users can take a quiz in practice mode
-		Repeats questions a user has difficulty with up to three times
-		Removes questions that the user got right
+	<h3>Practice Mode</h3>
+		<p>Users can take a quiz in practice mode</p>
+		<p>Repeats questions a user has difficulty with up to three times</p>
+		<p>Removes questions that the user got right</p>
 		
-	Social Sharing
-		From the quiz summary page, users can
-			Like on Facebook
-			+1 on Google Plus
-			Tweet the quiz
+	<h3>Social Sharing</h3>
+		<p>From the quiz summary page, users can</p>
+			<p>Like on Facebook</p>
+			<p>+1 on Google Plus</p>
+			<p>Tweet the quiz</p>
 			
-	Wizard Hat Logo and Creative Website Name
-	
-Notes and Bugs:
+	<h3>Wizard Hat Logo and Creative Website Name</h3>
+</div>
+
+<div class='section'>
+<h1>Notes and Bugs:</h1>
 	Mysql Database is sometimes very slow - causing pages to be shown with information that is not up to date
 	For taking the quiz, the user must choose a radio button for multiple choice questions.
+</div>
 	
 </div>
 </div>
