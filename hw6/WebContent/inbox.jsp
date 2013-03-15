@@ -71,10 +71,10 @@
 	}
 %>
 
-<a href="compose.jsp">Send a message</a>
+<p><a href="compose.jsp">Send a message</a></p><br />
 
-<table>
-	<tr><th>Date</th><th>From</th><th>Message</th><th>Delete</th></tr>
+<div id='table'>
+	<div id='row-td'><div id='left-no-bound'>Date</div><div id='right-no-bound'>From</div><div id='right-no-bound'>Message</div><div id='right-no-bound'>Delete</div></div>
 	<%
 		AccountManager manager = new AccountManager();
 		ArrayList<TextMessage> messages = Inbox.getMessagesById(user.getId());
@@ -82,19 +82,19 @@
 		for(int i=0; i<messages.size(); i++) {
 			User fromUser = messages.get(i).getFromUser();
 			
-			out.println("<tr><td>"+messages.get(i).getTimestamp()+"</td><td>"
+			out.println("<div id='row'><div id='left-no-bound'>"+messages.get(i).getTimestamp()+"</div><div id='right-no-bound'>"
 						+"<a href='profile.jsp?id="+fromUser.getId()+"'>"
-						+fromUser.getUsername()+"</a>"+"</td><td>"+messages.get(i).getNote()
-						+"</td><td>"
+						+fromUser.getUsername()+"</a>"+"</div><div id='right-no-bound'>"+messages.get(i).getNote()
+						+"</div><div id='left-no-bound'>"
 						+"<form action='DeleteTextMessageServlet' method='POST'>"
 						+"<input type='hidden' name='num_messages' value='1' />"
 						+"<input type='hidden' name='delete_"+i+"' value='"
 						+messages.get(i).getMessageId()+"' />"
 						+"<input type='submit' value='Delete' />"
-						+"</form></td></tr>");
+						+"</form></div></div>");
 		}
 	%>
-</table>
+</div>
 
 </div>
 </div>

@@ -2,7 +2,7 @@
 
 body { font-family:'Helvetica', 'Arial', serif!important; margin:0px; }
 
-input[type=text] { height:20px; font-size:20px; font-family:'Helvetica', 'Arial', serif!important; padding:5px; }
+input[type=text],textarea { height:20px; font-size:20px; font-family:'Helvetica', 'Arial', serif!important; padding:5px; }
 input[type=submit], button { font-size: 0.7em; font-family:'Helvetica', 'Arial', serif!important; }
 
 .header-wrapper { width: 100%; background-color:#351330; }
@@ -43,7 +43,6 @@ td { color:#000000; background-color:#E8E8E8; }
 .login h1 { font-size:48px; }
 .login a { color: white; }
 .login input[type=text], input[type=password] { height: 30px; font-size:20px; padding: 5px; font-family:'Helvetica', 'Arial', serif!important; }
-/**#login-background { background-image: url('http://www.dvd-ppt-slideshow.com/blog/wp-content/uploads/2010/08/universe-wallpaper-20.jpg'); }**/
 #login-background { background-image: url('http://www.dvd-ppt-slideshow.com/blog/wp-content/uploads/2010/08/universe-wallpaper-20.jpg'); }
 .login th, .login td { background-color:transparent; color: white; border:0px; }
 .login input[type=submit]  { font-size: 1.0em; font-family:'Helvetica', 'Arial', serif!important; }
@@ -69,7 +68,8 @@ td { color:#000000; background-color:#E8E8E8; }
 #table { display: table; }
 #row  { display: table-row; }
 #row:hover { background-color:lightgray; }
-#left, #right, #middle { display: table-cell; padding:10px; max-width:250px; overflow:hidden; text-overflow:ellipsis; }
+#left, #right, #middle { display: table-cell; padding:10px; max-width:250px; overflow:hidden; word-wrap:break-word; }
+#left-no-bound, #right-no-bound, #middle-no-bound { display: table-cell; padding:10px; max-width:250px; overflow:hidden; word-wrap:break-word; }
 #left { padding-right: 10px; font-weight:bold; }
 #row-td { display: table-row; background-color:#64908A; color:white; margin:1px;}
 
