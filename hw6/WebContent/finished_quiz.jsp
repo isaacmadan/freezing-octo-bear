@@ -33,12 +33,12 @@ ArrayList<Answer> answers;
 	}
 %>
 <!-- END -->
-<title>Quiz Result</title>
+<title>Quizzard - Quiz Result</title>
 </head>
 <body>
 
 <div class='header-wrapper'>
-<div class="header"><a href='index.jsp'>QUIZZARD</a>
+<div class="header"><img src='wizard_hat.png' width='30px' /><a href='index.jsp'>QUIZZARD</a>
 
 	<ul class='menu'>
 		<li><a href = "make_quiz.jsp">Make a quiz</a></li>

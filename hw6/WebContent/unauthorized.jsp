@@ -17,7 +17,7 @@
 <body>
 
 <div class='header-wrapper'>
-<div class="header"><a href='index.jsp'>QUIZZARD</a>
+<div class="header"><img src='wizard_hat.png' width='30px' /><a href='index.jsp'>QUIZZARD</a>
 
 </div>
 </div>
