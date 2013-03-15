@@ -105,7 +105,7 @@
 %>
 
 
-<div class='col-1-3'>
+<div class='col-1-5'>
 <h2>Friends</h2>
 <%
 	HashSet<Integer> friends = manager.getFriends(Integer.parseInt(user_id));
@@ -134,7 +134,8 @@
 	%>
 </form>
 </div>
-<div class="col-1-3">
+
+<div class="col-3-5">
 <h2>History</h2>
 <div class='pad-right'>
 <table>
@@ -162,7 +163,7 @@
 </div>
 </div>
 
-<div class="col-1-3">
+<div class="col-1-5">
 <h2>Achievements</h2>
 <%
 	Achievements achievements = manager.getAchievements(user.getId());

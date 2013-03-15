@@ -50,6 +50,8 @@ td { color:#000000; background-color:#E8E8E8; }
 [class*='col-'] { float: left; min-height: 300px; }
 .col-1-2 { width: 50%; }
 .col-1-3 { width: 33.33%; }
+.col-1-5 { width: 20%; }
+.col-3-5 { width: 60%; }
 
 #accordion { font-family:'Helvetica', 'Arial', serif!important; }
 
