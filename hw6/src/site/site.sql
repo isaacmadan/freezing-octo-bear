@@ -7,13 +7,20 @@ CREATE TABLE users (
 	user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     username CHAR(64),
     password TEXT,
-    salt, TEXT,
+    salt TEXT,
     is_admin BOOLEAN,
     login_count INT,
     created_timestamp timestamp default '0000-00-00 00:00:00', 
   	last_login_timestamp timestamp default now() on update now(), 
 	FULLTEXT(username)
   	);
+
+  	INSERT INTO users(user_id, username, password, salt, is_admin, login_count) VALUES
+
+	(NULL, "isaac", "85603b51e76bac1c5a9c316118ae1312254aaaa8", "be0c2801b4d37421556b250f", TRUE, 0),
+	(NULL, "aojia", "3fae269b34f482dd8598d8810211fa4fec74020d","c4dc150822df05ae26f53652", FALSE, 1),
+	(NULL, "charlie", "e05221fe9b8af2eb1b05129b32b4bf0c3e277968","dddc2916e4c9b51699d65444", FALSE, 300);
+	
 
 
 DROP TABLE IF EXISTS quizzes;
@@ -169,8 +176,8 @@ CREATE TABLE achievements (
     prodigious_author BOOLEAN,
     quiz_machine BOOLEAN,
     i_am_greatest BOOLEAN,
-    practice_perfect BOOLEAN
-    created_timestamp TIMESTAMP default now(),
+    practice_perfect BOOLEAN,
+    created_timestamp TIMESTAMP default now()
 );
 
 DROP TABLE IF EXISTS announcements;
@@ -191,45 +198,6 @@ CREATE TABLE categories (
 	FULLTEXT(string)
 );
 
-DROP TABLE IF EXISTS tags;
-
-CREATE TABLE tags (
-	tag_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	quiz_id INT,
-	string TEXT,
-	FULLTEXT(string)
-);
-
-DROP TABLE IF EXISTS reviews;
-
-CREATE TABLE reviews (
-	review_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	user_id INT,
-	quiz_id INT,
-	string TEXT,
-	review_score INT,
-	created_timestamp TIMESTAMP default now(),
-);
-
-DROP TABLE IF EXISTS reports;
-
-CREATE TABLE reports (
-	report_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	user_id INT,
-	quiz_id INT,
-	string TEXT,
-	created_timestamp TIMESTAMP default now()
-);
-
-
--- Initialize database with these fields
-
-INSERT INTO users(user_id, username, password, salt, is_admin, login_count) VALUES
-
-	(NULL, "isaac", "85603b51e76bac1c5a9c316118ae1312254aaaa8", "be0c2801b4d37421556b250f", TRUE, 0),
-	(NULL, "aojia", "3fae269b34f482dd8598d8810211fa4fec74020d","c4dc150822df05ae26f53652", FALSE, 1),
-	(NULL, "charlie", "e05221fe9b8af2eb1b05129b32b4bf0c3e277968","dddc2916e4c9b51699d65444", FALSE, 300);
-	
 INSERT INTO categories VALUES
 (NULL, -1, "Food"),
 (NULL, -1, "Politics"),
@@ -249,5 +217,40 @@ INSERT INTO categories VALUES
 (NULL, -1,  "Fashion"),
 (NULL, -1,  "Design"),
 (NULL, -1,  "Culture");
+
+DROP TABLE IF EXISTS tags;
+
+CREATE TABLE tags (
+	tag_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	quiz_id INT,
+	string TEXT,
+	FULLTEXT(string)
+);
+
+DROP TABLE IF EXISTS reviews;
+
+CREATE TABLE reviews (
+	review_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT,
+	quiz_id INT,
+	string TEXT,
+	review_score INT,
+	created_timestamp TIMESTAMP default now()
+);
+
+DROP TABLE IF EXISTS reports;
+
+CREATE TABLE reports (
+	report_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT,
+	quiz_id INT,
+	string TEXT,
+	created_timestamp TIMESTAMP default now()
+);
+
+
+-- Initialize database with these fields
+
+
 
 
