@@ -100,7 +100,9 @@ if(request.getParameter("random") != null) {
 
 
 for(int i = 0; i < questions.size(); i++) {
-	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i)))) {
+	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i))) ||
+			(answers.get(i).contains("") && request.getParameter("answer_" + Integer.toString(i)) == null && 
+			questions.get(i).getQuestionType() == 3)) {
 		score++;
 		out.println("Question " + (i + 1) + ": Correct!<br>");
 		out.println("Acceptable Answers: " + answers.get(i).getAnswers() + "<br><br>");

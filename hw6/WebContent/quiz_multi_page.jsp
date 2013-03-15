@@ -91,16 +91,19 @@
 		if(request.getParameter("immediate") != null) {
 			if(i != questions.size())
 				out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(i) + "\" />");
-			if(i > 0 && request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null && 
-					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + randomIndex.get(i - 1)))) {
+			if((i > 0 && request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null && 
+					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + randomIndex.get(i - 1)))) ||
+					(i > 0 && questions.get(randomIndex.get(i - 1)).getQuestionType() == 3 &&
+					request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) == null &&
+					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(""))) {
 				score++;
-				out.println("Question " + (randomIndex.get(i - 1) + 1) + ": Correct!<br>");
+				out.println("Question " + (i) + ": Correct!<br>");
 				out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br><br>");
 				ArrayList<String> ans = (ArrayList<String>)session.getAttribute("listOfAnswers");
 				ans.add(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))));
 			}
 			else {
-				out.println("Question " + (randomIndex.get(i - 1) + 1) + ": Incorrect, Sorry!<br>");
+				out.println("Question " + (i) + ": Incorrect, Sorry!<br>");
 				out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br><br>");
 				ArrayList<String> ans = (ArrayList<String>)session.getAttribute("listOfAnswers");
 				ans.add(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))));
@@ -139,7 +142,8 @@
 			out.println("<input type=\"hidden\" name=\"question_num\" value=\"" + Integer.toString(i + 1) + "\" />");
 		}
 		if(i > 0 && request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) == null &&
-				questions.get(randomIndex.get(i - 1)).getQuestionType() == 3) {
+				questions.get(randomIndex.get(i - 1)).getQuestionType() == 3 && 
+				Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains("")) {
 			ArrayList<String> ans = (ArrayList<String>)session.getAttribute("listOfAnswers");
 			ans.add(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))));
 			}
@@ -148,8 +152,11 @@
 			ans.add(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))));
 			session.setAttribute("listOfAnswers", ans);
 		}
-		if(i > 0 && request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null && 
-				Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))))) {
+		if((i > 0 && request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null && 
+				Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))))) ||
+				(i > 0 && questions.get(randomIndex.get(i - 1)).getQuestionType() == 3 &&
+				request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) == null &&
+				Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(""))) {
 			score++;
 		}
 		out.println("<input type = \"hidden\" name =\"score\" value = \"" + Integer.toString(score) +"\" >");
@@ -158,8 +165,11 @@
 		}
 	}
 	else {
-		if(request.getParameter("answer_" + Integer.toString(randomIndex.get(questions.size() - 1))) != null && 
-				Answer.getAnswerForQuestion(questions.get(randomIndex.get(questions.size() - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(randomIndex.get(questions.size() - 1))))) {
+		if((request.getParameter("answer_" + Integer.toString(randomIndex.get(questions.size() - 1))) != null && 
+				Answer.getAnswerForQuestion(questions.get(randomIndex.get(questions.size() - 1)).getQuestionId()).contains(request.getParameter("answer_" + Integer.toString(randomIndex.get(questions.size() - 1))))) ||
+				(questions.get(randomIndex.get(questions.size() - 1)).getQuestionType() == 3 &&
+				request.getParameter("answer_" + Integer.toString(randomIndex.get(questions.size() - 1))) == null &&
+				Answer.getAnswerForQuestion(questions.get(randomIndex.get(questions.size() - 1)).getQuestionId()).contains(""))) {
 			score++;
 		}
 		ArrayList<String> ans = (ArrayList<String>)session.getAttribute("listOfAnswers");

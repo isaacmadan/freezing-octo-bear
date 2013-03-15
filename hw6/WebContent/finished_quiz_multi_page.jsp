@@ -88,7 +88,9 @@ if(!quiz.isImmediate_correction()) {
 for(int i = 0; i < questions.size(); i++) {
 	questions.get(randomIndex.get(i));
 	System.out.println(ans.get(i));
-	if(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).contains(ans.get(i))) {
+	if(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).contains(ans.get(i)) ||
+			(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).contains("") && questions.get(randomIndex.get(i)).getQuestionType() == 3
+			&& ans.get(i) == null)) {
 		out.println("Question " + (i + 1) + ": Correct!<br>");
 		out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers() + "<br><br>");
 	}
