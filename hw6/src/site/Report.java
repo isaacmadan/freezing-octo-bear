@@ -22,7 +22,7 @@ public class Report extends Object {
 	}
 	
 	public String dateString(){
-		 DateFormat formatter = new SimpleDateFormat ("MMMM dd, yyyy hh:mm aa");
+		 DateFormat formatter = new SimpleDateFormat ("MM/dd/yy hh:mm aa");
 		 return formatter.format(this.time);
 	}
 	

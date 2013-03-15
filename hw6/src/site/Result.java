@@ -57,7 +57,7 @@ public class Result extends Object{
 	/**Returns a formatted date string from a Result*/
 	public String dateString(){
 		  
-		 DateFormat formatter = new SimpleDateFormat ("MMMM dd, yyyy hh:mm aa");
+		 DateFormat formatter = new SimpleDateFormat ("MM/dd/yy hh:mm aa");
 		 
 		 return formatter.format(this.timeStamp);
 		    

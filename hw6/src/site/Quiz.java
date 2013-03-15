@@ -3,6 +3,8 @@ package site;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import com.mysql.jdbc.Connection;
@@ -289,5 +291,10 @@ public class Quiz {
 
 	public void setTags(String tags) {
 		this.tags = tags;
+	}
+	
+	public String dateString(){
+		DateFormat formatter = new SimpleDateFormat ("MM/dd/yy hh:mm aa");
+		 return formatter.format(this.created_timestamp);
 	}
 }

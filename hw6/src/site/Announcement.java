@@ -24,7 +24,7 @@ public class Announcement extends Object{
 		return "Announcement [user_id=" + user_id + ", text=" + text + "]";
 	}
 	public String dateString(){
-		DateFormat formatter = new SimpleDateFormat ("MMMM dd, yyyy hh:mm aa");
+		DateFormat formatter = new SimpleDateFormat ("MM/dd/yy hh:mm aa");
 		 return formatter.format(this.time);
 	}
 
