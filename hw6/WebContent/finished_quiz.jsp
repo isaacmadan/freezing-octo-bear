@@ -107,6 +107,7 @@ for(int i = 0; i < questions.size(); i++) {
 		score++;
 		out.println("<div class='"+color+"'>");
 		out.println("<h3>Question " + (i + 1) + ": Correct!</h3><br>");
+		out.println("<h4>Question Text: " + questions.get(i) + "</h4>");
 		out.println("<h4>Acceptable Answers: </h4>");
 		out.println("<span>");
 		for(String str:answers.get(i).getAnswers()) {
@@ -118,6 +119,7 @@ for(int i = 0; i < questions.size(); i++) {
 	else {
 		out.println("<div class='"+color+"'>");
 		out.println("<h3>Question " + (i + 1) + ": Incorrect, sorry!</h3><br>");
+		out.println("<h4>Question Text: " + questions.get(i) + "</h4>");
 		out.println("<h4>Acceptable Answers: </h4>");
 		out.println("<span>");
 		for(String str:answers.get(i).getAnswers()) {

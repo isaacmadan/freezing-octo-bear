@@ -86,23 +86,31 @@ ArrayList<Integer> randomIndex = (ArrayList<Integer>)session.getAttribute("rando
 
 if(!quiz.isImmediate_correction()) {
 for(int i = 0; i < questions.size(); i++) {
+	String color = "section-white";
+	if(i % 2 == 0) color = "section";
 	if(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).contains(ans.get(i))) {
-		out.println("Question " + (i + 1) + ": Correct!<br>");
-		out.println("Acceptable Answers: <br>");
-		out.println("<ul>");
+		out.println("<div class='"+color+"'>");
+		out.println("<h3>Question " + (i + 1) + ": Correct!</h3><br>");
+		out.println("<h4>Question Text: " + questions.get(i) + "</h4>");
+		out.println("<h4>Acceptable Answers: </h4>");
+		out.println("<span>");
 		for(String str:Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers()) {
-			out.println("<li>" + str + "</li>");
+			out.println("<p>" + str + "</p>");
 		}
-		out.println("</ul>");
+		out.println("</span>");
+		out.println("</div>");
 	}
 	else {
-		out.println("Question " + (i + 1) + ": Incorrect, Sorry!<br>");
-		out.println("Acceptable Answers: <br>");
-		out.println("<ul>");
+		out.println("<div class='"+color+"'>");
+		out.println("<h3Question " + (i + 1) + ": Incorrect, sorry!</h3><br>");
+		out.println("<h4>Question Text: " + questions.get(i) + "</h4>");
+		out.println("<h4>Acceptable Answers: </h4>");
+		out.println("<span>");
 		for(String str:Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers()) {
-			out.println("<li>" + str + "</li>");
+			out.println("<p>" + str + "</p>");
 		}
-		out.println("</ul>");
+		out.println("</span>");
+		out.println("</div>");
 	}
 }
 }
