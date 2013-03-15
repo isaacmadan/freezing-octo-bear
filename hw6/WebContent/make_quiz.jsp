@@ -69,13 +69,13 @@
 <div class='content-wrapper'>
 <div class='content'>
 <form action="making_quiz.jsp" method="POST" onsubmit="return validateForm(['quiz_name','quiz_description'])">
-	<table>
-		<tr><td><label>Name of Quiz</label></td>
-		<td><input type="text" id="quiz_name" name="quiz_name"></input></td></tr>
-		<tr><td><label>Quiz Description</label></td>
-		<td><input type="text" size="100" id="quiz_description" name="quiz_description"></td></tr>
-		<tr><td>Categories</td>
-		<td>
+	<div id='table'>
+		<div id='row'><div id='left'><label>Name of Quiz</label></div>
+		<div id='right'><input type="text" id="quiz_name" name="quiz_name"></input></div></div>
+		<div id='row'><div id='left'><label>Quiz Description</label></div>
+		<div id='right'><textarea type="text" id="quiz_description" name="quiz_description"></textarea></div></div>
+		<div id='row'><div id='left'>Categories</div>
+		<div id='right'>
 			<select id='category' name='category'>
 				<%
 					new CatTagManager();
@@ -85,18 +85,18 @@
 					}
 				%>
 			</select>
-		</td></tr>
-		<tr><td>Tags</td>
-		<td><input type='text' id='tags' name='tags' /></td></tr>
-		<tr><td><label>Allow Practice Mode?</label></td>
-		<td><input type = "checkbox" name = "practice_mode" id = "practice_mode">Yes (leave blank for no)</td></tr>
-		<tr><td><label>List Questions in Random Order?</label></td>
-		<td><input type = "checkbox" name = "random_question" id = "random_question">Yes (leave blank for no)</td></tr>
-		<tr><td><label>List Questions on One Page?</label></td>
-		<td><input type = "checkbox" name = "one_page" id = "one_page">Yes (leave blank for multiple pages)</td></tr>
-		<tr><td><label>Allow Immediate Correction?</label></td>
-		<td><input type = "checkbox" name = "immediate_correction" id = "immediate_correction">Yes (leave blank for no)</td></tr>
-	</table>
+		</div></div>
+		<div id='row'><div id='left'>Tags</div>
+		<div id='right'><input type='text' id='tags' name='tags' /></div></div>
+		<div id='row'><div id='left'><label>Allow Practice Mode?</label></div>
+		<div id='right'><input type = "checkbox" name = "practice_mode" id = "practice_mode">Yes (leave blank for no)</div></div>
+		<div id='row'><div id='left'><label>List Questions in Random Order?</label></div>
+		<div id='right'><input type = "checkbox" name = "random_question" id = "random_question">Yes (leave blank for no)</div></div>
+		<div id='row'><div id='left'><label>List Questions on One Page?</label></div>
+		<div id='right'><input type = "checkbox" name = "one_page" id = "one_page">Yes (leave blank for multiple pages)</div></div>
+		<div id='row'><div id='left'><label>Allow Immediate Correction?</label></div>
+		<div id='right'><input type = "checkbox" name = "immediate_correction" id = "immediate_correction">Yes (leave blank for no)</div></div>
+	</div>
 	<input type='hidden' name='user_id' value='<%= user.getId() %>' />
 	<input type="submit" value = "Make Quiz" />
 </form>

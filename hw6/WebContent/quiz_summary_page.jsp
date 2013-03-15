@@ -215,56 +215,20 @@
 		</h3>
 	</div>
 
-	<h3>
-	Categories:
-	<%
-		new CatTagManager();
-		out.println("<a href='cat_tag.jsp?category="+CatTagManager.getCategoryFromQuiz(quiz.getQuiz_id())+"'>"+CatTagManager.getCategoryFromQuiz(quiz.getQuiz_id())+"</a>");
-	%>
-	</h3>
+	<div class='col-1-4'>
+	<div class='pad-left-small'>
+		<p class='h3'><a name='top'>Menu</a></p>
+		<p><a href='#yourPastScores'>Your past scores</a></p>
+		<p><a href='#bestScoresAllTime'>Best scores of all time</a></p>
+		<p><a href='#bestScoresLastDay'>Best scores in the last day</a></p>
+		<p><a href='#recentScores'>Recent scores</a></p>
+		<p><a href='#statistics'>Statistics</a></p>
+		<p><a href='#ratingsReviews'>Ratings and review</a></p>
+	</div>
+	</div>
 	
-	<h3>
-	Tags:
-	<%
-		for(String tag : CatTagManager.getTagsFromQuiz(quiz.getQuiz_id())) {
-			out.println("<a href='cat_tag.jsp?tag="+tag+"'>"+tag+"</a>");
-		}
-	%>
-	</h3>
-	
-	Quiz Author:
-	<a href="profile.jsp?id=<%=quiz.getUser_id()%>"> <%=manager.getAccountById(String.valueOf(quiz.getUser_id()))
-					.getUsername()%></a>
-	<p></p>
-	
-	Average Rating:
-	<%
-		out.println(ReviewManager.getAverageRating(ReviewManager.getReviews(quiz.getQuiz_id())));
-	%>
-	<br />
-	Share:<br />
-	<div>
-	<!-- FACEBOOK LIKE BUTTON -->
-	<div class="fb-like" data-href="http://localhost:8080/hw6/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true" data-font="segoe ui"></div>
-
-	<!-- GOOGLE PLUS BUTTON --><br />
-	<!-- Place this tag where you want the +1 button to render. -->
-	<div class="g-plusone" data-annotation="inline" data-width="300"></div>
-
-	<!-- Place this tag after the last +1 button tag. -->
-	<script type="text/javascript">
-	  (function() {
-	    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-	    po.src = 'https://apis.google.com/js/plusone.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-	  })();
-	</script>
-	
-	<!-- TWITTER SHARE BUTTON --><br />
-	<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
-	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-	</div><br />
-	
+	<div class='col-1-4'>
+	<div class='pad-left-small'>
 <%
 if(!quiz.isOne_page()) {
 	if(!quiz.isPractice_mode()) {
@@ -440,22 +404,70 @@ private ArrayList<Integer> randomize() {
 			out.println("<br /><br />Nobody has taken this quiz");
 		}
 	%>
-	<br />
-	<br />
+	</div>
+	</div>
 
-<div>
-	<h3><a name='top'>Menu</a></h3>
-	<p><a href='#yourPastScores'>Your past scores</a></p>
-	<p><a href='#bestScoresAllTime'>Best scores of all time</a></p>
-	<p><a href='#bestScoresLastDay'>Best scores in the last day</a></p>
-	<p><a href='#recentScores'>Recent scores</a></p>
-	<p><a href='#statistics'>Statistics</a></p>
-	<p><a href='#ratingsReviews'>Ratings and review</a></p>
-</div>	
+	<div class='col-1-4'>
+	<div class='pad-left-small'>
+	<p class='h3'>Categories:
+	<%
+		new CatTagManager();
+		out.println("<a href='cat_tag.jsp?category="+CatTagManager.getCategoryFromQuiz(quiz.getQuiz_id())+"'>"+CatTagManager.getCategoryFromQuiz(quiz.getQuiz_id())+"</a>");
+	%></p>
 	
-<div id='accordion-off'>	
-	<h3><a name='yourPastScores'>Your past scores with this quiz</a></h3>
+	<p class='h3'>Tags:
+	<%
+		for(String tag : CatTagManager.getTagsFromQuiz(quiz.getQuiz_id())) {
+			out.println("<a href='cat_tag.jsp?tag="+tag+"'>"+tag+"</a>");
+		}
+	%></p>
+	
+	<p class='h3'>Quiz Author:
+	<a href="profile.jsp?id=<%=quiz.getUser_id()%>"> <%=manager.getAccountById(String.valueOf(quiz.getUser_id()))
+					.getUsername()%></a>
+	</p>
+	
+	<p class='h3'>Average Rating:
+	<%
+		out.println(ReviewManager.getAverageRating(ReviewManager.getReviews(quiz.getQuiz_id())));
+	%></p>
+	</div>
+	</div>
+	
+	<div class='col-1-4'>
+	<div class='pad-left-small'>
+	Share:<br />
 	<div>
+	<!-- FACEBOOK LIKE BUTTON -->
+	<div class="fb-like" data-href="http://localhost:8080/hw6/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true" data-font="segoe ui"></div>
+
+	<!-- GOOGLE PLUS BUTTON --><br />
+	<!-- Place this tag where you want the +1 button to render. -->
+	<div class="g-plusone" data-annotation="inline" data-width="300"></div>
+
+	<!-- Place this tag after the last +1 button tag. -->
+	<script type="text/javascript">
+	  (function() {
+	    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	    po.src = 'https://apis.google.com/js/plusone.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	  })();
+	</script>
+	
+	<!-- TWITTER SHARE BUTTON --><br />
+	<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</div><br />
+	</div>
+	</div><!-- end col-1-4 -->
+	
+	
+	<br />
+	<br />	
+	
+<div id='accordion-off' class='clear-both'>	
+	<div class='section'>
+	<h3><a name='yourPastScores'>Your past scores with this quiz</a></h3>
 	<%
 		// List of user's past performance on specific quiz
 		ArrayList<Result> results = QuizResult.getUserPerformanceOnQuiz(
@@ -465,8 +477,8 @@ private ArrayList<Integer> randomize() {
 	<br /><a href='#top'>Back to top</a>
 	</div>
 	
+	<div class='section-white'>
 	<h3><a name='bestScoresAllTime'>Best scores of all time</a></h3>
-	<div>
 	<%
 		// List of highest performers of all time
 		results = QuizResult.getBestQuizTakers(quiz.getQuiz_id(), 0);
@@ -476,8 +488,8 @@ private ArrayList<Integer> randomize() {
 	<br /><a href='#top'>Back to top</a>
 	</div>
 	
+	<div class='section'>
 	<h3><a name='bestScoresLastDay'>Best scores in the last day</a></h3>
-	<div>
 	<%
 		// List of recent best scores in the last day
 		results = QuizResult.getRecentHighScores(quiz.getQuiz_id(), 0);
@@ -487,8 +499,8 @@ private ArrayList<Integer> randomize() {
 	<br /><a href='#top'>Back to top</a>
 	</div>
 	
+	<div class='section-white'>
 	<h3><a name='recentScores'>Recent quiz scores</a></h3>
-	<div>
 	<%
 		// List of recent 
 		results = QuizResult.getRecentTakers(quiz.getQuiz_id(), 0);
@@ -498,6 +510,7 @@ private ArrayList<Integer> randomize() {
 	<br /><a href='#top'>Back to top</a>
 	</div>
 	
+	<div class='section'>
 	<h3><a name='statistics'>Statistics for this quiz</a></h3>
 	<div id='table'>
 	<%
@@ -546,9 +559,10 @@ private ArrayList<Integer> randomize() {
 	%>
 	<br /><a href='#top'>Back to top</a>
 	</div>
+	</div>
 	
+	<div class='section-white'>
 	<h3><a name='ratingsReviews'>Ratings and Reviews for this quiz</a></h3>
-	<div>
 		<%
 			ArrayList<Review> reviews = ReviewManager.getReviews(quiz.getQuiz_id());
 			for(Review newReview : reviews) {
