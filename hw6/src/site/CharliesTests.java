@@ -68,7 +68,7 @@ public class CharliesTests {
 //		System.out.println(AdminControl.isAdmin(3));
 //		MyDB.close();
 //
-//		System.out.println(AdminControl.clearQuizResults(19));
+		System.out.println(AdminControl.clearQuizResults(137));
 	}
 	/*
 	@Test

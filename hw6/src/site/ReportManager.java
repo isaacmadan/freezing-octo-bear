@@ -54,6 +54,17 @@ public class ReportManager {
 		}
 	}
 	
+	/**Removes all reports associated with a quiz*/
+	public static boolean clearReportsByQuiz(int quiz_id){
+		String deleteQuiz = "DELETE FROM reports where quiz_id = " + quiz_id;
+		try {
+			stmt.executeUpdate(deleteQuiz);
+			return true;
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+	
 	public static int getNumReports(int quiz_id){
 		String execution = "SELECT COUNT(*) from reports GROUP BY quiz_id";
 		try {
