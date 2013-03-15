@@ -130,8 +130,8 @@
 <div class='section'>
 <h3><a name='adminNews'>Admin News</a></h3>
 
-<table>
-<tr><th>Date</th><th>Posted By</th><th>Announcement</th></tr>
+<div id='table'>
+<div id='row-td'><div id='left'>Date</div><div id='left'>Posted By</div><div id='left'>Announcement</div></div>
 <%
 	AccountManager accountManager = new AccountManager();
 	new AdminControl();
@@ -139,16 +139,16 @@
 	try { 
 		announcements = AdminControl.getAnnouncements(10);
 		for(Announcement announcement : announcements) {
-			out.println("<tr><td>"+announcement.dateString()+"</td>"+
-					"<td><a href='profile.jsp?id="+
+			out.println("<div id='row'><div id='left'>"+announcement.dateString()+"</div>"+
+					"<div id='right'><a href='profile.jsp?id="+
 					announcement.user_id+"'>"+
-					accountManager.getAccountById(String.valueOf(announcement.user_id)).getUsername()+"</a></td>"+
-					"<td>"+announcement.text+"</td></tr>");
+					accountManager.getAccountById(String.valueOf(announcement.user_id)).getUsername()+"</a></div>"+
+					"<div id='right'>"+announcement.text+"</div></div>");
 		}
 	}
 	catch(Exception e) { System.out.println(e); }
 %>
-</table>
+</div>
 <br />
 <%
 	if(AdminControl.isAdmin(user.getId())) {
@@ -167,17 +167,17 @@
 	if(AdminControl.isAdmin(user.getId())) {
 		out.println("<div class='section-white'>");
 		out.println("<h3><a name='quizzardStatistics'>Quizzard Statistics</a></h3>");
-		out.println("<table>");
-		out.println("<tr><th>Statistic</th><th>Value</th></tr>");
+		out.println("<div id='table'>");
+		out.println("<div id='row-td'><div id='left'>Statistic</div><div id='left'>Value</div></div>");
 	
 		try {
 		ArrayList<Statistic> statistics = AdminControl.getStatistics();
 		for(Statistic statistic : statistics) {
-			out.println("<tr><td>"+statistic.description+"</td><td>"+statistic.stat+"</td></tr>");
+			out.println("<div id='row'><div id='left'>"+statistic.description+"</div><div id='right'>"+statistic.stat+"</div></div>");
 		}
 		} catch(Exception e) {}
 		
-		out.println("</table><br />");
+		out.println("</div><br />");
 		out.println("<p><a href='#top'>Back to top</a></p>");
 		out.println("</div>");
 	}
@@ -188,8 +188,8 @@
 	if(AdminControl.isAdmin(user.getId())) {
 		out.println("<div class='section reported'>");
 		out.println("<h3><a name='reportedQuizzes'>Reported Quizzes</a></h3>");
-		out.println("<table>");
-		out.println("<tr><th>Reported on</th><th>Reported by</th><th>Report text</th><th>Quiz name</th><th>Quiz description</th><th>Quiz creator</th><th>Delete report</th></tr>");
+		out.println("<div id='table'>");
+		out.println("<div id='row-td'><div id='left'>Reported on</div><div id='left'>Reported by</div><div id='left'>Report text</div><div id='left'>Quiz name</div><div id='left'>Quiz description</div><div id='left'>Quiz creator</div><div id='left'>Delete report</div></div>");
 		new ReportManager();
 		QuizManager manager = new QuizManager();
 		ArrayList<Report> reports = ReportManager.getReportedQuizzes();
@@ -197,16 +197,16 @@
 			User reportingUser = accountManager.getAccountById(String.valueOf(report.userId));
 			Quiz offendingQuiz = manager.getQuizByQuizId(report.quizId);
 			User offendingUser = accountManager.getAccountById(String.valueOf(offendingQuiz.getUser_id()));
-			out.println("<tr><td>"+report.dateString()+"</td>"+
-						"<td><a href='profile.jsp?id="+reportingUser.getId()+"'>"+reportingUser.getUsername()+"</a></td>"+
-						"<td>"+report.text+"</td>"+
-						"<td><a href='quiz_summary_page.jsp?quiz_id="+offendingQuiz.getQuiz_id()+"'>"+offendingQuiz.getTitle()+"</a></td>"+
-						"<td>"+offendingQuiz.getDescription()+"</td>"+
-						"<td><a href='profile.jsp?id="+offendingUser.getId()+"'>"+offendingUser.getUsername()+"</a></td>"+
-						"<td>"+"<form action='success.jsp' method='POST'><input type='hidden' name='delete_report' value='"+report.reportId+"' /><input type='submit' value='Delete report' /></form>"+"</td>"+
-						"</tr>");
+			out.println("<div id='row'><div id='left'>"+report.dateString()+"</div>"+
+						"<div id='left'><a href='profile.jsp?id="+reportingUser.getId()+"'>"+reportingUser.getUsername()+"</a></div>"+
+						"<div id='right'>"+report.text+"</div>"+
+						"<div id='right'><a href='quiz_summary_page.jsp?quiz_id="+offendingQuiz.getQuiz_id()+"'>"+offendingQuiz.getTitle()+"</a></div>"+
+						"<div id='right'>"+offendingQuiz.getDescription()+"</div>"+
+						"<div id='right'><a href='profile.jsp?id="+offendingUser.getId()+"'>"+offendingUser.getUsername()+"</a></div>"+
+						"<div id='right'>"+"<form action='success.jsp' method='POST'><input type='hidden' name='delete_report' value='"+report.reportId+"' /><input type='submit' value='Delete report' /></form>"+"</div>"+
+						"</div>");
 		}
-		out.println("</table><br />");
+		out.println("</div><br />");
 		out.println("<p><a href='#top'>Back to top</a></p>");
 		out.println("</div>");
 	}
@@ -222,8 +222,8 @@
 
 <div class='section-white'>
 <h3><a name='popularQuizzes'>Popular Quizzes</a></h3>
-<table>
-<tr><th>Date</th><th>Quiz name</th><th>Description</th><th>Created by</th></tr>
+<div id='table'>
+<div id='row-td'><div id='left'>Date</div><div id='left'>Quiz name</div><div id='left'>Description</div><div id='left'>Created by</div></div>
 <%
 	new QuizResult();
 	ArrayList<Quiz> popularQuizzes  = QuizResult.getPopularQuizzes(0);
@@ -233,19 +233,19 @@
 	for(int i = 0; i < length; i++) {
 		Quiz quiz = popularQuizzes.get(i);
 		if(quiz == null)
-			out.println("<tr><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td></tr>");
+			out.println("<div id='row'><div id='left'>NULL</div><div id='right'>NULL</div><div id='right'>NULL</div><div id='right'>NULL</div></div>");
 		else
-			out.println("<tr><td>"+quiz.dateString()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td><td><a href='profile.jsp?id="+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getId()+"'>"+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+"</a></td></tr>");
+			out.println("<div id='row'><div id='left'>"+quiz.dateString()+"</div><div id='right'><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></div><div id='right'>"+quiz.getDescription()+"</div><div id='right'><a href='profile.jsp?id="+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getId()+"'>"+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+"</a></div></div>");
 	}
 %>
-</table><br />
+</div><br />
 <p><a href='#top'>Back to top</a></p>
 </div>
 
 <div class='section'>
 <h3><a name='recentCreated'>Recently Created Quizzes</a></h3>
-<table>
-<tr><th>Date</th><th>Quiz name</th><th>Description</th><th>Created by</th></tr>
+<div id='table'>
+<div id='row-td'><div id='left'>Date</div><div id='left'>Quiz name</div><div id='left'>Description</div><div id='left'>Created by</div></div>
 <%
 	QuizManager manager = new QuizManager();
 	ArrayList<Quiz> recentQuizzes  = manager.getRecentWholeQuizTableByDate(7); //7 days
@@ -255,29 +255,29 @@
 	for(int i = 0; i < length; i++) {
 		Quiz quiz = recentQuizzes.get(i);
 		if(quiz == null)
-			out.println("<tr><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td></tr>");
+			out.println("<div id='row'><div id='left'>NULL</div><div id='right'>NULL</div><div id='right'>NULL</div><div id='right'>NULL</div></div>");
 		else {
 			try {
-				out.println("<tr><td>"+quiz.dateString()+
-							"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+
-							"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+
-							"</td><td><a href='profile.jsp?id="+
+				out.println("<div id='row'><div id='left'>"+quiz.dateString()+
+							"</div><div id='right'><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+
+							"'>"+quiz.getTitle()+"</a></div><div id='right'>"+quiz.getDescription()+
+							"</div><div id='right'><a href='profile.jsp?id="+
 							accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getId()+
 							"'>"+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+
-							"</a></td></tr>");
+							"</a></div></div>");
 			}
 			catch(Exception e) { System.out.println(e); }
 		}
 	}
 %>
-</table><br />
+</div><br />
 <p><a href='#top'>Back to top</a></p>
 </div>
 
 <div class='section-white'>
 <h3><a name='recentTaken'>My Recent Quiz Taking Activities</a></h3>
-<table>
-<tr><th>Date</th><th>Quiz name</th><th>Score</th><th>Duration</th></tr>
+<div id='table'>
+<div id='row-td'><div id='left'>Date</div><div id='left'>Quiz name</div><div id='left'>Score</div><div id='left'>Duration</div></div>
 <%
 	ArrayList<Result> results = QuizResult.getRecentUserPerformances(user.getId(), 7); //7 days
 	for(Result result : results) {
@@ -286,33 +286,33 @@
 		if(quiz != null) {
 			titleString = quiz.getTitle();
 		}
-		out.println("<tr><td>"+result.dateString()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"
-					+titleString+"</a></td><td>"+result.pointsScored+"/"+result.maxPossiblePoints+"</td><td>"
-					+result.durationString()+"</td></tr>");
+		out.println("<div id='row'><div id='left'>"+result.dateString()+"</div><div id='right'><a href='quiz_summary_page.jsp?quiz_id="+result.quizId+"'>"
+					+titleString+"</a></div><div id='right'>"+result.pointsScored+"/"+result.maxPossiblePoints+"</div><div id='right'>"
+					+result.durationString()+"</div></div>");
 	}
 	if(results.size() == 0) {
 		out.println("No quiz results");
 	}
 %>
-</table><br />
+</div><br />
 <p><a href='#top'>Back to top</a></p>
 </div>
 
 <div class='section'>
 <h3><a name='myRecentCreated'>My Recent Quiz Creating Activities</a></h3>
-<table>
-<tr><th>Date</th><th>Quiz name</th><th>Quiz Description</th></tr>
+<div id='table'>
+<div id='row-td'><div id='left'>Date</div><div id='left'>Quiz name</div><div id='left'>Quiz Description</div></div>
 <%
 	//ArrayList<Quiz> quizzes = manager.getQuizzesByUserId(user.getId());	
 	ArrayList<Quiz> quizzes = manager.getRecentQuizzesByUserId(user.getId(), 7); //7 days	
 	for(Quiz quiz : quizzes) {
-		out.println("<tr><td>"+quiz.dateString()+"</td><td><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></td><td>"+quiz.getDescription()+"</td></tr>");
+		out.println("<div id='row'><div id='left'>"+quiz.dateString()+"</div><div id='right'><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></div><div id='right'>"+quiz.getDescription()+"</div></div>");
 	}
 	if(results.size() == 0) {
 		out.println("No quiz results");
 	}
 %>
-</table><br />
+</div><br />
 <p><a href='#top'>Back to top</a></p>
 </div>
 

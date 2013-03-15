@@ -136,7 +136,7 @@
 </div>
 
 <div class="col-3-5">
-<h2>History</h2>
+<h2>Performance History</h2>
 <div class='pad-right'>
 <div id='table'>
 <div id='row-td'><div id='left'>Date</div><div id='right'>Quiz name</div><div id='right'>Score</div><div id='right'>Duration</div></div>
@@ -177,6 +177,26 @@
 %>
 </div>
 
+<div class='clear-both'>
+	<div class='col-1-5'></div>
+	<div class='col-3-5'>
+	<h2>Created Quizzes</h2>
+	
+	<div id='table'>
+	<div id='row-td'><div id='left'>Date</div><div id='right'>Quiz name</div><div id='right'>Quiz description</div></div>
+	<%	
+	ArrayList<Quiz> quizzes = quizManager.getQuizzesByUserId(user.getId());	
+	for(Quiz quiz : quizzes) {
+		out.println("<div id='row'><div id='left'>"+quiz.dateString()+"</div><div id='right'><a href='quiz_summary_page.jsp?quiz_id="+quiz.getQuiz_id()+"'>"+quiz.getTitle()+"</a></div><div id='right'>"+quiz.getDescription()+"</div></div>");
+	}
+	if(results.size() == 0) {
+		out.println("No quiz results");
+	}
+%>
+	</div>
+	</div>
+	<div class='col-1-5'></div>
+</div>
 
 </div>
 </div>

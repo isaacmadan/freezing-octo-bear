@@ -68,7 +68,7 @@ td { color:#000000; background-color:#E8E8E8; }
 #table { display: table; }
 #row  { display: table-row; }
 #row:hover { background-color:lightgray; }
-#left, #right, #middle { display: table-cell; padding:10px; max-width:250px; overflow:hidden; word-wrap:break-word; }
+#left, #right, #middle { display: table-cell; padding:10px; max-width:270px; overflow:hidden; word-wrap:break-word; }
 #left-no-bound, #right-no-bound, #middle-no-bound { display: table-cell; padding:10px; max-width:250px; overflow:hidden; word-wrap:break-word; }
 #left { padding-right: 10px; font-weight:bold; }
 #row-td { display: table-row; background-color:#64908A; color:white; margin:1px;}
