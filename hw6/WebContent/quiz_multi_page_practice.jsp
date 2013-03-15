@@ -92,10 +92,7 @@
 		
 		if(request.getParameter("immediate") != null) {
 			if((request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null && 
-					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + randomIndex.get(i - 1)))) ||
-					(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) == null &&
-					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains("") &&
-					questions.get(randomIndex.get(i - 1)).getQuestionType() == 3)) {
+					Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).contains(request.getParameter("answer_" + randomIndex.get(i - 1))))) {
 				out.println("Question " + (i) + ": Correct!<br>");
 				out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i - 1)).getQuestionId()).getAnswers() + "<br><br>");
 				indices.set(i - 1, indices.get(i - 1) + 1);
@@ -174,8 +171,11 @@
 	</form>
 	
 	<%
-	if(size == 0)
+	if(size == 0){
 		out.println("The Quiz is Complete!<br>");
+		out.println("<br>");
+		out.println("<a href = 'quiz_summary_page.jsp?quiz_id=" + thisQuiz.getQuiz_id() + "'>Back to Quiz</a>");
+	}
 	%>
 
 	<!-- PracticeMakesPerfect -->

@@ -68,12 +68,13 @@ ArrayList<Answer> answers;
 
 <div class='content-wrapper'>
 <div class='content'>
-<p>
+<h2>
 Congrats, you have finished the quiz!
-</p>
-<p>
+</h2>
+<h3>
 Your results:
-<br>
+</h3>
+<p>
 <%
 Quiz quiz = (new QuizManager()).getQuizByQuizId(Integer.parseInt(request.getParameter("quiz_id")));
 try {
@@ -100,9 +101,7 @@ if(request.getParameter("random") != null) {
 
 
 for(int i = 0; i < questions.size(); i++) {
-	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i))) ||
-			(answers.get(i).contains("") && request.getParameter("answer_" + Integer.toString(i)) == null && 
-			questions.get(i).getQuestionType() == 3)) {
+	if(answers.get(i).contains(request.getParameter("answer_" + Integer.toString(i)))) {
 		score++;
 		out.println("Question " + (i + 1) + ": Correct!<br>");
 		out.println("Acceptable Answers: " + answers.get(i).getAnswers() + "<br><br>");
@@ -128,7 +127,10 @@ Duration: <%= dur %><br>
 Score: <%=score%>/<%=maxScore %>
 </p>
 <br>
-
+<br>
+<p>
+<a href = "quiz_summary_page.jsp?quiz_id=<%=quiz.getQuiz_id() %>">Back to Quiz</a>
+</p>
 <!-- update IAmTheGreatest Achievement -->
 <%
 	new QuizResult();

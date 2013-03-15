@@ -86,11 +86,7 @@ ArrayList<Integer> randomIndex = (ArrayList<Integer>)session.getAttribute("rando
 
 if(!quiz.isImmediate_correction()) {
 for(int i = 0; i < questions.size(); i++) {
-	questions.get(randomIndex.get(i));
-	System.out.println(ans.get(i));
-	if(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).contains(ans.get(i)) ||
-			(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).contains("") && questions.get(randomIndex.get(i)).getQuestionType() == 3
-			&& ans.get(i) == null)) {
+	if(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).contains(ans.get(i))) {
 		out.println("Question " + (i + 1) + ": Correct!<br>");
 		out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers() + "<br><br>");
 	}
@@ -120,6 +116,10 @@ Duration: <%= length %><br>
 Score: <%=score%>/<%= maxScore %>
 </p>
 <br>
+<br>
+<p>
+<a href = "quiz_summary_page.jsp?quiz_id=<%=quiz.getQuiz_id() %>">Back to Quiz</a>
+</p>
 
 <!-- update IAmTheGreatest Achievement -->
 <%
@@ -141,7 +141,6 @@ int result_id = QuizResult.addResult(user.getId(), Integer.parseInt(request.getP
 
 
 %>
-<a href = "index.jsp">Back to Home</a>
 </div><!-- end content -->
 </div>
 
