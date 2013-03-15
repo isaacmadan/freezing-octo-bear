@@ -95,11 +95,10 @@
 					out.println("<div id='table'>");
 					out.println("<span class='make_question_head'>Question Response</span>");
 					out.println("<br /><input type='text' id='numAnswers' value='# of valid answers' /><button id='addAnswer' onclick=\"addAnswers($(\'#numAnswers\').val());\">Allow Multiple answers</button><br />");
-					out.println("<br /><form action='making_quiz.jsp' method='POST'>"
+					out.println("<br /><form action='making_quiz.jsp' method='POST' onsubmit='return validateForm([\"question_string\"]);'>"
 							+ "<input type='hidden' value='question_response' name='question_type' />"
-							+ "<div id='row'><div id='left'>Question? </div><div id='right'><input type='text' name='question_string' /></div></div>"
-							//+ "<div id='row'><div id='left'>Answer(s)? </div><div id='right'><div id='answers'><input type='hidden' value='1' name='num_answers' /><input type='text' name='answer1' /></div></div></div>"
-									+ "Answer(s)? <div id='answers'><input type='hidden' value='1' name='num_answers' /><input type='text' name='answer1' /></div>"
+							+ "<div id='row'><div id='left'>Question? </div><div id='right'><input type='text' id='question_string' name='question_string' /></div></div>"
+							+ "<div id='row'><div id='left'>Answer(s)? </div><div id='right'><div id='answers'><input type='hidden' value='1' name='num_answers' /><input type='text' name='answer1' /></div></div></div>"
 							+ "<button>Add Question</button>" + "</form>");
 					out.println("</div>");
 				}
@@ -122,9 +121,9 @@
 					out.println("<span class='make_question_head'>Multiple Choice</span>");
 					out.println("<br /><input type='text' id='numChoices' value='# choices' /><button id='addChoice' onclick=\"addChoices($(\'#numChoices\').val());\">Add choices</button>");
 					out.println("<input type='text' id='numAnswers' value='# of valid answers' /><button id='addAnswer' onclick=\"addAnswers($(\'#numAnswers\').val());\">Allow Multiple answers</button><br />");
-					out.println("<br /><form action='making_quiz.jsp' method='POST'>"
+					out.println("<br /><form action='making_quiz.jsp' method='POST' onsubmit='return validateForm([\"question_string\"]);'>"
 							+ "<input type='hidden' value='multiple_choice' name='question_type' />"
-							+ "<div id='row'><div id='left'>Question: </div><div id='right'><input type='text' name='question_string' /></div></div>"
+							+ "<div id='row'><div id='left'>Question: </div><div id='right'><input type='text' id='question_string' name='question_string' /></div></div>"
 							+ "<div id='row'><div id='left'>Choice(s): </div><div id='right'><div id='choices'><input type='hidden' value='1' name='num_choices' /><input type='text' name='choice1' /></div></div></div>"
 							+ "<div id='row'><div id='left'>Answer(s): </div><div id='right'><div id='answers'><input type='hidden' value='1' name='num_answers' /><input type='text' name='answer1' /></div></div></div>"
 							+ "<br /><button>Add Question</button>" + "</form>");
@@ -135,9 +134,9 @@
 					out.println("<div id='table'>");
 					out.println("<span class='make_question_head'>Picture Response</span>");
 					out.println("<br /><input type='text' id='numAnswers' value='# of valid answers' /><button id='addAnswer' onclick=\"addAnswers($(\'#numAnswers\').val());\">Allow Multiple answers</button><br />");
-					out.println("<form action='making_quiz.jsp' method='POST'>"
+					out.println("<form action='making_quiz.jsp' method='POST' onsubmit='return validateForm([\"question_string\"]);'>"
 							+ "<input type='hidden' value='picture_response' name='question_type' />"
-							+ "<div id='row'><div id='left'>Question: </div><div id='right'><input type='text' name='question_string' /></div></div>"
+							+ "<div id='row'><div id='left'>Question: </div><div id='right'><input type='text' id='question_string' name='question_string' /></div></div>"
 							+ "<div id='row'><div id='left'>URL: </div><div id='right'><input type='text' name='url_string' /></div></div>"
 							+ "<div id='row'><div id='left'>Answer(s): </div><div id='right'><div id='answers'><input type='hidden' value='1' name='num_answers' /><input type='text' name='answer1' /></div></div></div>"
 							+ "<button>Add Question</button>" + "</form>");
