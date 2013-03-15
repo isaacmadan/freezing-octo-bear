@@ -101,7 +101,7 @@
 	}
 	
 	if(delete_quiz_results != null && quiz_id != null) {
-		System.out.println("clear");
+		//System.out.println("clear");
 		AdminControl.clearQuizResults(Integer.parseInt(quiz_id));
 	}
 

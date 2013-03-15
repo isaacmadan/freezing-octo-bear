@@ -146,7 +146,7 @@
 					"<div id='right'>"+announcement.text+"</div></div>");
 		}
 	}
-	catch(Exception e) { System.out.println(e); }
+	catch(Exception ignored) { }
 %>
 </div>
 <br />
@@ -266,7 +266,7 @@
 							"'>"+accountManager.getAccountById(String.valueOf(quiz.getUser_id())).getUsername()+
 							"</a></div></div>");
 			}
-			catch(Exception e) { System.out.println(e); }
+			catch(Exception ignored) { }
 		}
 	}
 %>
