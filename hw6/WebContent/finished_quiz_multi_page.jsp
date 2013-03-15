@@ -84,6 +84,8 @@ ArrayList<Integer> randomIndex = (ArrayList<Integer>)session.getAttribute("rando
 if(!quiz.isImmediate_correction()) {
 for(int i = 0; i < questions.size(); i++) {
 	//System.out.println(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers());
+	questions.get(randomIndex.get(i));
+	System.out.println(ans.get(i));
 	if(Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).contains(ans.get(i))) {
 		out.println("Question " + (i + 1) + ": Correct!<br>");
 		out.println("Acceptable Answers: " + Answer.getAnswerForQuestion(questions.get(randomIndex.get(i)).getQuestionId()).getAnswers() + "<br><br>");

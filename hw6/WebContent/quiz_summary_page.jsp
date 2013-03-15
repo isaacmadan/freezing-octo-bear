@@ -92,6 +92,7 @@
 <%
 	// SETUP
 	manager = new AccountManager();
+	new ReviewManager();
 	//quiz = (new QuizManager()).getQuizByQuizId(7);
 	//taker = manager.getAccountById("1");
 	taker = (User) session.getAttribute("user");

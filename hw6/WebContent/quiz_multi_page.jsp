@@ -139,7 +139,7 @@
 		if(i > 0 && request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))) != null) {
 			//System.out.println("randomIndex is: " + Integer.toString(randomIndex.get(i - 1)));
 			ArrayList<String> ans = (ArrayList<String>)session.getAttribute("listOfAnswers");
-			//System.out.println("last input answer is: " + request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))));
+			System.out.println("last input answer is: " + request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))));
 			ans.add(request.getParameter("answer_" + Integer.toString(randomIndex.get(i - 1))));
 			session.setAttribute("listOfAnswers", ans);
 		}
